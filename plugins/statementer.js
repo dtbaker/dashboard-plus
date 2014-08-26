@@ -96,7 +96,7 @@
 					currentbalance = parseInt($('.header-logo-account__balance').html().substr(1).replace(',', '').replace('.', ''), 16);
 
 					$content.html('<span style="font-style:italic">loading Statement... <a href="javascript:window.dashboardplus.set(\'statementer\', {});window.dashboardplus.setCookie(\'statementer_lastbalance\', \'\', -1);location.reload();">Click here if it stucks...</a></span>');
-					var style = $('<link id="statementer_css" media="all" type="text/css" href="//http://dtbaker.github.io/dashboard-plus/css/statementer.css" rel="stylesheet">');
+					var style = $('<link id="statementer_css" media="all" type="text/css" href="//dtbaker.github.io/dashboard-plus/css/statementer.css" rel="stylesheet">');
 					style.appendTo('head');
 
 					$('.statement-search__presets_links').css('float','right').insertBefore('.statement-heading').find('a').eq(0).remove();
