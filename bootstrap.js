@@ -11,7 +11,7 @@
 
 	//"use strict"
 
-	var version = '0.3.4',
+	var version = '1.3.1',
 		cookiePrefix = 'dbp_';
 	
 	if( typeof jQuery != 'undefined' ){
@@ -287,20 +287,29 @@
 			
 			loadit.sort();
 			var url = window.dashboardplus['base']+'/plugins/';
-			
+
+            var script_count = 0;
 			for(var item in loadit){
+                script_count++;
 				console.log(plugins[loadit[item]].name+' loaded!');
+                var plugin_url = url + loadit[item] + '.js?v=' + version;
+
+                console.log("Loading script: "+script_count + " url: " + plugin_url);
+                $.ajax({
+                    url: plugin_url,
+                    dataType: "script",
+                    success: function(){
+                        script_count--;
+                        console.log("Left to load: "+script_count);
+                        if(script_count<=0){
+                            // we've loaded all scripts completely... run our callback
+                            callback();
+                        }
+                    },
+                    cache: true
+                });
 			}
-			url += loadit.join('.js,')+'.js';
-			
-			url += '?v='+version;
-	
-			$.ajax({
-				url: url,
-				dataType: "script",
-				success: callback,
-				cache: true
-			});
+
 			
 		}
 		

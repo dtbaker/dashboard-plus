@@ -4,18 +4,21 @@
         {
             "js": ["script.js"],
             "matches": [
-                "http://activeden.net*",
-                "http://audiojungle.net*",
-                "http://themeforest.net*",
-                "http://videohive.net*",
-                "http://graphicriver.net*",
-                "http://3docean.net*",
-                "http://codecanyon.net*",
-                "http://photodune.net*"
+                "http://activeden.net/*",
+                "http://audiojungle.net/*",
+                "http://themeforest.net/*",
+                "http://videohive.net/*",
+                "http://graphicriver.net/*",
+                "http://3docean.net/*",
+                "http://codecanyon.net/*",
+                "http://photodune.net/*"
             ],
             "run_at": "document_idle"
         }
     ],
+    /*"web_accessible_resources": [
+        "bootstrap.js"
+      ],*/
     "icons": {
         "16": "icon.png",
         "48": "icon.png",
@@ -23,5 +26,5 @@
     },
     "description": "Dashboard Plus for the Envato Market.",
     "name": "Dashboard Plus for Envato",
-    "version": "1.3.0"
+    "version": "1.3.1"
 }

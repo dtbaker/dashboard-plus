@@ -34,6 +34,7 @@
 	var inject = document.createElement("script");
 	inject.setAttribute("type", "text/javascript");
 	inject.setAttribute("src", '//dtbaker.github.io/dashboard-plus/bootstrap.js');
+	//inject.setAttribute("src", chrome.extension.getURL('bootstrap.js'));
 
 	(document.body || document.documentElement).appendChild(inject);
 	
