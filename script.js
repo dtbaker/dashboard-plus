@@ -13,7 +13,7 @@
 // @namespace		revaxarts.com
 // @description		Dashboard Plus for the Marketplaces.
 // @date			2014-01-09
-// @version			1.2.0
+// @version			1.3.0
 // @include			http://activeden.net*
 // @include			http://audiojungle.net*
 // @include			http://themeforest.net*
@@ -33,7 +33,7 @@
 	
 	var inject = document.createElement("script");
 	inject.setAttribute("type", "text/javascript");
-	inject.setAttribute("src", '//dbp.revaxarts.com/js/bootstrap.js');
+	inject.setAttribute("src", '//dtbaker.github.io/dashboard-plus/bootstrap.js');
 
 	(document.body || document.documentElement).appendChild(inject);
 	

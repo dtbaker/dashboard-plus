@@ -34,7 +34,7 @@
 		if(!username) return false;
 	
 		window.dashboardplus = window.dashboardplus || {};
-		window.dashboardplus['base'] = 'http://dbp.revaxarts.com';
+		window.dashboardplus['base'] = '//dtbaker.github.io/dashboard-plus';
 		window.dashboardplus['user'] = username;
 		
 		try{
@@ -286,7 +286,7 @@
 			if(!loadit.length) return false;
 			
 			loadit.sort();
-			var url = window.dashboardplus['base']+'/js/';
+			var url = window.dashboardplus['base']+'/plugins/';
 			
 			for(var item in loadit){
 				console.log(plugins[loadit[item]].name+' loaded!');

@@ -1,0 +1,8 @@
+
+
+2014.08.26 - version 1.3.0
+ * Changing script sources to host js files from Github pages instead of @revaxarts hosting
+ * Adjust manifest.json to support Chrome Webstore submission
+
+2014.08.26 - version 1.2.0
+ * Initial import of plugin from @revaxarts
