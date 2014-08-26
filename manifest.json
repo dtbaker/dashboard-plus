@@ -22,6 +22,7 @@
     "icons": {
         "16": "icon.png",
         "48": "icon.png",
+        "64": "icon.png",
         "128": "icon.png"
     },
     "description": "Dashboard Plus for the Envato Market.",
