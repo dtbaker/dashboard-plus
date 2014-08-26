@@ -33,7 +33,7 @@
 	
 	var inject = document.createElement("script");
 	inject.setAttribute("type", "text/javascript");
-	inject.setAttribute("src", '//dbp.revaxarts.com/js/bootstrap.js');
+	inject.setAttribute("src", '//dtbaker.github.com/dashboard-plus/bootstrap.js');
 
 	(document.body || document.documentElement).appendChild(inject);
 	
