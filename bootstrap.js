@@ -34,7 +34,7 @@
 		if(!username) return false;
 	
 		window.dashboardplus = window.dashboardplus || {};
-		window.dashboardplus['base'] = '//dtbaker.github.com/dashboard-plus';
+		window.dashboardplus['base'] = '//dtbaker.github.io/dashboard-plus';
 		window.dashboardplus['user'] = username;
 		
 		try{
