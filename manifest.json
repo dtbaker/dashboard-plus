@@ -1,0 +1,15 @@
+{
+   "content_scripts": [ {
+      "exclude_globs": [  ],
+      "exclude_matches": [  ],
+      "include_globs": [ "http://activeden.net*", "http://audiojungle.net*", "http://themeforest.net*", "http://videohive.net*", "http://graphicriver.net*", "http://3docean.net*", "http://codecanyon.net*", "http://photodune.net*" ],
+      "js": [ "script.js" ],
+      "matches": [ "http://*/*", "https://*/*" ],
+      "run_at": "document_idle"
+   } ],
+   "converted_from_user_script": true,
+   "description": "Dashboard Plus for the Marketplaces.",
+   "key": "5KkUi5mbfAKwP9vaXFjKtLe2GFGvTJxJdkp5aLdU1HI=",
+   "name": "Dashboard Plus for Envato",
+   "version": "1.0.0"
+}
