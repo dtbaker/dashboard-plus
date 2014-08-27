@@ -32,9 +32,9 @@
 		var loadit = [];
 		var storage;
 		if(!username) return false;
-	
+        console.log(window.dashboardplus);
 		window.dashboardplus = window.dashboardplus || {};
-		window.dashboardplus['base'] = '//dtbaker.github.io/dashboard-plus';
+		window.dashboardplus['base'] = window.dashboardplus['base'] || '//dtbaker.github.io/dashboard-plus/';
 		window.dashboardplus['user'] = username;
 		
 		try{
@@ -286,7 +286,7 @@
 			if(!loadit.length) return false;
 			
 			loadit.sort();
-			var url = window.dashboardplus['base']+'/plugins/';
+			var url = window.dashboardplus['base']+'plugins/';
 
             var script_count = 0;
 			for(var item in loadit){

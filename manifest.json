@@ -16,6 +16,11 @@
             "run_at": "document_idle"
         }
     ],
+    "web_accessible_resources": [
+        "*.js",
+        "plugins/*.js",
+        "*.css"
+      ],
     "icons": {
         "16": "icon.png",
         "48": "icon.png",
