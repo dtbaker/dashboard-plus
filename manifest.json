@@ -19,7 +19,10 @@
     "web_accessible_resources": [
         "*.js",
         "plugins/*.js",
-        "*.css"
+        "plugins/*.html",
+        "img/*.png",
+        "img/*.gif",
+        "css/*.css"
       ],
     "icons": {
         "16": "icon.png",
