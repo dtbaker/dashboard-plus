@@ -12,8 +12,8 @@
 // @creator			userscripts@revaxarts.com
 // @namespace		revaxarts.com
 // @description		Dashboard Plus for the Marketplaces.
-// @date			2014-08-26
-// @version			1.3.1
+// @date			2014-08-27
+// @version			1.3.2
 // @include			http://activeden.net*
 // @include			http://audiojungle.net*
 // @include			http://themeforest.net*
@@ -33,8 +33,16 @@
 	
 	var inject = document.createElement("script");
 	inject.setAttribute("type", "text/javascript");
-	inject.setAttribute("src", '//dtbaker.github.io/dashboard-plus/bootstrap.js');
-	//inject.setAttribute("src", chrome.extension.getURL('bootstrap.js'));
+    if(true) { // change to false if developing locally..
+        inject.setAttribute("src", '//dtbaker.github.io/dashboard-plus/bootstrap.js');
+    }else {
+        var actualCode = ['window.dashboardplus = window.dashboardplus || {};',
+                            "window.dashboardplus['base'] = '" +  chrome.extension.getURL('') + "'; "].join('\n');
+        var script = document.createElement('script');
+        script.textContent = actualCode;
+        (document.head||document.documentElement).appendChild(script);
+        inject.setAttribute("src", chrome.extension.getURL('bootstrap.js'));
+    }
 
 	(document.body || document.documentElement).appendChild(inject);
 	

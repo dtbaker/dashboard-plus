@@ -11,7 +11,7 @@
 
 	//"use strict"
 
-	var version = '1.3.1',
+	var version = '1.3.2',
 		cookiePrefix = 'dbp_';
 	
 	if( typeof jQuery != 'undefined' ){
@@ -32,9 +32,9 @@
 		var loadit = [];
 		var storage;
 		if(!username) return false;
-	
+        console.log(window.dashboardplus);
 		window.dashboardplus = window.dashboardplus || {};
-		window.dashboardplus['base'] = '//dtbaker.github.io/dashboard-plus';
+		window.dashboardplus['base'] = window.dashboardplus['base'] || '//dtbaker.github.io/dashboard-plus/';
 		window.dashboardplus['user'] = username;
 		
 		try{
@@ -157,6 +157,10 @@
 				'name': 'Purchase Verification',
 				'desc': 'verify purchasecodes right on your dashboards sidebar'
 			},
+			'progressbar': {
+				'name': 'Upload Progressbar',
+				'desc': 'Show the progressbar on uploads'
+			},
 			'quickcollection': {
 				'name': 'Quickcollection',
 				'desc': 'Add items to your bookmarks from the item thumbnail'
@@ -199,7 +203,8 @@
 	
 			enque('envatitor');
 			enque('verify');
-			
+			enque('progressbar');
+
 			//Settings Page
 		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net|com)\/user\/(\w+)\/(\w+)\/edit/)) {
 		
@@ -286,7 +291,7 @@
 			if(!loadit.length) return false;
 			
 			loadit.sort();
-			var url = window.dashboardplus['base']+'/plugins/';
+			var url = window.dashboardplus['base']+'plugins/';
 
             var script_count = 0;
 			for(var item in loadit){
