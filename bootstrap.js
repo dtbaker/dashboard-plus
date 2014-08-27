@@ -11,7 +11,7 @@
 
 	//"use strict"
 
-	var version = '1.3.1',
+	var version = '1.3.2',
 		cookiePrefix = 'dbp_';
 	
 	if( typeof jQuery != 'undefined' ){
@@ -157,6 +157,10 @@
 				'name': 'Purchase Verification',
 				'desc': 'verify purchasecodes right on your dashboards sidebar'
 			},
+			'progressbar': {
+				'name': 'Upload Progressbar',
+				'desc': 'Show the progressbar on uploads'
+			},
 			'quickcollection': {
 				'name': 'Quickcollection',
 				'desc': 'Add items to your bookmarks from the item thumbnail'
@@ -199,7 +203,8 @@
 	
 			enque('envatitor');
 			enque('verify');
-			
+			enque('progressbar');
+
 			//Settings Page
 		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net|com)\/user\/(\w+)\/(\w+)\/edit/)) {
 		
