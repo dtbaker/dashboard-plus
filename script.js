@@ -44,7 +44,7 @@
         inject.setAttribute("src", chrome.extension.getURL('bootstrap.js'));
     }
 
-	(document.body || document.documentElement).appendChild(inject);
+	(document.head || document.documentElement).appendChild(inject);
 	
 
 })();

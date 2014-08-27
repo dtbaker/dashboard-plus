@@ -11,7 +11,7 @@
 
 	//"use strict"
 
-	var version = '1.3.2',
+	var version = '1.3.3',
 		cookiePrefix = 'dbp_';
 	
 	if( typeof jQuery != 'undefined' ){
@@ -191,6 +191,10 @@
 					}	
 				]
 			},
+			'replypantry': {
+				'name': 'Reply Pantry',
+				'desc': 'Store canned text for use in forums and item comments'
+			},
 			'_localdevelopment': {
 				'beta': true,
 				'name': 'Local Development',
@@ -204,9 +208,10 @@
 			enque('envatitor');
 			enque('verify');
 			enque('progressbar');
+			enque('replypantry');
 
 			//Settings Page
-		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net|com)\/user\/(\w+)\/(\w+)\/edit/)) {
+		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net|com)\/user\/([\w-]+)\/(\w+)\/edit/)) {
 		
 			settingspage();
 			
@@ -219,6 +224,7 @@
 		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net|com)\/forums\//)) {
 	
 			enque('envatitor');
+			enque('replypantry');
 			//Upload Page
 		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net|com)\/upload\//)) {
 	
@@ -233,11 +239,13 @@
 		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net|com)\/item\/([a-z0-9-]+)\/discussion/)) {
 	
 			enque('envatitor');
+			enque('replypantry');
 			
 			//item discussion page
 		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net|com)\/item\/([a-z0-9-]+)\/([0-9]+)\/comments/)) {
 	
 			enque('envatitor');
+			enque('replypantry');
 			
 			//item faq page
 		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net|com)\/item\/([a-z0-9-]+)\/([0-9]+)\/faqs/)) {

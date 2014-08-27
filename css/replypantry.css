@@ -1,0 +1,233 @@
+#cancontainer{
+	position:relative;
+	width:200px;
+	z-index:100;
+}
+#cancontents{
+
+	width:200px;
+	
+	-webkit-border-radius:2px;
+	border:1px solid #fff;
+	
+	z-index:10;
+}
+#cancontainer #cancontents ul li{
+	padding:7px 10px;
+	margin:0 !important;
+	position:relative;
+	border-top:1px solid #191919;
+	box-shadow:inset 0px 1px 1px rgba(255, 255, 255, .1);
+	
+	background:#222;
+	background:#bbb -webkit-linear-gradient(bottom, rgba(0,0,0,.87) 50%, rgba(0,0,0, .85));
+}
+#cancontainer #cancontents ul li:first-child{
+	border-radius:2px 2px 0 0 ;
+}
+#cancontainer #cancontents ul li:last-child{
+	border-radius:0 0 2px 2px;
+}
+#cancontainer #cancontents ul li:hover{
+	background:#bbb -webkit-linear-gradient(bottom, rgba(0,0,0,.97) 50%, rgba(0,0,0, .95));
+}
+#cancontainer #cancontents ul li a{
+	color:#f5f5f5;
+	text-shadow:0px -1px 1px #000;
+	display:block;
+	margin:0 !important;
+	text-transform:none;
+	font-size:12px;
+}
+#cancontainer #cancontents ul li a:hover{
+	text-decoration:none;
+}
+#cancontainer #cancontents ul li a img{
+	padding:0;
+}
+#cancontainer.item-comments{
+	position: absolute;
+	width: 200px;
+	z-index: 100;
+	bottom: 40px;
+}
+#canbutton{
+	position:relative;
+	margin:0;
+}
+#canbutton img{
+	padding:0;
+}
+.cantip{
+	width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+
+    border-top: 10px solid #191919;
+    
+    position:absolute;
+    top:98%;
+    left:14px;
+    
+    z-index:20;
+}
+
+.cankey-edit{
+	position:absolute;
+	right:8px;
+	top:8px;
+	
+}
+
+.cankey-editor{
+	position:absolute;
+	left:100%;
+	bottom:1px;
+	display:none;
+	
+	padding:7px 10px;
+	border-top:1px solid #191919;
+	box-shadow:inset 0px 1px 1px rgba(255, 255, 255, .1);
+	
+	background:#222;
+	background:#bbb -webkit-linear-gradient(bottom, rgba(0,0,0,.87) 50%, rgba(0,0,0, .85));
+	
+	border-top:1px solid #191919;
+	box-shadow:inset 0px 1px 1px rgba(255, 255, 255, .1);
+	
+	border-radius:2px;
+}
+
+.cankey-editor textarea{
+	padding:8px !important;
+	width:300px !important;
+	max-height:100px;
+	display:block;
+	border-radius:0;
+	margin-bottom:10px;
+}
+.cankey-editor input[type='text']{
+	padding:8px !important;
+	width:280px !important;
+	-webkit-transition: all .2s ease-in-out;
+	border-radius:0;
+	
+	float:left;
+	margin-bottom:5px;	
+}
+.cankey-editor input[type='text']:not(:focus){
+	background: transparent;
+	border: none;
+	padding-left: 0px !important;
+	margin-top:0px;
+	/*padding-top: 0px !important;*/
+	color: white;
+	font-style: normal;
+	font-weight: bold;
+}
+
+.cankey-editor select#cankey-editor-cat{
+	width:auto !important;
+	display:block;
+	float:left;
+	border-radius:0;
+}
+.cankey-editor input[type="submit"]{
+	float:right;
+	margin-right:0;
+	background-color: #EF452C;
+	background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, .2) 0%,rgba(0, 0, 0, .2) 100%), url('http://0.envato-static.com/images/buttons-8a861acb09.png');
+	background-position: top left,  93% -735px;
+	background-repeat: repeat, no-repeat;
+	box-shadow:inset 0px 1px 1px rgba(255,255,255,.3);
+	text-shadow:0px -1px 1px rgba(0, 0, 0, .2);
+	border: 1px solid #901B09;
+	border-top-color: #B23D2B;
+	border-left-color: #B23D2B;
+	margin-top:3px;
+}
+
+#can-close-editor{
+	color:#fff;
+	text-decoration:none;
+	/*position: absolute;
+	right: 5px;
+	bottom: 5px;*/
+	float:right;
+}
+
+.cankey-remove{
+	position:absolute;
+	top:3px;
+	right:25px;
+	padding:5px;
+}
+
+#canpanel{
+	display:none;
+	position:absolute;
+	bottom:125%;
+	left:-12px;
+}
+
+.can-buttons{
+
+}
+.can-buttons a{
+	display:inline-block;
+	margin:0px 2px 2px 1px !important;
+	padding:3px 5px;
+	border:1px solid #999;
+	border-radius:2px;
+	box-shadow:inset 0px 1px 1px rgba(255, 255, 255, .3);
+	
+	background:#666;
+	background:#aaa -webkit-linear-gradient(bottom, rgba(200,200,200,1) 50%, rgba(180,180,180, .5));
+	
+	color:#222;
+	text-shadow:0px 1px 1px #eee;
+	font-size:10px;
+	text-transform:none;
+}
+
+.can-buttons a:hover{
+	text-decoration:none !important;
+}
+
+#can-new{
+	float:right;
+	background:#ef452c -webkit-linear-gradient(top, rgba(255,255,255,.2) 0%,rgba(0,0,0,.2) 100%); /* Chrome10+,Safari5.1+ */
+	border:1px solid #901B09;
+	border-top-color:#B23D2B;
+	border-left-color:#B23D2B;
+	
+	box-shadow:inset 0px 1px 1px rgba(255,255,255,.3);
+	text-shadow:0px -1px 1px rgba(0, 0, 0, .2);
+	color:#fff;
+}
+
+.can-keyname{
+	padding-right:40px;
+}
+
+#canlist{
+	max-height: 300px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	margin:0px !important;
+}
+
+.cankey-op .cantext{
+	display:none;
+}
+
+#can_previewbox{
+	display:none;
+	width:200px;
+}
+#can_previewbox textarea{
+	border:none;
+	font-family:Arial, Helvetica, sans-serif;
+}
+
