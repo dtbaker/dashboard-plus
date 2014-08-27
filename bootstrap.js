@@ -32,7 +32,7 @@
 		var loadit = [];
 		var storage;
 		if(!username) return false;
-        console.log(window.dashboardplus);
+        //console.log(window.dashboardplus);
 		window.dashboardplus = window.dashboardplus || {};
 		window.dashboardplus['base'] = window.dashboardplus['base'] || '//dtbaker.github.io/dashboard-plus/';
 		window.dashboardplus['user'] = username;
