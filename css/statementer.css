@@ -375,4 +375,53 @@
     top: 0;
 }
 
-/*
+/*  Buttons Filter Nav */
+
+    .box--hard-top {
+        font-size: 13px;
+    }
+
+    .box--hard-top {
+    background: none;
+    margin: 30px 0px 0px 0px;
+    padding: 0px;
+    }
+
+    .feature-list.statementer_menu {
+
+    }
+
+    .feature-list li {
+        margin-left: 15px;
+        padding-bottom: 0px;
+        height: 20px;
+    }
+
+    #statementer_dateslider {
+    margin: 0 10px 20px;
+    background: #BFBFBF;
+    border-radius: 4px;
+    }
+
+    ul.statementer_menu.feature-list {
+    height: 135px;
+    background: #f5f5f5;
+    width: 25%;
+    display: inline-table;
+    margin-right: 20px;
+    width: 211px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    padding: 10px;
+    }
+
+    .statementer_menu a.btn.btn--set {
+    margin-right: 1px;
+    }
+
+    .statementer_menu a.btn.btn--set:hover {
+        background-color: #444444;
+        color:#fffff9;
+    }
+
+
