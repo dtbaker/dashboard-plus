@@ -99,9 +99,9 @@
 					var style = $('<link id="statementer_css" media="all" type="text/css" href="//dtbaker.github.io/dashboard-plus/css/statementer.css" rel="stylesheet">');
 					style.appendTo('head');
 
-					$('.statement-search__presets_links').css('float','right').insertBefore('.statement-heading').find('a').eq(0).remove();
-					$('.statement-search__advanced-form').insertBefore('.statement-heading');
-					$('.statement-search__timezone-disclaimer').css({'float':'right', 'margin-right':10}).insertBefore('.statement-heading');
+					//$('.statement-search__presets_links').css('float','right').insertBefore('.statement-heading').find('a').eq(0).remove();
+					//$('.statement-search__advanced-form').insertBefore('.statement-heading');
+					//$('.statement-search__timezone-disclaimer').css({'float':'right', 'margin-right':10}).insertBefore('.statement-heading');
 
 
 					loadStatementer();
@@ -128,42 +128,43 @@
 						return false;
 					});
 					
-					html = '<div class="box--topbar"><h2>Statementer</h2></div><div class="box--hard-top">';
-					html += '<ul class="statementer_menu feature-list">';
+
+					html = '<div class="box--hard-top">';
+
 					var _first = new Date(currentyear, currentmonth, 1, 0, 0, 0),
 						_last = new Date(currentyear, currentmonth + 1, 0, 23, 59, 59),
 						_firstmonday = (_first.getTime() + ((8 - _first.getDay()) * 864e5));
 						//fix if 1st day is sunday
+
 						if(!_first.getDay()) _firstmonday -= 864e5*7;
-					html += '<li><a data-from="' + (new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0).getTime()) + '" data-to="' + (new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59).getTime()) + '">Today</a></li>';
-					html += '<li><a data-from="' + (new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 0, 0, 0).getTime()) + '" data-to="' + (new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 23, 59, 59).getTime()) + '">Yesterday</a></li>';
-					html += '</ul><hr/>';
-					html += '<ul class="statementer_menu feature-list">';
-					html += '<li><a data-offset-from="' + (-1 * 864e5) + '" data-dimension="' + (1 * 864e5 - 1000) + '">- one Day</a></li>';
-					html += '<li><a data-offset-from="' + (1 * 864e5) + '" data-dimension="' + (1 * 864e5 - 1000) + '">+ one Day</a></li>';
-					html += '<li><a data-offset-from="' + (-7 * 864e5) + '" data-dimension="' + (7 * 864e5 - 1000) + '">- one Week</a></li>';
-					html += '<li><a data-offset-from="' + (7 * 864e5) + '" data-dimension="' + (7 * 864e5 - 1000) + '">+ one Week</a></li>';
-					html += '</ul><hr/>';
-					html += '<ul class="statementer_menu feature-list">';
-					html += '<li><a data-from="' + _first.getTime() + '" data-to="' + _last.getTime() + '">Month</a></li>';
-					html += '<li><a data-from="' + _first.getTime() + '" data-to="' + (_firstmonday - 1000) + '">1st week</a></li>';
-					if((_firstmonday + (6048e5) - 1000) < _last.getTime()) html += '<li><a data-from="' + _firstmonday + '" data-to="' + (_firstmonday + (6048e5) - 1000) + '">2nd week</a></li>';
-					if((_firstmonday + (6048e5)) < _last.getTime()) html += '<li><a data-from="' + (_firstmonday + (6048e5)) + '" data-to="' + (_firstmonday + (6048e5 * 2) - 1000) + '">3rd week</a></li>';
-					if((_firstmonday + (6048e5 * 2)) < _last.getTime()) html += '<li><a data-from="' + (_firstmonday + (6048e5 * 2)) + '" data-to="' + (_firstmonday + (6048e5 * 3) - 1000) + '">4th week</a></li>';
-					if((_firstmonday + (6048e5 * 3)) < _last.getTime()) html += '<li><a data-from="' + (_firstmonday + (6048e5 * 3)) + '" data-to="' + (_firstmonday + (6048e5 * 4) - 1000) + '">5th week</a></li>';
-					if((_firstmonday + (6048e5 * 4)) < _last.getTime()) html += '<li><a data-from="' + (_firstmonday + (6048e5 * 4)) + '" data-to="' + (_firstmonday + (6048e5 * 5) - 1000) + '">6th week</a></li>';
-					html += '</ul><hr/>';
-					html += '<ul class="feature-list">';
-					html += '<li><a id="statementer_fetch_all" href="#">fetch all</a></li>';
-					html += '</ul>';
-					html += '<ul class="feature-list">';
-					html += '<li><a id="statementer_clear_cache_current" href="#">clear current storage</a></li>';
-					html += '<li><a id="statementer_clear_cache" href="#">clear storage</a></li>';
-					html += '</ul>';
+
+					html += '<div class="statementer_menu statement-search__presets_links" style="display: block;">';
+						html += '<a class="btn btn--set" data-from="' + (new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0).getTime()) + '" data-to="' + (new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59).getTime()) + '">Today</a>';
+						html += '<a class="btn btn--set" data-from="' + (new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 0, 0, 0).getTime()) + '" data-to="' + (new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 23, 59, 59).getTime()) + '">Yesterday</a>';
+					html += "</div>";
+
+                	html += '<ul class="statementer_menu statement-search__presets_links" style="display: block;">';
+						html += '<a class="btn btn--set" data-offset-from="' + (-1 * 864e5) + '" data-dimension="' + (1 * 864e5 - 1000) + '">- one Day</a>';
+						html += '<a class="btn btn--set" data-offset-from="' + (1 * 864e5) + '" data-dimension="' + (1 * 864e5 - 1000) + '">+ one Day</a>';
+						html += '<a class="btn btn--set" data-offset-from="' + (-7 * 864e5) + '" data-dimension="' + (7 * 864e5 - 1000) + '">- one Week</a>';
+						html += '<a class="btn btn--set" data-offset-from="' + (7 * 864e5) + '" data-dimension="' + (7 * 864e5 - 1000) + '">+ one Week</a>';
+					html += "</ul>";
+
+                	html += '<ul class="statementer_menu statement-search__presets_links" style="display: block;">';
+						html += '<a class="btn btn--set" data-from="' + _first.getTime() + '" data-to="' + _last.getTime() + '">Month</a>';
+						html += '<a class="btn btn--set" data-from="' + _first.getTime() + '" data-to="' + (_firstmonday - 1000) + '">1st week</a>';
+						if((_firstmonday + (6048e5) - 1000) < _last.getTime()) html += '<a class="btn btn--set" data-from="' + _firstmonday + '" data-to="' + (_firstmonday + (6048e5) - 1000) + '">2nd week</a>';
+						if((_firstmonday + (6048e5)) < _last.getTime()) html += '<a class="btn btn--set" data-from="' + (_firstmonday + (6048e5)) + '" data-to="' + (_firstmonday + (6048e5 * 2) - 1000) + '">3rd week</a>';
+						if((_firstmonday + (6048e5 * 2)) < _last.getTime()) html += '<a class="btn btn--set" data-from="' + (_firstmonday + (6048e5 * 2)) + '" data-to="' + (_firstmonday + (6048e5 * 3) - 1000) + '">4th week</a>';
+						if((_firstmonday + (6048e5 * 3)) < _last.getTime()) html += '<a class="btn btn--set" data-from="' + (_firstmonday + (6048e5 * 3)) + '" data-to="' + (_firstmonday + (6048e5 * 4) - 1000) + '">5th week</a>';
+						if((_firstmonday + (6048e5 * 4)) < _last.getTime()) html += '<a class="btn btn--set" data-from="' + (_firstmonday + (6048e5 * 4)) + '" data-to="' + (_firstmonday + (6048e5 * 5) - 1000) + '">6th week</a>';
+					html += "</ul>";
+
 					html += '</div>';
 					//html += '<h2 class="box-heading">Currency</h2><div class="content-box" id="statementer_currency">loading...</div>';
 					
-					$('.sidebar-s.sidebar-right').prepend(html);
+					$('.statement-heading').append(html);
+
 					$('.statementer_menu').delegate('a', 'click', function () {
 						var _this = $(this),
 							_from, _to;
