@@ -836,7 +836,7 @@
 								sales[name].totalearnings += (data.earnings*sales[name].percentage)*add;
 								sales[name].hours[data.date.getHours()] += add;
 								sales[name].days[data.date.getDate()] += add;
-								sales[name].earningsperday[data.date.getDate()] += parseInt(data.earnings*sales[name].percentage, 10);
+								sales[name].earningsperday[data.date.getDate()] += data.earnings*sales[name].percentage;
 
 								sales[name].maxsales_hour = Math.max(sales[name].hours[data.date.getHours()], sales[name].maxsales_hour);
 								sales[name].maxsales_day = Math.max(sales[name].days[data.date.getDate()], sales[name].maxsales_day);
@@ -846,7 +846,7 @@
 								sales[allitems].totalearnings += (data.earnings*sales[name].percentage)*add;
 								sales[allitems].hours[data.date.getHours()] += add;
 								sales[allitems].days[data.date.getDate()] += add;
-								sales[allitems].earningsperday[data.date.getDate()] += parseInt(data.earnings*sales[name].percentage, 10);
+								sales[allitems].earningsperday[data.date.getDate()] += data.earnings*sales[name].percentage;
 
 								sales[allitems].maxsales_hour = Math.max(sales[allitems].hours[data.date.getHours()], sales[allitems].maxsales_hour);
 								sales[allitems].maxsales_day = Math.max(sales[allitems].days[data.date.getDate()], sales[allitems].maxsales_day);
