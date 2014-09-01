@@ -96,7 +96,10 @@
 					currentbalance = parseInt($('.header-logo-account__balance').html().substr(1).replace(',', '').replace('.', ''), 16);
 
 					$content.html('<span style="font-style:italic">loading Statement... <a href="javascript:window.dashboardplus.set(\'statementer\', {});window.dashboardplus.setCookie(\'statementer_lastbalance\', \'\', -1);location.reload();">Click here if it stucks...</a></span>');
+					
+					//var style = $('<link id="statementer_css" media="all" type="text/css" href="'+ window.dashboardplus['base'] +'css/statementer.css" rel="stylesheet">');
 					var style = $('<link id="statementer_css" media="all" type="text/css" href="//dtbaker.github.io/dashboard-plus/css/statementer.css" rel="stylesheet">');
+					
 					style.appendTo('head');
 
 					//$('.statement-search__presets_links').css('float','right').insertBefore('.statement-heading').find('a').eq(0).remove();
@@ -139,47 +142,40 @@
 						if(!_first.getDay()) _firstmonday -= 864e5*7;
 
 					html += '<div class="statementer_menu statement-search__presets_links" style="display: block;">';
-						html += '<a class="btn btn--set" data-from="' + (new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0).getTime()) + '" data-to="' + (new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59).getTime()) + '">Today</a>';
-						html += '<a class="btn btn--set" data-from="' + (new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 0, 0, 0).getTime()) + '" data-to="' + (new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 23, 59, 59).getTime()) + '">Yesterday</a>';
+						html += '<a id="navFilter_01" class="btn btn--set" data-from="' + (new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0).getTime()) + '" data-to="' + (new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59).getTime()) + '">Today</a>';
+						html += '<a id="navFilter_02" class="btn btn--set" data-from="' + (new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 0, 0, 0).getTime()) + '" data-to="' + (new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 23, 59, 59).getTime()) + '">Yesterday</a>';
 					html += "</div>";
 
                 	html += '<ul class="statementer_menu statement-search__presets_links" style="display: block;">';
-						html += '<a class="btn btn--set" data-offset-from="' + (-1 * 864e5) + '" data-dimension="' + (1 * 864e5 - 1000) + '">- one Day</a>';
-						html += '<a class="btn btn--set" data-offset-from="' + (1 * 864e5) + '" data-dimension="' + (1 * 864e5 - 1000) + '">+ one Day</a>';
-						html += '<a class="btn btn--set" data-offset-from="' + (-7 * 864e5) + '" data-dimension="' + (7 * 864e5 - 1000) + '">- one Week</a>';
-						html += '<a class="btn btn--set" data-offset-from="' + (7 * 864e5) + '" data-dimension="' + (7 * 864e5 - 1000) + '">+ one Week</a>';
+						html += '<a id="navFilter_03" class="btn btn--set" data-offset-from="' + (-1 * 864e5) + '" data-dimension="' + (1 * 864e5 - 1000) + '">-1 Day</a>';
+						html += '<a id="navFilter_04" class="btn btn--set" data-offset-from="' + (1 * 864e5) + '" data-dimension="' + (1 * 864e5 - 1000) + '">+1 Day</a>';
 					html += "</ul>";
 
                 	html += '<ul class="statementer_menu statement-search__presets_links" style="display: block;">';
-						html += '<a class="btn btn--set" data-from="' + _first.getTime() + '" data-to="' + _last.getTime() + '">Month</a>';
-						html += '<a class="btn btn--set" data-from="' + _first.getTime() + '" data-to="' + (_firstmonday - 1000) + '">1st week</a>';
-						if((_firstmonday + (6048e5) - 1000) < _last.getTime()) html += '<a class="btn btn--set" data-from="' + _firstmonday + '" data-to="' + (_firstmonday + (6048e5) - 1000) + '">2nd week</a>';
-						if((_firstmonday + (6048e5)) < _last.getTime()) html += '<a class="btn btn--set" data-from="' + (_firstmonday + (6048e5)) + '" data-to="' + (_firstmonday + (6048e5 * 2) - 1000) + '">3rd week</a>';
-						if((_firstmonday + (6048e5 * 2)) < _last.getTime()) html += '<a class="btn btn--set" data-from="' + (_firstmonday + (6048e5 * 2)) + '" data-to="' + (_firstmonday + (6048e5 * 3) - 1000) + '">4th week</a>';
-						if((_firstmonday + (6048e5 * 3)) < _last.getTime()) html += '<a class="btn btn--set" data-from="' + (_firstmonday + (6048e5 * 3)) + '" data-to="' + (_firstmonday + (6048e5 * 4) - 1000) + '">5th week</a>';
-						if((_firstmonday + (6048e5 * 4)) < _last.getTime()) html += '<a class="btn btn--set" data-from="' + (_firstmonday + (6048e5 * 4)) + '" data-to="' + (_firstmonday + (6048e5 * 5) - 1000) + '">6th week</a>';
+						html += '<a id="navFilter_05" class="btn btn--set" data-offset-from="' + (-7 * 864e5) + '" data-dimension="' + (7 * 864e5 - 1000) + '">-1 Week</a>';
+						html += '<a id="navFilter_06" class="btn btn--set" data-offset-from="' + (7 * 864e5) + '" data-dimension="' + (7 * 864e5 - 1000) + '">+1 Week</a>';
+					html += "</ul>";
+
+                	html += '<ul class="statementer_menu statement-search__presets_links" style="display: block;">';
+						html += '<a id="navFilter_07" class="btn btn--set" data-from="' + _first.getTime() + '" data-to="' + (_firstmonday - 1000) + '">1st Week</a>';
+						if((_firstmonday + (6048e5) - 1000) < _last.getTime()) html += '<a id="navFilter_08" class="btn btn--set" data-from="' + _firstmonday + '" data-to="' + (_firstmonday + (6048e5) - 1000) + '">2nd </a>';
+						if((_firstmonday + (6048e5)) < _last.getTime()) html += '<a id="navFilter_09" class="btn btn--set" data-from="' + (_firstmonday + (6048e5)) + '" data-to="' + (_firstmonday + (6048e5 * 2) - 1000) + '">3rd </a>';
+						if((_firstmonday + (6048e5 * 2)) < _last.getTime()) html += '<a id="navFilter_10" class="btn btn--set" data-from="' + (_firstmonday + (6048e5 * 2)) + '" data-to="' + (_firstmonday + (6048e5 * 3) - 1000) + '">4th </a>';
+						if((_firstmonday + (6048e5 * 3)) < _last.getTime()) html += '<a id="navFilter_11" class="btn btn--set" data-from="' + (_firstmonday + (6048e5 * 3)) + '" data-to="' + (_firstmonday + (6048e5 * 4) - 1000) + '">5th </a>';
+						if((_firstmonday + (6048e5 * 4)) < _last.getTime()) html += '<a id="navFilter_12" class="btn btn--set" data-from="' + (_firstmonday + (6048e5 * 4)) + '" data-to="' + (_firstmonday + (6048e5 * 5) - 1000) + '">6th </a>';
+					html += "</ul>";
+
+					html += '<ul class="statementer_menu statement-search__presets_links" style="display: block;">';
+					html += '<a id="navFilter_13" class="btn btn--set" style="border-radius: 4px;" data-from="' + _first.getTime() + '" data-to="' + _last.getTime() + '">All Month</a>';
 					html += "</ul>";
 
 					html += '</div>';
 					//html += '<h2 class="box-heading">Currency</h2><div class="content-box" id="statementer_currency">loading...</div>';
 					
-					$('.statement-heading').append(html);
+					htmlNAv = html;
+					//$('.statement-heading').append(html);
+					
 
-					$('.statementer_menu').delegate('a', 'click', function () {
-						var _this = $(this),
-							_from, _to;
-						if (_this.attr('data-from')) {
-							_from = _this.attr('data-from');
-							_to = _this.attr('data-to');
-							if(_from > now.getTime()) return false;
-						} else {
-							var _values = $('#statementer_dateslider').slider('option', 'values');
-							_from = _values[0] + parseInt(_this.attr('data-offset-from'), 10);
-							_to = _from + parseInt(_this.attr('data-dimension'), 10);
-						}
-						window.location.hash = '#from=' + _from + '&to=' + _to + '';
-						calculate();
-					});
 					// $('#statementer_fetch_all').on('click', function () {
 					// 	if (confirm("Ok, let's fetch!\n\nIt's not possible to make graphs or calculate something with this data. This just puts all CSV files into a textarea.\n\n Continue? (This could take a while...)")) {
 					// 		if ($('#statementer_fetch_area').length) {
@@ -336,13 +332,19 @@
 					html += '<ul>';
 					html += '<li>you\'ve sold<h4>' + total_sales + '</h4>' + _n('item', 'items', total_sales) + ' and earned<h4>' + _d(total_earning) + '</h4></li>';
 					html += '<li>you\'ve purchased<h4>' + total_purchases + '</h4>' + _n('item', 'items', total_purchases) + ' and spent<h4>' + _d(total_purchases_money) + '</h4></li>';
-					html += '<li>you\'ve referred<h4>' + total_referrals + '</h4>' + _n('user', 'users', total_referrals) + ' and earned<h4>' + _d(total_referrals_money) + '</h4></li>';
-					html += '<li>you\'ve withdrawn<h4>' + total_withdrawal + '</h4>' + _n('time', 'times', total_withdrawal) + ' with an amount of<h4>' + _d(total_withdrawal_money) + '</h4></li>';
+					
+					html += '<div style="display: inline-block; margin-left: 2%; width: 230px;">';
+					html += '<li class="halfBox" style="width: 210px; height: 85px;"><span>you\'ve referred </span><h4> ' + total_referrals + '</h4> <span class="box">' + _n('user', 'users', total_referrals) + ' and earned </span><h4>' + _d(total_referrals_money) + '</h4></li>';
+					//html += '<li class="halfBox" style="width: 250px; height: 90px; margin-left: 0;"><span>you\'ve withdrawn </span><h4>' + total_withdrawal + '</h4>' + _n('time', 'times', total_withdrawal) + ' with an amount of<h4>' + _d(total_withdrawal_money) + '</h4></li>';
+					html += '<li class="halfBox" style="width: 210px; height: 85px; margin-left: 0;"><span>you\'ve withdrawn ' + total_withdrawal + _n('time', 'times', total_withdrawal) + '</span> <h4>' + _d(total_withdrawal_money) + '</h4></li>';
+					html += '</div>';
+
+					html += '<li class="filterNav" style=" height: 185px; background: none; text-align: left;"></li>';
+
 					html += '</ul>';
 					html += '</div>';
 					
 					tabcount = 0;
-
 
 					if (total_sales) {
 
@@ -539,6 +541,30 @@
 					$('#statementer_date_to').html(new Date(to || lastofmonth).toString().substr(0, 21));
 					//";
 					
+					// ADD FILTER NAV
+					$('.filterNav').html(htmlNAv);
+					$('.statementer_menu').delegate('a', 'click', function () {
+
+
+						var _this = $(this),
+							_from, _to;
+						if (_this.attr('data-from')) {
+							_from = _this.attr('data-from');
+							_to = _this.attr('data-to');
+							if(_from > now.getTime()) return false;
+						} else {
+							var _values = $('#statementer_dateslider').slider('option', 'values');
+							_from = _values[0] + parseInt(_this.attr('data-offset-from'), 10);
+							_to = _from + parseInt(_this.attr('data-dimension'), 10);
+						}
+						window.location.hash = '#from=' + _from + '&to=' + _to + '';
+						calculate();
+
+						$( "#" + _this.attr('id') ).addClass( "active" );
+						
+
+					});
+
 
 				},
 
@@ -753,8 +779,6 @@
 						line[0] = line[0].substr(1);
 						
 						dateparts = line[0].replace(/(-|:)/g, ' ').split(' ');
-
-						console.log("---- " + new Date(dateparts[0], dateparts[1]-1, dateparts[2], dateparts[3], dateparts[4], dateparts[5] ) );
 
 						data = {
 							date: new Date(dateparts[0], dateparts[1]-1, dateparts[2], dateparts[3], dateparts[4], dateparts[5] ),
