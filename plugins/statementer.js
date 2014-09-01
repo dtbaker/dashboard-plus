@@ -753,16 +753,18 @@
 						line[0] = line[0].substr(1);
 						
 						dateparts = line[0].replace(/(-|:)/g, ' ').split(' ');
-						
+
+						console.log("---- " + new Date(dateparts[0], dateparts[1]-1, dateparts[2], dateparts[3], dateparts[4], dateparts[5] ) );
+
 						data = {
 							date: new Date(dateparts[0], dateparts[1]-1, dateparts[2], dateparts[3], dateparts[4], dateparts[5] ),
-							type: line[1],
-							name: line[2],
-							id: parseInt(line[3], 10) || null,
-							earnings: parseFloat(line[4], 10),
+							type: line[2],
+							name: line[3],
+							id: parseInt(line[4], 10) || null,
+							earnings: parseFloat(line[5], 10),
 							rate: parseFloat(line[5], 10) || null,
 							price: parseInt(line[6], 10) || null,
-							site: line[7].replace('"', '')
+							site: line[6].replace('"', '')
 						};
 
 						if (from <= data.date.getTime() && data.date.getTime() <= to || !to) {
