@@ -1,4 +1,6 @@
-
+2014.09.1 - version 1.3.5
+ * New CSV format — Pixelthrone
+ * New Layout
 
 2014.08.28 - version 1.3.4
  * Progress bar on uploads
