@@ -1,12 +1,3 @@
-/*
- * Copyright (c) 2014 
- * ==================================
- * powered by revaxarts.com (http://revaxarts.com)
- * original filename: statementer.js
- * filesize: 46167 Bytes
- * last modified: Thu, 12 Jun 2014 09:09:55 +0200
- *
- */
 (function () {
 
 	//"use strict"
@@ -16,14 +7,14 @@
 				return;
 			}
 
-			var version = '1.9.8',
+			var version = '2.0',
 				exchangeinterval = 3600,
 				rates = {},
 				currentcurrency = 'USD',
 				currencies = {"AUD": "Australian Dollar","AED": "United Arab Emirates Dirham","AFN": "Afghan Afghani","ALL": "Albanian Lek","AMD": "Armenian Dram","ANG": "Netherlands Antillean Guilder","AOA": "Angolan Kwanza","ARS": "Argentine Peso","AWG": "Aruban Florin","AZN": "Azerbaijani Manat","BAM": "Bosnia-Herzegovina Convertible Mark","BBD": "Barbadian Dollar","BDT": "Bangladeshi Taka","BGN": "Bulgarian Lev","BHD": "Bahraini Dinar","BIF": "Burundian Franc","BMD": "Bermudan Dollar","BND": "Brunei Dollar","BOB": "Bolivian Boliviano","BRL": "Brazilian Real","BSD": "Bahamian Dollar","BTN": "Bhutanese Ngultrum","BWP": "Botswanan Pula","BYR": "Belarusian Ruble","BZD": "Belize Dollar","CAD": "Canadian Dollar","CDF": "Congolese Franc","CHF": "Swiss Franc","CLF": "Chilean Unit of Account (UF)","CLP": "Chilean Peso","CNY": "Chinese Yuan","COP": "Colombian Peso","CRC": "Costa Rican Colon","CUP": "Cuban Peso","CVE": "Cape Verdean Escudo","CZK": "Czech Republic Koruna","DJF": "Djiboutian Franc","DKK": "Danish Krone","DOP": "Dominican Peso","DZD": "Algerian Dinar","EGP": "Egyptian Pound","EUR": "Euro","ETB": "Ethiopian Birr","FJD": "Fijian Dollar","FKP": "Falkland Islands Pound","GBP": "British Pound Sterling","GEL": "Georgian Lari","GHS": "Ghanaian Cedi","GIP": "Gibraltar Pound","GMD": "Gambian Dalasi","GNF": "Guinean Franc","GTQ": "Guatemalan Quetzal","GYD": "Guyanaese Dollar","HKD": "Hong Kong Dollar","HNL": "Honduran Lempira","HRK": "Croatian Kuna","HTG": "Haitian Gourde","HUF": "Hungarian Forint","IDR": "Indonesian Rupiah","IEP": "Irish Pound","ILS": "Israeli New Sheqel","INR": "Indian Rupee","IQD": "Iraqi Dinar","IRR": "Iranian Rial","ISK": "Icelandic Krona","JMD": "Jamaican Dollar","JOD": "Jordanian Dinar","JPY": "Japanese Yen","KES": "Kenyan Shilling","KGS": "Kyrgystani Som","KHR": "Cambodian Riel","KMF": "Comorian Franc","KPW": "North Korean Won","KRW": "South Korean Won","KWD": "Kuwaiti Dinar","KZT": "Kazakhstani Tenge","LAK": "Laotian Kip","LBP": "Lebanese Pound","LKR": "Sri Lankan Rupee","LRD": "Liberian Dollar","LSL": "Lesotho Loti","LTL": "Lithuanian Litas","LVL": "Latvian Lats","LYD": "Libyan Dinar","MAD": "Moroccan Dirham","MDL": "Moldovan Leu","MGA": "Malagasy Ariary","MKD": "Macedonian Denar","MMK": "Myanma Kyat","MNT": "Mongolian Tugrik","MOP": "Macanese Pataca","MRO": "Mauritanian Ouguiya","MUR": "Mauritian Rupee","MVR": "Maldivian Rufiyaa","MWK": "Malawian Kwacha","MXN": "Mexican Peso","MYR": "Malaysian Ringgit","MZN": "Mozambican Metical","NAD": "Namibian Dollar","NGN": "Nigerian Naira","NIO": "Nicaraguan Cordoba","NOK": "Norwegian Krone","NPR": "Nepalese Rupee","NZD": "New Zealand Dollar","OMR": "Omani Rial","PAB": "Panamanian Balboa","PEN": "Peruvian Nuevo Sol","PGK": "Papua New Guinean Kina","PHP": "Philippine Peso","PKR": "Pakistani Rupee","PLN": "Polish Zloty","PYG": "Paraguayan Guarani","QAR": "Qatari Rial","RON": "Romanian Leu","RSD": "Serbian Dinar","RUB": "Russian Ruble","RWF": "Rwandan Franc","SAR": "Saudi Riyal","SBD": "Solomon Islands Dollar","SCR": "Seychellois Rupee","SDG": "Sudanese Pound","SEK": "Swedish Krona","SGD": "Singapore Dollar","SHP": "Saint Helena Pound","SLL": "Sierra Leonean Leone","SOS": "Somali Shilling","SRD": "Surinamese Dollar","STD": "Sao Tome and Principe Dobra","SVC": "Salvadoran Colon","SYP": "Syrian Pound","SZL": "Swazi Lilangeni","THB": "Thai Baht","TJS": "Tajikistani Somoni","TMT": "Turkmenistani Manat","TND": "Tunisian Dinar","TOP": "Tongan Pa'anga","TRY": "Turkish Lira","TTD": "Trinidad and Tobago Dollar","TWD": "New Taiwan Dollar","TZS": "Tanzanian Shilling","UAH": "Ukrainian Hryvnia","UGX": "Ugandan Shilling","USD": "United States Dollar","UYU": "Uruguayan Peso","UZS": "Uzbekistan Som","VEF": "Venezuelan Bolivar","VND": "Vietnamese Dong","VUV": "Vanuatu Vatu","WST": "Samoan Tala","XAF": "CFA Franc BEAC","XCD": "East Caribbean Dollar","XDR": "Special Drawing Rights","XOF": "CFA Franc BCEAO","XPF": "CFP Franc","YER": "Yemeni Rial","ZAR": "South African Rand","ZMK": "Zambian Kwacha","ZWD": "Zimbabwean Dollar (1980-2008)","ZWL": "Zimbabwean Dollar"
 				};
 
-			var $content = $('<div id="statementer">sdfsdf</div>', {
+			var $content = $('<div id="statementer"></div>', {
 				id: 'statementer'
 			}).insertAfter('h2.statement-heading');
 			var raw, sales = {},
@@ -71,6 +62,7 @@
 				currentyear = current[2] ? parseInt(current[2].split('-')[0],10) : now.getFullYear(),
 				csvfile = '/statement/'+currentyear+'-'+(currentmonth < 9 ? '0'+(currentmonth+1) : (currentmonth+1))+'.csv?v=v1';
 				
+				
 /*
 			var color = {};
 			var marketplace = location.hostname.split('.').shift();
@@ -96,12 +88,12 @@
 					currentbalance = parseInt($('.header-logo-account__balance').html().substr(1).replace(',', '').replace('.', ''), 16);
 
 					$content.html('<span style="font-style:italic">loading Statement... <a href="javascript:window.dashboardplus.set(\'statementer\', {});window.dashboardplus.setCookie(\'statementer_lastbalance\', \'\', -1);location.reload();">Click here if it stucks...</a></span>');
-					var style = $('<link id="statementer_css" media="all" type="text/css" href="//dtbaker.github.io/dashboard-plus/css/statementer.css" rel="stylesheet">');
+					var style = $('<link id="statementer_css" media="all" type="text/css" href="http://dbp.revaxarts.com/css/statementer-2.0.css" rel="stylesheet">');
 					style.appendTo('head');
 
-					//$('.statement-search__presets_links').css('float','right').insertBefore('.statement-heading').find('a').eq(0).remove();
-					//$('.statement-search__advanced-form').insertBefore('.statement-heading');
-					//$('.statement-search__timezone-disclaimer').css({'float':'right', 'margin-right':10}).insertBefore('.statement-heading');
+					$('.statement-search__presets_links').css('float','right').insertBefore('.statement-heading').find('a').eq(0).remove();
+					$('.statement-search__advanced-form').insertBefore('.statement-heading');
+					$('.statement-search__timezone-disclaimer').css({'float':'right', 'margin-right':10}).insertBefore('.statement-heading');
 
 
 					loadStatementer();
@@ -128,43 +120,33 @@
 						return false;
 					});
 					
-
-					html = '<div class="box--hard-top">';
-
+					html = '<div class="statementer_menu feature-list">';
 					var _first = new Date(currentyear, currentmonth, 1, 0, 0, 0),
 						_last = new Date(currentyear, currentmonth + 1, 0, 23, 59, 59),
 						_firstmonday = (_first.getTime() + ((8 - _first.getDay()) * 864e5));
 						//fix if 1st day is sunday
-
 						if(!_first.getDay()) _firstmonday -= 864e5*7;
-
-					html += '<div class="statementer_menu statement-search__presets_links" style="display: block;">';
-						html += '<a class="btn btn--set" data-from="' + (new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0).getTime()) + '" data-to="' + (new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59).getTime()) + '">Today</a>';
-						html += '<a class="btn btn--set" data-from="' + (new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 0, 0, 0).getTime()) + '" data-to="' + (new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 23, 59, 59).getTime()) + '">Yesterday</a>';
-					html += "</div>";
-
-                	html += '<ul class="statementer_menu statement-search__presets_links" style="display: block;">';
-						html += '<a class="btn btn--set" data-offset-from="' + (-1 * 864e5) + '" data-dimension="' + (1 * 864e5 - 1000) + '">- one Day</a>';
-						html += '<a class="btn btn--set" data-offset-from="' + (1 * 864e5) + '" data-dimension="' + (1 * 864e5 - 1000) + '">+ one Day</a>';
-						html += '<a class="btn btn--set" data-offset-from="' + (-7 * 864e5) + '" data-dimension="' + (7 * 864e5 - 1000) + '">- one Week</a>';
-						html += '<a class="btn btn--set" data-offset-from="' + (7 * 864e5) + '" data-dimension="' + (7 * 864e5 - 1000) + '">+ one Week</a>';
-					html += "</ul>";
-
-                	html += '<ul class="statementer_menu statement-search__presets_links" style="display: block;">';
-						html += '<a class="btn btn--set" data-from="' + _first.getTime() + '" data-to="' + _last.getTime() + '">Month</a>';
-						html += '<a class="btn btn--set" data-from="' + _first.getTime() + '" data-to="' + (_firstmonday - 1000) + '">1st week</a>';
-						if((_firstmonday + (6048e5) - 1000) < _last.getTime()) html += '<a class="btn btn--set" data-from="' + _firstmonday + '" data-to="' + (_firstmonday + (6048e5) - 1000) + '">2nd week</a>';
-						if((_firstmonday + (6048e5)) < _last.getTime()) html += '<a class="btn btn--set" data-from="' + (_firstmonday + (6048e5)) + '" data-to="' + (_firstmonday + (6048e5 * 2) - 1000) + '">3rd week</a>';
-						if((_firstmonday + (6048e5 * 2)) < _last.getTime()) html += '<a class="btn btn--set" data-from="' + (_firstmonday + (6048e5 * 2)) + '" data-to="' + (_firstmonday + (6048e5 * 3) - 1000) + '">4th week</a>';
-						if((_firstmonday + (6048e5 * 3)) < _last.getTime()) html += '<a class="btn btn--set" data-from="' + (_firstmonday + (6048e5 * 3)) + '" data-to="' + (_firstmonday + (6048e5 * 4) - 1000) + '">5th week</a>';
-						if((_firstmonday + (6048e5 * 4)) < _last.getTime()) html += '<a class="btn btn--set" data-from="' + (_firstmonday + (6048e5 * 4)) + '" data-to="' + (_firstmonday + (6048e5 * 5) - 1000) + '">6th week</a>';
-					html += "</ul>";
-
-					html += '</div>';
+					html += '<a class="btn btn--set" data-from="' + (new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0).getTime()) + '" data-to="' + (new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59).getTime()) + '">Today</a></li>';
+					html += '<a class="btn btn--set" data-from="' + (new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 0, 0, 0).getTime()) + '" data-to="' + (new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 23, 59, 59).getTime()) + '">Yesterday</a></li>';
+					html += '</div';
+					html += '<div class="statementer_menu feature-list">';
+					html += '<a class="btn btn--set" data-offset-from="' + (-1 * 864e5) + '" data-dimension="' + (1 * 864e5 - 1000) + '">- one Day</a></li>';
+					html += '<a class="btn btn--set" data-offset-from="' + (1 * 864e5) + '" data-dimension="' + (1 * 864e5 - 1000) + '">+ one Day</a></li>';
+					html += '<a class="btn btn--set" data-offset-from="' + (-7 * 864e5) + '" data-dimension="' + (7 * 864e5 - 1000) + '">- one Week</a></li>';
+					html += '<a class="btn btn--set" data-offset-from="' + (7 * 864e5) + '" data-dimension="' + (7 * 864e5 - 1000) + '">+ one Week</a></li>';
+					html += '</div';
+					html += '<div class="statementer_menu feature-list">';
+					html += '<a class="btn btn--set" data-from="' + _first.getTime() + '" data-to="' + _last.getTime() + '">Month</a></li>';
+					html += '<a class="btn btn--set" data-from="' + _first.getTime() + '" data-to="' + (_firstmonday - 1000) + '">1st week</a></li>';
+					if((_firstmonday + (6048e5) - 1000) < _last.getTime()) html += '<a class="btn btn--set" data-from="' + _firstmonday + '" data-to="' + (_firstmonday + (6048e5) - 1000) + '">2nd week</a></li>';
+					if((_firstmonday + (6048e5)) < _last.getTime()) html += '<a class="btn btn--set" data-from="' + (_firstmonday + (6048e5)) + '" data-to="' + (_firstmonday + (6048e5 * 2) - 1000) + '">3rd week</a></li>';
+					if((_firstmonday + (6048e5 * 2)) < _last.getTime()) html += '<a class="btn btn--set" data-from="' + (_firstmonday + (6048e5 * 2)) + '" data-to="' + (_firstmonday + (6048e5 * 3) - 1000) + '">4th week</a></li>';
+					if((_firstmonday + (6048e5 * 3)) < _last.getTime()) html += '<a class="btn btn--set" data-from="' + (_firstmonday + (6048e5 * 3)) + '" data-to="' + (_firstmonday + (6048e5 * 4) - 1000) + '">5th week</a></li>';
+					if((_firstmonday + (6048e5 * 4)) < _last.getTime()) html += '<a class="btn btn--set" data-from="' + (_firstmonday + (6048e5 * 4)) + '" data-to="' + (_firstmonday + (6048e5 * 5) - 1000) + '">6th week</a></li>';
+					html += '</div';
 					//html += '<h2 class="box-heading">Currency</h2><div class="content-box" id="statementer_currency">loading...</div>';
 					
-					$('.statement-heading').append(html);
-
+					$(html).insertAfter('.statement-heading');
 					$('.statementer_menu').delegate('a', 'click', function () {
 						var _this = $(this),
 							_from, _to;
@@ -545,8 +527,6 @@
 				loadCharts = function (element) {
 					if (element.data('loaded')) return false;
 
-					console.log(element);
-
 					var name = element.data('name');
 
 					var lastday = new Date(currentyear, currentmonth + 1, 0, 23, 59, 59).getDate();
@@ -555,7 +535,6 @@
 					var date_values = [];
 					var hour_values = [];
 					var hours = ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'];
-					console.log(sales[name], name, sales);
 					var steps = Math.ceil(sales[name].maxsales_hour / 30);
 					var esteps = Math.ceil(sales[name].maxearnings_day / 10);
 
@@ -746,27 +725,24 @@
 
 						line = raw[i].split('","');
 
-
 						//correct timezone
 						//line[0] = line[0].replace(/(\+1100|\+1000)/, '');
 
 						line[0] = line[0].substr(1);
 						
 						dateparts = line[0].replace(/(-|:)/g, ' ').split(' ');
-
-						console.log("---- " + new Date(dateparts[0], dateparts[1]-1, dateparts[2], dateparts[3], dateparts[4], dateparts[5] ) );
-
+						
 						data = {
 							date: new Date(dateparts[0], dateparts[1]-1, dateparts[2], dateparts[3], dateparts[4], dateparts[5] ),
 							type: line[2],
 							name: line[3],
 							id: parseInt(line[4], 10) || null,
-							earnings: parseFloat(line[5], 10),
-							rate: parseFloat(line[5], 10) || null,
-							price: parseInt(line[6], 10) || null,
+							earnings: parseFloat(line[5]),
+							rate: null,
+							price: null,
 							site: line[6].replace('"', '')
 						};
-
+						
 						if (from <= data.date.getTime() && data.date.getTime() <= to || !to) {
 							switch (data.type) {
 							case 'Referral Cut':
@@ -808,9 +784,9 @@
 							case 'Sale':
 								var add = (data.type == 'Sale' ? 1 : -1),
 								name = data.name+'_'+data.id;
-
-
+								
 								if ($.inArray(name, items) == -1) {
+								
 									items.push(name);
 									sales[name] = {
 										id: data.id,
@@ -836,10 +812,11 @@
 
 
 								sales[name].totalsales += add;
+								
 								sales[name].totalearnings += (data.earnings*sales[name].percentage)*add;
 								sales[name].hours[data.date.getHours()] += add;
 								sales[name].days[data.date.getDate()] += add;
-								sales[name].earningsperday[data.date.getDate()] += data.earnings*sales[name].percentage;
+								sales[name].earningsperday[data.date.getDate()] += parseInt(data.earnings*sales[name].percentage, 10);
 
 								sales[name].maxsales_hour = Math.max(sales[name].hours[data.date.getHours()], sales[name].maxsales_hour);
 								sales[name].maxsales_day = Math.max(sales[name].days[data.date.getDate()], sales[name].maxsales_day);
@@ -849,7 +826,7 @@
 								sales[allitems].totalearnings += (data.earnings*sales[name].percentage)*add;
 								sales[allitems].hours[data.date.getHours()] += add;
 								sales[allitems].days[data.date.getDate()] += add;
-								sales[allitems].earningsperday[data.date.getDate()] += data.earnings*sales[name].percentage;
+								sales[allitems].earningsperday[data.date.getDate()] += parseInt(data.earnings*sales[name].percentage, 10);
 
 								sales[allitems].maxsales_hour = Math.max(sales[allitems].hours[data.date.getHours()], sales[allitems].maxsales_hour);
 								sales[allitems].maxsales_day = Math.max(sales[allitems].days[data.date.getDate()], sales[allitems].maxsales_day);
@@ -926,8 +903,8 @@
 						if (lastbalance != currentbalance || !raw) {
 								$content.html('<span style="font-style:italic">fetching data...</span>');
 								$.get(csvfile, function (data) {
-									//console.log(data);
 									raw = $.trim(data.replace(/"Date","Type","Detail","Item ID","Amount","Rate","Price","Site"\n/g, ''));
+									raw = $.trim(raw.replace(/"Date","Order ID","Type","Detail","Item ID","Amount","Site"\n/g, ''));
 									save('' + currentyear + '_' + currentmonth, raw);
 									window.dashboardplus.setCookie('statementer_lastbalance', currentbalance, 30);
 									initCalc();
@@ -941,6 +918,7 @@
 							$content.html('<span style="font-style:italic">fetching data...</span>');
 							$.get(csvfile, function (data) {
 								raw = $.trim(data.replace(/"Date","Type","Detail","Item ID","Amount","Rate","Price","Site"\n/g, ''));
+                                raw = $.trim(raw.replace(/"Date","Order ID","Type","Detail","Item ID","Amount","Site"\n/g, ''));
 								initCalc();
 							});
 						}
@@ -980,5 +958,6 @@
 
 			prepareUI();
 
+	
 
 })();
