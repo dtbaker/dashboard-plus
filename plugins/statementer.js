@@ -904,6 +904,7 @@
 								$content.html('<span style="font-style:italic">fetching data...</span>');
 								$.get(csvfile, function (data) {
 									raw = $.trim(data.replace(/"Date","Type","Detail","Item ID","Amount","Rate","Price","Site"\n/g, ''));
+									raw = $.trim(raw.replace(/"Date","Order ID","Type","Detail","Item ID","Amount","Site"\n/g, ''));
 									save('' + currentyear + '_' + currentmonth, raw);
 									window.dashboardplus.setCookie('statementer_lastbalance', currentbalance, 30);
 									initCalc();
@@ -917,6 +918,7 @@
 							$content.html('<span style="font-style:italic">fetching data...</span>');
 							$.get(csvfile, function (data) {
 								raw = $.trim(data.replace(/"Date","Type","Detail","Item ID","Amount","Rate","Price","Site"\n/g, ''));
+                                raw = $.trim(raw.replace(/"Date","Order ID","Type","Detail","Item ID","Amount","Site"\n/g, ''));
 								initCalc();
 							});
 						}
