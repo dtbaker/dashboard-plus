@@ -12,7 +12,7 @@ Development Howto:
 
 1. Fork a copy of this repo
 2. Checkout your copy of the repo to your local computer
-3. Change the `if(true) {` to `if(false) {` in script.js so it loads everything locally
+3. Uncomment the `//var dashboardplus_base_uri = chrome.extension.getURL('');` code in `script.js` so files are loaded locally.
 3. Disable the real Dashboard Plus extension in Google Chrome
 4. Click "Developer Mode" at the top of the Google Chrome extension page
 5. Click "Load Unpacked Extension" and select the git checkout folder 
