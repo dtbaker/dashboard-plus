@@ -98,7 +98,7 @@
 					$content.html('<span style="font-style:italic">loading Statement... <a href="javascript:window.dashboardplus.set(\'statementer\', {});window.dashboardplus.setCookie(\'statementer_lastbalance\', \'\', -1);location.reload();">Click here if it stucks...</a></span>');
 					
 					//var style = $('<link id="statementer_css" media="all" type="text/css" href="'+ window.dashboardplus['base'] +'css/statementer.css" rel="stylesheet">');
-					var style = $('<link id="statementer_css" media="all" type="text/css" href="//dtbaker.github.io/dashboard-plus/css/statementer.css" rel="stylesheet">');
+					var style = $('<link id="statementer_css" media="all" type="text/css" href="//lder.github.io/dashboard-plus/css/statementer.css" rel="stylesheet">');
 					
 					style.appendTo('head');
 

@@ -8,43 +8,52 @@
  *
  */
 // ==UserScript==
-// @name			Dashboard Plus for Envato Marketplaces
-// @creator			userscripts@revaxarts.com
-// @namespace		revaxarts.com
-// @description		Dashboard Plus for the Marketplaces.
-// @date			2014-08-27
-// @version			1.3.4
-// @include			http://activeden.net*
-// @include			http://audiojungle.net*
-// @include			http://themeforest.net*
-// @include			http://videohive.net*
-// @include			http://graphicriver.net*
-// @include			http://3docean.net*
-// @include			http://codecanyon.net*
-// @include			http://photodune.net*
+// @name            Dashboard Plus for Envato Marketplaces
+// @creator         userscripts@revaxarts.com
+// @namespace       revaxarts.com
+// @description     Dashboard Plus for the Marketplaces.
+// @date            2014-08-27
+// @version         1.3.4
+// @include         http://activeden.net*
+// @include         http://audiojungle.net*
+// @include         http://themeforest.net*
+// @include         http://videohive.net*
+// @include         http://graphicriver.net*
+// @include         http://3docean.net*
+// @include         http://codecanyon.net*
+// @include         http://photodune.net*
 // ==/UserScript==
 
 (function () {
 
-	/*
-	insert the the bootstrap of dbp
-	to get an uncompress version append compress=0 like http://dbp.revaxarts.com/js/bootstrap.js?compress=0
-	*/
-	
-	var inject = document.createElement("script");
-	inject.setAttribute("type", "text/javascript");
-    if(true) { // change to false if developing locally..
-        inject.setAttribute("src", '//dtbaker.github.io/dashboard-plus/bootstrap.js');
-    }else {
-        var actualCode = ['window.dashboardplus = window.dashboardplus || {};',
-                            "window.dashboardplus['base'] = '" +  chrome.extension.getURL('') + "'; "].join('\n');
-        var script = document.createElement('script');
-        script.textContent = actualCode;
-        (document.head||document.documentElement).appendChild(script);
-        inject.setAttribute("src", chrome.extension.getURL('bootstrap.js'));
-    }
+    /*
+    insert the the bootstrap of dbp
+    to get an uncompress version append compress=0 like http://dbp.revaxarts.com/js/bootstrap.js?compress=0
+    */
+    
+    var inject = document.createElement("script");
+    inject.setAttribute("type", "text/javascript");
 
-	(document.head || document.documentElement).appendChild(inject);
-	
+    // we can load dashboard plus code from various locations. uncomment based on your needs.
+
+    // 1: from github pages dtbaker.github.io/dashboard-plus/bootstrap.js
+    var dashboardplus_base_uri = '//lder.github.io/dashboard-plus/';
+    
+    // 2: from local code contained in this plugin folder
+    //var dashboardplus_base_uri = chrome.extension.getURL('');
+
+    // 3: from a github development repo for testing eg: raw.githubusercontent.com/dtbaker/dashboard-plus/master/bootstrap.js
+    //    you can use your own github fork here for testing
+    //var dashboardplus_base_uri = '//raw.githubusercontent.com/dtbaker/dashboard-plus/master/';
+
+
+    // this injects some code into the browser window along with the bootstrap.js extension file (from our desired loading location above)
+    var actualCode = ['window.dashboardplus = window.dashboardplus || {};',"window.dashboardplus['base'] = '" +  dashboardplus_base_uri + "'; "].join('\n');
+    var script = document.createElement('script');
+    script.textContent = actualCode;
+    (document.head||document.documentElement).appendChild(script);
+    inject.setAttribute("src", dashboardplus_base_uri + 'bootstrap.js');
+    (document.head || document.documentElement).appendChild(inject);
+    
 
 })();
