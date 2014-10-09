@@ -203,7 +203,7 @@
 		};
 	
 			//Dashboard Page
-		if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net|com)\/author_dashboard/)) {
+		if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/author_dashboard/)) {
 	
 			enque('envatitor');
 			enque('verify');
@@ -211,44 +211,44 @@
 			enque('replypantry');
 
 			//Settings Page
-		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net|com)\/user\/([\w-]+)\/(\w+)\/edit/)) {
+		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/user\/([\w-]+)\/(\w+)\/edit/)) {
 		
 			settingspage();
 			
 			//Statement Page
-		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net|com)\/statement/)) {
+		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/statement/) || location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/user\/(.*)\/statement/)) {
 		
 			enque('statementer');
 			
 			//Forums Page
-		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net|com)\/forums\//)) {
+		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/forums\//)) {
 	
 			enque('envatitor');
 			enque('replypantry');
 			//Upload Page
-		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net|com)\/upload\//)) {
+		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/upload\//)) {
 	
 			enque('envatitor');
 			
 			//item edit page
-		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net|com)\/item\/([a-z0-9-]+)\/edit/)) {
+		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/item\/([a-z0-9-]+)\/edit/)) {
 	
 			enque('envatitor');
 			
 			//item discussion page
-		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net|com)\/item\/([a-z0-9-]+)\/discussion/)) {
+		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/item\/([a-z0-9-]+)\/discussion/)) {
 	
 			enque('envatitor');
 			enque('replypantry');
 			
 			//item discussion page
-		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net|com)\/item\/([a-z0-9-]+)\/([0-9]+)\/comments/)) {
+		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/item\/([a-z0-9-]+)\/([0-9]+)\/comments/)) {
 	
 			enque('envatitor');
 			enque('replypantry');
 			
 			//item faq page
-		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net|com)\/item\/([a-z0-9-]+)\/([0-9]+)\/faqs/)) {
+		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/item\/([a-z0-9-]+)\/([0-9]+)\/faqs/)) {
 	
 			enque('envatitor');
 			
@@ -261,7 +261,7 @@
 			
 		}
 		
-		if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net|com)\/item\/([a-z0-9-]+)/)) {
+		if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/item\/([a-z0-9-]+)/)) {
 	
 			//enque('editinline');
 			
