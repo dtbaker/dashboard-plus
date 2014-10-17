@@ -195,6 +195,10 @@
 				'name': 'Reply Pantry',
 				'desc': 'Store canned text for use in forums and item comments'
 			},
+			'compare_earnings': {
+				'name': 'Compare Earnings',
+				'desc': 'allows you to compare your earnings with a previous month/year'
+			},
 			'_localdevelopment': {
 				'beta': true,
 				'name': 'Local Development',
@@ -210,6 +214,11 @@
 			enque('progressbar');
 			enque('replypantry');
 
+			//Earnings Page
+		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/user\/(\w+)\/new_earnings\/(referrals|sales)\/(.*)/)) {
+		
+			enque('compare_earnings');
+			
 			//Settings Page
 		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/user\/([\w-]+)\/(\w+)\/edit/)) {
 		
