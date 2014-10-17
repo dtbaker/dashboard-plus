@@ -7,7 +7,7 @@
 				return;
 			}
 
-			var version = '2.0',
+			var version = '2.1',
 				exchangeinterval = 3600,
 				rates = {},
 				currentcurrency = 'USD',
@@ -56,28 +56,11 @@
 			var now = new Date(), timestamp = now.getTime(), envatotimeoffsetinhours = 12+now.getTimezoneOffset()/60;
 				now = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes() + (now.getTimezoneOffset()+ 60*parseInt(envatotimeoffsetinhours,10)), now.getSeconds());
 			
-			var current = location.pathname.split('/'),
+			var current = location.pathname.match(/(\d\d\d\d)-(\d\d)/),
 				monthnames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-				currentmonth = current[2] ? parseInt(current[2].split('-')[1],10)-1 : now.getMonth(),
-				currentyear = current[2] ? parseInt(current[2].split('-')[0],10) : now.getFullYear(),
+				currentmonth = current ? parseInt(current[2],10)-1 : now.getMonth(),
+				currentyear = current ? parseInt(current[1],10) : now.getFullYear(),
 				csvfile = '/statement/'+currentyear+'-'+(currentmonth < 9 ? '0'+(currentmonth+1) : (currentmonth+1))+'.csv?v=v1';
-				
-				
-/*
-			var color = {};
-			var marketplace = location.hostname.split('.').shift();
-			color['activeden'] = 'e86223';
-			color['audiojungle'] = '65992e';
-			color['themeforest'] = '69472a';
-			color['videohive'] = 'f4950c';
-			color['graphicriver'] = '0568b3';
-			color['3docean'] = '802836';
-			color['codecanyon'] = 'db592b';
-			color['tutsplus'] = 'e86223';
-			color['photodune'] = '499ba1';
-
-			color = color[marketplace] || '333333';
-*/
 			
 			var color = '0084B4';
 			
@@ -88,7 +71,7 @@
 					currentbalance = parseInt($('.header-logo-account__balance').html().substr(1).replace(',', '').replace('.', ''), 16);
 
 					$content.html('<span style="font-style:italic">loading Statement... <a href="javascript:window.dashboardplus.set(\'statementer\', {});window.dashboardplus.setCookie(\'statementer_lastbalance\', \'\', -1);location.reload();">Click here if it stucks...</a></span>');
-					var style = $('<link id="statementer_css" media="all" type="text/css" href="http://dbp.revaxarts.com/css/statementer-2.0.css" rel="stylesheet">');
+					var style = $('<link id="statementer_css" media="all" type="text/css" href="http://dbp.revaxarts.com/css/statementer-2.1.css" rel="stylesheet">');
 					style.appendTo('head');
 
 					$('.statement-search__presets_links').css('float','right').insertBefore('.statement-heading').find('a').eq(0).remove();
@@ -144,7 +127,6 @@
 					if((_firstmonday + (6048e5 * 3)) < _last.getTime()) html += '<a class="btn btn--set" data-from="' + (_firstmonday + (6048e5 * 3)) + '" data-to="' + (_firstmonday + (6048e5 * 4) - 1000) + '">5th week</a></li>';
 					if((_firstmonday + (6048e5 * 4)) < _last.getTime()) html += '<a class="btn btn--set" data-from="' + (_firstmonday + (6048e5 * 4)) + '" data-to="' + (_firstmonday + (6048e5 * 5) - 1000) + '">6th week</a></li>';
 					html += '</div';
-					//html += '<h2 class="box-heading">Currency</h2><div class="content-box" id="statementer_currency">loading...</div>';
 					
 					$(html).insertAfter('.statement-heading');
 					$('.statementer_menu').delegate('a', 'click', function () {
@@ -162,59 +144,6 @@
 						window.location.hash = '#from=' + _from + '&to=' + _to + '';
 						calculate();
 					});
-					// $('#statementer_fetch_all').on('click', function () {
-					// 	if (confirm("Ok, let's fetch!\n\nIt's not possible to make graphs or calculate something with this data. This just puts all CSV files into a textarea.\n\n Continue? (This could take a while...)")) {
-					// 		if ($('#statementer_fetch_area').length) {
-					// 			var t = $('#statementer_fetch_area');
-					// 			var info = $('#statementer_fetch_info');
-					// 		} else {
-					// 			var t = $('<textarea id="statementer_fetch_area">').insertBefore('#statementer_daterange');
-					// 			var info = $('<div id="statementer_fetch_info">').insertAfter($('#content').find('h2').eq(0));
-					// 		}
-					// 		var stopit = false;
-					// 		$('body').on('click', '#statementer_cancelfetch', function () {
-					// 			stopit = true;
-					// 			return false;
-					// 		});
-					// 		t.val('');
-					// 		var fetchData = function (month, year) {
-					// 				var csvfile = '/statement/'+year+'-'+(month < 9 ? '0'+(month+1) : (month+1))+'.csv?v=v1';
-					// 				info.html('Fetching ' + monthnames[month] + ' ' + year + '... <a id="statementer_cancelfetch" href="#">cancel</a>');
-					// 				$.get(csvfile, function (data) {
-					// 					if (stopit) return false;
-					// 					raw = data.replace(/"Date","Type","Detail","Item ID","Amount","Rate","Price"/g, '');
-					// 					raw = $.trim(raw);
-					// 					if (raw) t.val(t.val() + raw.replace(/","/g, "\t").replace(/"/g, "") + "\n");
-					// 					if (month == 0) {
-					// 						month = 12;
-					// 						year--;
-					// 					}
-					// 					if (year == 2006 && month == 7) {
-					// 						info.html('Finished!');
-					// 					} else {
-					// 						fetchData(month - 1, year);
-					// 					}
-
-					// 				});
-					// 			};
-					// 		fetchData(new Date().getMonth(), new Date().getFullYear());
-					// 	}
-					// 	return false;
-					// });
-					// $('#statementer_clear_cache').on('click', function () {
-					// 	localStorage.removeItem('statementer');
-					// 	window.dashboardplus.setCookie('statementer_lastbalance', '', -1);
-					// 	alert('Data cleared!');
-					// 	return false;
-					// });
-					// $('#statementer_clear_cache_current').on('click', function () {
-					// 	save('' + currentyear + '_' + currentmonth, '');
-					// 	if (now.getMonth() == currentmonth && now.getFullYear() == currentyear) {
-					// 		window.dashboardplus.setCookie('statementer_lastbalance', '', -1);
-					// 	}
-					// 	alert('Data cleared!');
-					// 	return false;
-					// });
 
 					$('#statementer')
 					.delegate('area', 'click', function (event) {
@@ -254,16 +183,6 @@
 						calculate();
 						return;
 					});
-					// $('#statementer_currency').delegate('select', 'change', function (event) {
-					// 	currentcurrency = $(this).val();
-					// 	window.dashboardplus.setCookie('statementer_currentcurrency', currentcurrency);
-					// 	$('#statementer_ratio').html('1 : '+rates[currentcurrency]);
-					// 	from = from || firstdate;
-					// 	calculate();
-					// });
-					
-					
-					//currency();
 					
 					
 				},
@@ -316,10 +235,10 @@
 					var html = '', story = '';
 					html += '<div id="statementer_summary">';
 					html += '<ul>';
-					html += '<li>you\'ve sold<h4>' + total_sales + '</h4>' + _n('item', 'items', total_sales) + ' and earned<h4>' + _d(total_earning) + '</h4></li>';
-					html += '<li>you\'ve purchased<h4>' + total_purchases + '</h4>' + _n('item', 'items', total_purchases) + ' and spent<h4>' + _d(total_purchases_money) + '</h4></li>';
-					html += '<li>you\'ve referred<h4>' + total_referrals + '</h4>' + _n('user', 'users', total_referrals) + ' and earned<h4>' + _d(total_referrals_money) + '</h4></li>';
-					html += '<li>you\'ve withdrawn<h4>' + total_withdrawal + '</h4>' + _n('time', 'times', total_withdrawal) + ' with an amount of<h4>' + _d(total_withdrawal_money) + '</h4></li>';
+					html += '<li>you\'ve sold<h4>' + number_format(total_sales) + '</h4>' + _n('item', 'items', total_sales) + ' and earned<h4>' + _d(total_earning) + '</h4></li>';
+					html += '<li>you\'ve purchased<h4>' + number_format(total_purchases) + '</h4>' + _n('item', 'items', total_purchases) + ' and spent<h4>' + _d(total_purchases_money) + '</h4></li>';
+					html += '<li>you\'ve referred<h4>' + number_format(total_referrals) + '</h4>' + _n('user', 'users', total_referrals) + ' and earned<h4>' + _d(total_referrals_money) + '</h4></li>';
+					html += '<li>you\'ve withdrawn<h4>' + number_format(total_withdrawal) + '</h4>' + _n('time', 'times', total_withdrawal) + ' with an amount of<h4>' + _d(total_withdrawal_money) + '</h4></li>';
 					html += '</ul>';
 					html += '</div>';
 					
@@ -359,7 +278,7 @@
 
 						html += '<h3 style="padding-bottom:0;">Sale Reversals:</h3>';
 						html += 'You have <strong>' + total_reversals + '</strong> ' + _n('reversal', 'reversals', total_reversals) + ' within <strong>'+Math.ceil(daysrange)+'</strong> ' + _n('day', 'days', Math.ceil(daysrange)) + ' with a total value of <strong>'+_d(total_reversals_money) +'</strong>. That\'s <strong>'+(total_reversals/daysrange).toFixed(2)+'</strong> items and <strong>'+_d(total_reversals_money/daysrange)+'</strong> per day.';
-						html += '<table class="table-general table-general--striped" cellspacing="0" cellpadding="0">';
+						html += '<table class="table-general -striped -highlight-row" cellspacing="0" cellpadding="0">';
 						html += '<thead><tr>';
 						html += '<td width="70">Date</td><td>Detail</td><td width="50">Amount</td><td width="60">Price</td>';
 						html += '</tr></thead>';
@@ -390,7 +309,7 @@
 
 						html += '<h3 style="padding-bottom:0;">Purchases:</h3>';
 						html += 'You have purchased <strong>' + total_purchases + '</strong> ' + _n('item', 'items', total_purchases) + ' within <strong>'+Math.ceil(daysrange)+'</strong> ' + _n('day', 'days', Math.ceil(daysrange)) + ' with a total value of <strong>'+_d(total_purchases_money) +'</strong>. That\'s <strong>'+(total_purchases/daysrange).toFixed(2)+'</strong> items and <strong>'+_d(total_purchases_money/daysrange)+'</strong> per day.';
-						html += '<table class="table-general table-general--striped" cellspacing="0" cellpadding="0">';
+						html += '<table class="table-general -striped -highlight-row" cellspacing="0" cellpadding="0">';
 						html += '<thead><tr>';
 						html += '<td width="70">Date</td><td>Detail</td><td width="50">Amount</td><td width="60">Price</td>';
 						html += '</tr></thead>';
@@ -418,7 +337,7 @@
 
 						html += '<h3 style="padding-bottom:0;">Referrals:</h3>';
 						html += 'You have referred <strong>' + total_referrals + '</strong>  ' + _n('user', 'users', total_referrals) + '  within <strong>'+Math.ceil(daysrange)+'</strong> ' + _n('day', 'days', Math.ceil(daysrange)) + ' and earned <strong>'+_d(total_referrals_money) +'</strong>. That\'s <strong>'+(total_referrals/daysrange).toFixed(2)+'</strong> users and <strong>'+_d(total_referrals_money/daysrange)+'</strong> per day.';
-						html += '<table class="table-general table-general--striped" cellspacing="0" cellpadding="0">';
+						html += '<table class="table-general -striped -highlight-row" cellspacing="0" cellpadding="0">';
 						html += '<thead><tr>';
 						html += '<td width="70">Date</td><td>Detail</td><td width="50">Amount</td><td width="60">Price</td>';
 						html += '</tr></thead>';
@@ -446,7 +365,7 @@
 
 						html += '<h3 style="padding-bottom:0;">Deposits:</h3>';
 						html += 'You have deposited <strong>' + total_deposits + '</strong> times within <strong>'+Math.ceil(daysrange)+'</strong> ' + _n('day', 'days', Math.ceil(daysrange)) + ' and spent <strong>'+_d(total_deposits_money) +'</strong>. That\'s <strong>'+(total_deposits/daysrange).toFixed(2)+'</strong> deposits and <strong>'+_d(total_deposits_money/daysrange)+'</strong> per day.';
-						html += '<table class="table-general table-general--striped" cellspacing="0" cellpadding="0">';
+						html += '<table class="table-general -striped -highlight-row" cellspacing="0" cellpadding="0">';
 						html += '<thead><tr>';
 						html += '<td width="70">Date</td><td>Detail</td><td width="50">Amount</td><td width="60">Price</td>';
 						html += '</tr></thead>';
@@ -614,13 +533,25 @@
 					return slug;
 				},
 
+				number_format = function (nStr) {
+					nStr += '';
+					x = nStr.split('.');
+					x1 = x[0];
+					x2 = x.length > 1 ? '.' + x[1] : '';
+					var rgx = /(\d+)(\d{3})/;
+					while (rgx.test(x1)) {
+						x1 = x1.replace(rgx, '$1' + ',' + '$2');
+					}
+					return x1 + x2;
+				},
+
 				_n = function (single, plural, number) {
 					return (number == 1) ? single : plural;
 				},
 				
 				_d = function (value, decimal, raw) {
 					if(!rates) return (raw) ? value : _e(currentcurrency)+''+(value*1).toFixed(2);
-					return (raw) ? value*(rates[currentcurrency] || 1) : _e(currentcurrency)+''+(value*(rates[currentcurrency] || 1)).toFixed(2);
+					return (raw) ? number_format(value*(rates[currentcurrency] || 1)) : _e(currentcurrency)+''+number_format((value*(rates[currentcurrency] || 1)).toFixed(2));
 				},
 				
 				_e = function (currency) {
@@ -897,6 +828,7 @@
 						dataType: "script",
 						cache: true,
 						success: function () {
+
 						//current month
 						if (now.getMonth() == currentmonth && now.getFullYear() == currentyear) {
 							raw = get('' + currentyear + '_' + currentmonth);
@@ -904,7 +836,6 @@
 								$content.html('<span style="font-style:italic">fetching data...</span>');
 								$.get(csvfile, function (data) {
 									raw = $.trim(data.replace(/"Date","Type","Detail","Item ID","Amount","Rate","Price","Site"\n/g, ''));
-									raw = $.trim(raw.replace(/"Date","Order ID","Type","Detail","Item ID","Amount","Site"\n/g, ''));
 									save('' + currentyear + '_' + currentmonth, raw);
 									window.dashboardplus.setCookie('statementer_lastbalance', currentbalance, 30);
 									initCalc();
@@ -918,7 +849,6 @@
 							$content.html('<span style="font-style:italic">fetching data...</span>');
 							$.get(csvfile, function (data) {
 								raw = $.trim(data.replace(/"Date","Type","Detail","Item ID","Amount","Rate","Price","Site"\n/g, ''));
-                                raw = $.trim(raw.replace(/"Date","Order ID","Type","Detail","Item ID","Amount","Site"\n/g, ''));
 								initCalc();
 							});
 						}
