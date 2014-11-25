@@ -700,7 +700,7 @@
 							case 'Purchase':
 								data.price = -data.earnings;
 								purchases.push(data);
-								total_purchases++;
+								if(!(/^Buyer fee for /.test(data.name))) total_purchases++;
 								total_purchases_money -= data.earnings;
 								//total_earning += data.earnings;
 								break;
