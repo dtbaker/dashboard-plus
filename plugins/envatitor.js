@@ -81,11 +81,9 @@
 			switch (type) {
 			case 'newThread':
 				textarea = $('#thread_message_content');
-				dofocus = true;
 				break;
 			case 'postReply':
 				textarea = $('textarea[name=content]');
-				dofocus = true;
 				break;
 			case 'comment':
 				textarea = $('textarea#reply_text');

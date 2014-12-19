@@ -11,7 +11,7 @@
 
 	//"use strict"
 
-	var version = '1.3.4',
+	var version = '1.3.5',
 		cookiePrefix = 'dbp_';
 	
 	if( typeof jQuery != 'undefined' ){
@@ -215,7 +215,7 @@
 			enque('replypantry');
 
 			//Earnings Page
-		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/user\/(\w+)\/new_earnings\/(referrals|sales)\/(.*)/)) {
+		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/user\/(\w+)\/earnings\/(referrals|sales)\/(.*)/)) {
 		
 			enque('compare_earnings');
 			

@@ -21,7 +21,7 @@
 
 	function init(){
 
-		path = location.pathname.replace(/\/user\/(.*)\/new_earnings\//, '').split('/');
+		path = location.pathname.replace(/\/user\/(.*)\/earnings\//, '').split('/');
 		type = path[0];
 		year = path[1] ? parseInt(path[1], 10) : null;
 		month = path[2] ? parseInt(path[2], 10) : null;
@@ -79,7 +79,7 @@
 
 	function get_data(year, month, day, callback){
 		var time = (year ? '/'+year+(month ? '/'+month+(day ? '/'+day : '') : '') : '');
-		var url = location.pathname.replace(/\/new_earnings\/(.*)$/, '')+'/new_earnings/'+type+time+'?_pjax=.js-pjax-container';
+		var url = location.pathname.replace(/\/earnings\/(.*)$/, '')+'/earnings/'+type+time+'?_pjax=.js-pjax-container';
 		$.ajax({
 			url: url,
 			headers: { 'X-PJAX': true, 'X-PJAX-Container': '.js-pjax-container' },
