@@ -7,7 +7,7 @@
 				return;
 			}
 
-			var version = '2.1',
+			var version = '2.2',
 				exchangeinterval = 3600,
 				rates = {},
 				currentcurrency = 'USD',
@@ -228,7 +228,7 @@
 					
 					var daysrange = ((to || lastdate) - (from || firstdate))/864e5;
 					
-					if (raw == '"Date","Type","Detail","Amount","Rate","Price","Site"') {
+					if (raw == '"Date","Order ID","Type","Detail","Item ID","Price","Amount"') {
 						$('#statementer_content').html('<h2>Sorry, no action this month!</h2>');
 						return false;
 					}
@@ -616,7 +616,7 @@
 							return false;
 						}
 					}
-					if (raw == '"Date","Type","Detail","Item ID","Amount","Rate","Price","Site"') {
+					if (raw == '"Date","Order ID","Type","Detail","Item ID","Price","Amount"') {
 						$content.html('<span>No action here :(</span>');
 						return false;
 					}
@@ -668,10 +668,10 @@
 							type: line[2],
 							name: line[3],
 							id: parseInt(line[4], 10) || null,
-							earnings: parseFloat(line[5]),
+							earnings: parseFloat(line[6]),
 							rate: null,
-							price: null,
-							site: line[6].replace('"', '')
+							price: parseFloat(line[5]),
+							site: line[7].replace('"', '')
 						};
 						
 						if (from <= data.date.getTime() && data.date.getTime() <= to || !to) {
@@ -835,7 +835,7 @@
 						if (lastbalance != currentbalance || !raw) {
 								$content.html('<span style="font-style:italic">fetching data...</span>');
 								$.get(csvfile, function (data) {
-									raw = $.trim(data.replace(/"Date","Type","Detail","Item ID","Amount","Rate","Price","Site"\n/g, ''));
+									raw = $.trim(data.replace(/"Date","Order ID","Type","Detail","Item ID","Price","Amount"\n/g, ''));
 									save('' + currentyear + '_' + currentmonth, raw);
 									window.dashboardplus.setCookie('statementer_lastbalance', currentbalance, 30);
 									initCalc();
@@ -848,7 +848,7 @@
 							clear();
 							$content.html('<span style="font-style:italic">fetching data...</span>');
 							$.get(csvfile, function (data) {
-								raw = $.trim(data.replace(/"Date","Type","Detail","Item ID","Amount","Rate","Price","Site"\n/g, ''));
+								raw = $.trim(data.replace(/"Date","Order ID","Type","Detail","Item ID","Price","Amount","Site"\n/g, ''));
 								initCalc();
 							});
 						}

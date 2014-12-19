@@ -1,5 +1,8 @@
 
 
+2014.12.19 - version 1.3.5
+ * Statement CSV fix
+
 2014.08.28 - version 1.3.4
  * Progress bar on uploads
 
