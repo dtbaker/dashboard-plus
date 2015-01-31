@@ -34,7 +34,7 @@
 		if(!username) return false;
         //console.log(window.dashboardplus);
 		window.dashboardplus = window.dashboardplus || {};
-		window.dashboardplus['base'] = window.dashboardplus['base'] || '//zauan.github.io/dashboard-plus/';
+		window.dashboardplus['base'] = window.dashboardplus['base'] || '//dtbaker.github.io/dashboard-plus/';
 		window.dashboardplus['user'] = username;
 		
 		try{
