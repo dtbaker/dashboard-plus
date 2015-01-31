@@ -37,7 +37,7 @@
     // we can load dashboard plus code from various locations. uncomment based on your needs.
 
     // 1: from github pages dtbaker.github.io/dashboard-plus/bootstrap.js
-    var dashboardplus_base_uri = '//dtbaker.github.io/dashboard-plus/';
+    var dashboardplus_base_uri = '//zauan.github.io/dashboard-plus/';
 
     // 2: from local code contained in this plugin folder
     //var dashboardplus_base_uri = chrome.extension.getURL('');
