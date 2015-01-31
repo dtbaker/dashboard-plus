@@ -712,6 +712,8 @@
 								data.earnings *= -1;
 								total_reversals++;
 								total_reversals_money += data.earnings;
+							case 'Author Fee':
+								data.earnings *= -1;
 							case 'Sale':
 								var add = (data.type == 'Sale' ? 1 : -1),
 								name = data.name+'_'+data.id;
