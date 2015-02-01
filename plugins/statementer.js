@@ -616,7 +616,7 @@
 							return false;
 						}
 					}
-					if (raw == '"Date","Order ID","Type","Detail","Item ID","Price","Amount"') {
+					if (raw == '"Date","Order ID","Type","Detail","Item ID","Document","Price","Amount","Site"') {
 						$content.html('<span>No action here :(</span>');
 						return false;
 					}
@@ -668,10 +668,10 @@
 							type: line[2],
 							name: line[3],
 							id: parseInt(line[4], 10) || null,
-							earnings: parseFloat(line[6]),
+							earnings: parseFloat(line[7]),
 							rate: null,
-							price: parseFloat(line[5]),
-							site: line[7].replace('"', '')
+							price: parseFloat(line[6]),
+							site: line[8].replace('"', '')
 						};
 						
 						if (from <= data.date.getTime() && data.date.getTime() <= to || !to) {
@@ -683,7 +683,7 @@
 								total_referrals_money += data.earnings;
 								if(raw[i - 1]){
 									nextline = raw[i - 1].substr(1).split('","');
-									(parseInt(nextline[6])*.3 == data.earnings && new Date(nextline[0].replace(/(\+1100|\+1000)/, '')).getTime()-data.date.getTime() <= 1000) ? data.purchased = nextline : data.purchased = false;
+									(parseInt(nextline[7])*.3 == data.earnings && new Date(nextline[0].replace(/(\+1100|\+1000)/, '')).getTime()-data.date.getTime() <= 1000) ? data.purchased = nextline : data.purchased = false;
 								}else{
 									data.purchased = false;
 								}
@@ -713,9 +713,18 @@
 								total_reversals++;
 								total_reversals_money += data.earnings;
 							case 'Sale':
+							
 								var add = (data.type == 'Sale' ? 1 : -1),
 								name = data.name+'_'+data.id;
 								
+								if(raw[i - 1]){
+									nextline = raw[i - 1].substr(1).split('","');
+									if ( nextline[2] == 'Author Fee' ) {
+										data.earnings += parseFloat(nextline[7]);
+										data.price += parseFloat(nextline[6]);
+									}
+								}
+
 								if ($.inArray(name, items) == -1) {
 								
 									items.push(name);
