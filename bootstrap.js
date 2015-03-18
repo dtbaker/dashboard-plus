@@ -11,7 +11,7 @@
 
 	//"use strict"
 
-	var version = '1.3.5',
+	var version = '1.3.6',
 		cookiePrefix = 'dbp_';
 	
 	if( typeof jQuery != 'undefined' ){
