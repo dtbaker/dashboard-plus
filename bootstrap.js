@@ -11,9 +11,9 @@
 
 	//"use strict"
 
-	var version = '1.3.6',
+	var version = '1.3.7',
 		cookiePrefix = 'dbp_';
-	
+
 	if( typeof jQuery != 'undefined' ){
 		go();
 		return;
@@ -21,7 +21,7 @@
 	
 	yepnope({
 		load: [
-			"http://0.envato-static.com/assets/application/vendor-2b538c3f97134712a085fc58f4c396f5.js" 
+			"http://0.envato-static.com/assets/application/vendor-2b538c3f97134712a085fc58f4c396f5.js"
 		],
 		complete: go
 	});

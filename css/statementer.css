@@ -2,14 +2,14 @@
  * Copyright (c) 2014 
  * ==================================
  * powered by revaxarts.com (http://revaxarts.com)
- * original filename: statementer-1.9.8.css
- * filesize: 7395 Bytes
- * last modified: Thu, 12 Jun 2014 09:01:52 +0200
+ * original filename: statementer-2.1.css
+ * filesize: 7638 Bytes
+ * last modified: Thu, 11 Dec 2014 17:26:11 +0100
  *
  */
 #statementer {
     min-height: 20px;
-    margin-top: 20px;
+    margin-top: 50px;
 }
 
 #statementer .right {
@@ -24,20 +24,21 @@
 }
 
 #statementer #statementer_summary ul li {
-    color: #383838;
+    color: #FFF;
     background-repeat: repeat-x;
     background-position: top;
-    background-color: #F5F5F5;
-    width: 231px;
+    background-color: #333;
+    border-radius: 5px;
     height: 160px;
     text-align: center;
     float: left;
     list-style: none;
-    margin-left: 2%;
+    margin-left: 1.33%;
     margin-bottom: 2%;
-    line-height: 22px;
+    line-height: 40px;
     padding-top: 10px;
     overflow: hidden;
+    width: 24%;
 }
 
 #statementer #statementer_summary ul li .statementer_currency {
@@ -68,11 +69,14 @@
 }
 
 #statementer #statementer_summary ul li h4 {
-    color: #383838;
-    font-size: 35px;
+    color: #FFF;
     display: block;
     white-space: nowrap;
     height: 20px;
+    font-size: 34px;
+    line-height: 17px;
+    padding: 0;
+    font-weight: bold;
 }
 
 #accordion .tab {
@@ -81,10 +85,6 @@
 }
 
 .accordion-label {
-    border-radius: 4px;
-}
-
-#statementer_summary ul li {
     border-radius: 4px;
 }
 
@@ -108,6 +108,7 @@
     margin-bottom: 1px;
     padding: 13px 13px 14px 13px;
     position: relative;
+    outline: 0;
 }
 
 #statementer .accordion-label .marketplace-icon {
@@ -156,8 +157,8 @@
 }
 
 #statementer div.tabs {
-    max-height: 391px !important;
-    width: 968px !important;
+    max-height: 416px !important;
+    width: 984px !important;
     background: #bbb;
     padding: 10px 8px 16px;
     border-bottom-left-radius: 4px;
@@ -172,7 +173,7 @@
     padding: 18px 8px 0 8px !important;
     overflow: hidden;
     margin-bottom: 1px;
-    background: url(../img/loading.gif) no-repeat center #f5f5f5 !important;
+    background: url(//dbp.revaxarts.com/img/loading.gif) no-repeat center #f5f5f5 !important;
 }
 
 #content #statementer_copyright {
@@ -231,6 +232,10 @@
     cursor: pointer !important;
 }
 
+.statementer_menu {
+    float: right;
+}
+
 .statementer_menu a {
     cursor: pointer;
 }
@@ -252,6 +257,14 @@
 #statementer .ui-state-active a.statementer_itemlink:hover {
     text-decoration: none;
     color: #ddd;
+}
+
+#statementer .table-general {
+    margin-top: 10px;
+}
+
+.table-general td {
+    white-space: nowrap;
 }
 
 #statementer .ui-tabs {
@@ -375,53 +388,9 @@
     top: 0;
 }
 
-/*  Buttons Filter Nav */
-
-    .box--hard-top {
-        font-size: 13px;
-    }
-
-    .box--hard-top {
-    background: none;
-    margin: 30px 0px 0px 0px;
-    padding: 0px;
-    }
-
-    .feature-list.statementer_menu {
-
-    }
-
-    .feature-list li {
-        margin-left: 15px;
-        padding-bottom: 0px;
-        height: 20px;
-    }
-
-    #statementer_dateslider {
-    margin: 0 10px 20px;
-    background: #BFBFBF;
-    border-radius: 4px;
-    }
-
-    ul.statementer_menu.feature-list {
-    height: 135px;
-    background: #f5f5f5;
-    width: 25%;
-    display: inline-table;
-    margin-right: 20px;
-    width: 211px;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    padding: 10px;
-    }
-
-    .statementer_menu a.btn.btn--set {
-    margin-right: 1px;
-    }
-
-    .statementer_menu a.btn.btn--set:hover {
-        background-color: #444444;
-        color:#fffff9;
-    }
-
-
+#sales_world_map_holder{
+    display: none;
+}
+#sales_world_map{
+    height:400px;
+}

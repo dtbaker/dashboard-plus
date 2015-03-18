@@ -49,6 +49,8 @@
 				total_earning = 0,
 				total_reversals_money = 0,
 				total_reversals = 0;
+
+    var sales_per_country = {};
 				
 			var lastbalance = 0,
 				currentbalance = 0;
@@ -73,6 +75,7 @@
 					$content.html('<span style="font-style:italic">loading Statement... <a href="javascript:window.dashboardplus.set(\'statementer\', {});window.dashboardplus.setCookie(\'statementer_lastbalance\', \'\', -1);location.reload();">Click here if it stucks...</a></span>');
 					var style = $('<link id="statementer_css" media="all" type="text/css" href="http://dbp.revaxarts.com/css/statementer-2.1.css" rel="stylesheet">');
 					style.appendTo('head');
+                    $('head').append('<link type="text/css" rel="stylesheet" href="'+window.dashboardplus.base + 'css/statementer.css" />');
 
 					$('.statement-search__presets_links').css('float','right').insertBefore('.statement-heading').find('a').eq(0).remove();
 					$('.statement-search__advanced-form').insertBefore('.statement-heading');
@@ -94,8 +97,6 @@
 					html += '</div>';
 
 					$content.hide().html(html).show();
-
-
 
 
 					$('#statementer_content').delegate('.statementer_itemlink', 'click', function () {
@@ -247,6 +248,7 @@
 
 					if (total_sales) {
 
+
 						html += '<h2 style="padding-bottom:0;">Sales: <span class="sortby">Sort by: <a data-sort="name">Name</a> | <a data-sort="totalsales">Sales</a> | <a data-sort="totalearnings">Earnings</a> | <a data-sort="maxearnings_day">max. Earnings/day</a> | <a data-sort="maxsales_day">max. Sales/day</a> | <a data-sort="id">release date</a></span></h2>';
 						html += 'You have sold <strong>' + total_sales + '</strong> ' + _n('item', 'items', total_sales) + ' within <strong>'+Math.ceil(daysrange)+'</strong>  ' + _n('day', 'days', Math.ceil(daysrange)) + '  with a total value of <strong>'+_d(total_earning) +'</strong>. That\'s <strong>'+(total_sales/daysrange).toFixed(2)+'</strong> items and <strong>' + _d(total_earning/daysrange) + '</strong> per day.';
 						html += '<div id="accordion">';
@@ -264,7 +266,11 @@
 
 						});
 						html += '</div>';
-						
+
+                        html += '<div id="sales_world_map_holder">';
+                        html += '<h2 style="padding-bottom:0;">Sales Map:</h2>';
+                        html += '<div id="sales_world_map"></div>';
+                        html += '</div>';
 
 					}
 
@@ -388,6 +394,50 @@
 
 
 					$('#statementer_content').html(html);
+
+
+                    if (total_sales) {
+
+
+
+
+                        var chart_data = [
+                            ['Country','Sales']
+                        ];
+                        for (var country in sales_per_country) {
+                            if (sales_per_country.hasOwnProperty(country)) {
+                                chart_data.push([country, sales_per_country[country]]);
+                            }
+                        }
+
+                        if(chart_data.length > 1) {
+                            var jsapi_modules = '{"modules":[{"name":"visualization","callback":"alert(\'test\')","version":"1","packages":["geochart"]}]}';
+                            // load the world map
+                            $.ajax({
+                                url: '//www.google.com/jsapi?callback=console.log',
+                                dataType: "script",
+                                cache: true,
+                                success: function () {
+                                    google.load("visualization", "1", {
+                                        callback: function () {
+
+                                            $('#sales_world_map_holder').show();
+
+                                            var data = google.visualization.arrayToDataTable(chart_data);
+
+                                            var options = {};
+
+                                            var chart = new google.visualization.GeoChart(document.getElementById('sales_world_map'));
+
+                                            chart.draw(data, options);
+                                        }, packages: ["geochart"]
+                                    });
+
+                                }
+                            });
+                        }
+                    }
+
 					if (!currentitem || !$(currentitem).length) currentitem = 0;
 					if($('#accordion').data('accordion')) $('#accordion').accordion('destroy');
 					$('#accordion').accordion({
@@ -671,10 +721,9 @@
 							earnings: parseFloat(line[8]),
 							rate: null,
 							price: parseFloat(line[6]),
-							site: line[9].replace('"', '')
+							site: line[9].replace('"', ''),
+                            country: line[10]
 						};
-						console.log(line);
-						console.log(data);
 						if (from <= data.date.getTime() && data.date.getTime() <= to || !to) {
 							switch (data.type) {
 							case 'Referral Cut':
@@ -717,7 +766,11 @@
 							
 								var add = (data.type == 'Sale' ? 1 : -1),
 								name = data.name+'_'+data.id;
-								
+
+                                if(data.country){
+                                    sales_per_country[data.country] = (typeof sales_per_country[data.country] == 'undefined') ? 1 : (sales_per_country[data.country] + 1);
+                                }
+
 								if(raw[i - 1]){
 									nextline = raw[i - 1].substr(1).split('","');
 									if ( nextline[2] == 'Author Fee' ) {
@@ -838,6 +891,13 @@
 						dataType: "script",
 						cache: true,
 						success: function () {
+
+                            // check we have updated version.
+                            var last_version = get('last_version');
+                            if(last_version != version || !last_version){
+                                clear();
+                                save('last_version',version);
+                            }
 
 						//current month
 						if (now.getMonth() == currentmonth && now.getFullYear() == currentyear) {
