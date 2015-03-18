@@ -13,7 +13,7 @@
 // @namespace		revaxarts.com
 // @description		Dashboard Plus for the Marketplaces.
 // @date			2015-03-18
-// @version			1.3.6
+// @version			1.3.7
 // @include			http://activeden.net*
 // @include			http://audiojungle.net*
 // @include			http://themeforest.net*
@@ -54,6 +54,5 @@
     (document.head||document.documentElement).appendChild(script);
     inject.setAttribute("src", dashboardplus_base_uri + 'bootstrap.js');
 	(document.head || document.documentElement).appendChild(inject);
-	
 
 })();

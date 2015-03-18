@@ -1,5 +1,8 @@
 
 
+2015.03.18 - version 1.3.7
+ * Sales Location Map Added To Statementer
+
 2015.03.18 - version 1.3.6
  * Statement CSV fix
 
