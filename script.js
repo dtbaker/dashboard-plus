@@ -12,8 +12,8 @@
 // @creator			userscripts@revaxarts.com
 // @namespace		revaxarts.com
 // @description		Dashboard Plus for the Marketplaces.
-// @date			2014-08-27
-// @version			1.3.5
+// @date			2015-03-18
+// @version			1.3.6
 // @include			http://activeden.net*
 // @include			http://audiojungle.net*
 // @include			http://themeforest.net*

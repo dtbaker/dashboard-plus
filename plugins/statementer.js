@@ -7,7 +7,7 @@
 				return;
 			}
 
-			var version = '2.2',
+			var version = '2.3',
 				exchangeinterval = 3600,
 				rates = {},
 				currentcurrency = 'USD',
@@ -616,7 +616,7 @@
 							return false;
 						}
 					}
-					if (raw == '"Date","Order ID","Type","Detail","Item ID","Document","Price","Amount","Site"') {
+					if (raw == '"Date","Order ID","Type","Detail","Item ID","Document","Price","EU VAT","Amount","Site","Other Party Country","Other Party Region","Other Party City","Other Party Zipcode"') {
 						$content.html('<span>No action here :(</span>');
 						return false;
 					}
@@ -668,12 +668,13 @@
 							type: line[2],
 							name: line[3],
 							id: parseInt(line[4], 10) || null,
-							earnings: parseFloat(line[7]),
+							earnings: parseFloat(line[8]),
 							rate: null,
 							price: parseFloat(line[6]),
-							site: line[8].replace('"', '')
+							site: line[9].replace('"', '')
 						};
-						
+						console.log(line);
+						console.log(data);
 						if (from <= data.date.getTime() && data.date.getTime() <= to || !to) {
 							switch (data.type) {
 							case 'Referral Cut':
@@ -720,7 +721,7 @@
 								if(raw[i - 1]){
 									nextline = raw[i - 1].substr(1).split('","');
 									if ( nextline[2] == 'Author Fee' ) {
-										data.earnings += parseFloat(nextline[7]);
+										data.earnings += parseFloat(nextline[8]);
 										data.price += parseFloat(nextline[6]);
 									}
 								}
@@ -844,7 +845,8 @@
 						if (lastbalance != currentbalance || !raw) {
 								$content.html('<span style="font-style:italic">fetching data...</span>');
 								$.get(csvfile, function (data) {
-									raw = $.trim(data.replace(/"Date","Order ID","Type","Detail","Item ID","Price","Amount"\n/g, ''));
+									//raw = $.trim(data.replace(/"Date","Order ID","Type","Detail","Item ID","Price","Amount"\n/g, ''));
+									raw = $.trim(data.replace(/"Date","Order ID","Type","Detail","Item ID","Document","Price","EU VAT","Amount","Site","Other Party Country","Other Party Region","Other Party City","Other Party Zipcode"\n/g, ''));
 									save('' + currentyear + '_' + currentmonth, raw);
 									window.dashboardplus.setCookie('statementer_lastbalance', currentbalance, 30);
 									initCalc();
@@ -857,7 +859,7 @@
 							clear();
 							$content.html('<span style="font-style:italic">fetching data...</span>');
 							$.get(csvfile, function (data) {
-								raw = $.trim(data.replace(/"Date","Order ID","Type","Detail","Item ID","Price","Amount","Site"\n/g, ''));
+								raw = $.trim(data.replace(/"Date","Order ID","Type","Detail","Item ID","Document","Price","EU VAT","Amount","Site","Other Party Country","Other Party Region","Other Party City","Other Party Zipcode"\n/g, ''));
 								initCalc();
 							});
 						}
