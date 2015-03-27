@@ -11,7 +11,7 @@
 
 	//"use strict"
 
-	var version = '1.3.7',
+	var version = '1.3.8',
 		cookiePrefix = 'dbp_';
 
 	if( typeof jQuery != 'undefined' ){
@@ -205,7 +205,7 @@
 				'desc': 'development only'
 			}
 		};
-	
+
 			//Dashboard Page
 		if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/author_dashboard/)) {
 	
@@ -220,17 +220,17 @@
 			enque('compare_earnings');
 			
 			//Settings Page
-		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/user\/([\w-]+)\/(\w+)\/edit/)) {
-		
-			settingspage();
-			
-			//Statement Page
-		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/statement/) || location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/user\/(.*)\/statement/)) {
-		
+        }else if (window.location.href.match(/^https?:\/\/[\.a-z3]+\.net\/user\/.*\/statement/) || location.href.match(/^https?:\/\/([\.a-z3]+)\.(net)\/statement/)) {
+
 			enque('statementer');
-			
+
 			//Forums Page
-		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/forums\//)) {
+		}else if (location.href.match(/^https?:\/\/([\.a-z3]+)\.(net)\/user\/([\w-]+)\/(\w+)/)) {
+
+            settingspage();
+
+            //Statement Page
+        }else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/forums\//)) {
 	
 			enque('envatitor');
 			enque('replypantry');
@@ -339,7 +339,7 @@
 		function settingspage(){
 		
 			var active = (location.hash == '#dashboard_plus') ? ' active' : '';
-			
+
 			$content.find('.side-tabs').append('<li><a id="dashboard_plus_link" href="#dashboard_plus" class="'+active+' glyph-plus">Dashboard Plus</a></li><style>.side-tabs a#dashboard_plus_link:before{background-position:-240px -168px;}.side-tabs a#dashboard_plus_link.active:before{background-position:13px -232px;}</style>');
 			
 			var boxhtml = '<div id="dashboard_plus_tab" class="tab-content'+active+'" style="display:block"><h2 class="underlined">Dashboard Plus</h2><p>Select all features you would like to activate. Please check out the <a href="/forums/thread/introducing-dashboard-plus/71870">forum thread</a> if you have questions</p><p></p><h3 class="underlined">Available Plugins</h3><form id="dashboardplus_form" class="horizontal-form"><fieldset>';

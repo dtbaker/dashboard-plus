@@ -1,7 +1,7 @@
 (function () {
 
 	//"use strict"
-			
+
 			if (/page=/.test(location.search)) {
 				$('<div id="statementer" style="padding-bottom:20px"><span style="font-style:italic;">Statementer is disbaled if you use pagination. <a href="' + location.href.replace(/page=(\d+)/, '') + '">go back</span></div>').insertAfter('h2.statement-heading');
 				return;
@@ -73,8 +73,6 @@
 					currentbalance = parseInt($('.header-logo-account__balance').html().substr(1).replace(',', '').replace('.', ''), 16);
 
 					$content.html('<span style="font-style:italic">loading Statement... <a href="javascript:window.dashboardplus.set(\'statementer\', {});window.dashboardplus.setCookie(\'statementer_lastbalance\', \'\', -1);location.reload();">Click here if it stucks...</a></span>');
-					var style = $('<link id="statementer_css" media="all" type="text/css" href="http://dbp.revaxarts.com/css/statementer-2.1.css" rel="stylesheet">');
-					style.appendTo('head');
                     $('head').append('<link type="text/css" rel="stylesheet" href="'+window.dashboardplus.base + 'css/statementer.css" />');
 
 					$('.statement-search__presets_links').css('float','right').insertBefore('.statement-heading').find('a').eq(0).remove();
