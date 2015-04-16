@@ -3,7 +3,7 @@
 	//"use strict"
 
 			if (/page=/.test(location.search)) {
-				$('<div id="statementer" style="padding-bottom:20px"><span style="font-style:italic;">Statementer is disbaled if you use pagination. <a href="' + location.href.replace(/page=(\d+)/, '') + '">go back</span></div>').insertAfter('h2.statement-heading');
+				$('<div id="statementer" style="padding-bottom:20px"><span style="font-style:italic;">Statementer is disbaled if you use pagination. <a href="' + location.href.replace(/page=(\d+)/, '') + '">go back</span></div>').insertBefore('.statement-search');
 				return;
 			}
 
@@ -16,7 +16,7 @@
 
 			var $content = $('<div id="statementer"></div>', {
 				id: 'statementer'
-			}).insertAfter('h2.statement-heading');
+			}).insertAfter('.statement-search');
 			var raw, sales = {},
 				reversals = [],
 				referrals = [],
@@ -75,9 +75,9 @@
 					$content.html('<span style="font-style:italic">loading Statement... <a href="javascript:window.dashboardplus.set(\'statementer\', {});window.dashboardplus.setCookie(\'statementer_lastbalance\', \'\', -1);location.reload();">Click here if it stucks...</a></span>');
                     $('head').append('<link type="text/css" rel="stylesheet" href="'+window.dashboardplus.base + 'css/statementer.css" />');
 
-					$('.statement-search__presets_links').css('float','right').insertBefore('.statement-heading').find('a').eq(0).remove();
-					$('.statement-search__advanced-form').insertBefore('.statement-heading');
-					$('.statement-search__timezone-disclaimer').css({'float':'right', 'margin-right':10}).insertBefore('.statement-heading');
+					//$('.statement-search__presets_links').css('float','right').insertBefore('.statement-search').find('a').eq(0).remove();
+					//$('.statement-search__advanced-form').insertBefore('.statement-search');
+					//$('.statement-search__timezone-disclaimer').css({'float':'right', 'margin-right':10}).insertBefore('.statement-search');
 
 
 					loadStatementer();
@@ -127,7 +127,7 @@
 					if((_firstmonday + (6048e5 * 4)) < _last.getTime()) html += '<a class="btn btn--set" data-from="' + (_firstmonday + (6048e5 * 4)) + '" data-to="' + (_firstmonday + (6048e5 * 5) - 1000) + '">6th week</a></li>';
 					html += '</div';
 					
-					$(html).insertAfter('.statement-heading');
+					$(html).insertAfter('.statement-search');
 					$('.statementer_menu').delegate('a', 'click', function () {
 						var _this = $(this),
 							_from, _to;
@@ -390,6 +390,7 @@
 					html += '<div id="statementer_copyright">Version '+version+' &copy; <a href="/user/revaxarts">revaxarts</a>.com. Licensed under the MIT license</div><hr>';
 
 
+                    console.log(html);
 
 					$('#statementer_content').html(html);
 
@@ -698,7 +699,7 @@
 					};
 					
 					var dateparts, line, data, lastdata, nextline;
-					
+
 					for (var i = statementcount - 1; i >= 0; i--) {
 
 
@@ -854,7 +855,7 @@
 						items = sortitby(sales, sortby, sortfunc);
 					}
 					items.unshift(allitems);
-					
+
 					makeContent();
 					
 				},

@@ -1,6 +1,9 @@
 
 
-2015.03.27 - version 1.3.7
+2015.04.16 - version 1.3.9
+ * URL Change in Profile Page
+
+2015.03.27 - version 1.3.8
  * URL Change in Profile Page
 
 2015.03.18 - version 1.3.7
