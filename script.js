@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 
+ * Copyright (c) 2014
  * ==================================
  * powered by revaxarts.com (http://revaxarts.com)
  * original filename: dashboardplus.user.js
@@ -13,7 +13,7 @@
 // @namespace		revaxarts.com
 // @description		Dashboard Plus for the Marketplaces.
 // @date			2015-03-18
-// @version			1.3.8
+// @version			1.3.9
 // @include			http://activeden.net*
 // @include			http://audiojungle.net*
 // @include			http://themeforest.net*
@@ -22,6 +22,14 @@
 // @include			http://3docean.net*
 // @include			http://codecanyon.net*
 // @include			http://photodune.net*
+// @include			https://activeden.net*
+// @include			https://audiojungle.net*
+// @include			https://themeforest.net*
+// @include			https://videohive.net*
+// @include			https://graphicriver.net*
+// @include			https://3docean.net*
+// @include			https://codecanyon.net*
+// @include			https://photodune.net*
 // ==/UserScript==
 
 (function () {
@@ -30,7 +38,7 @@
 	insert the the bootstrap of dbp
 	to get an uncompress version append compress=0 like http://dbp.revaxarts.com/js/bootstrap.js?compress=0
 	*/
-	
+
 	var inject = document.createElement("script");
 	inject.setAttribute("type", "text/javascript");
 
