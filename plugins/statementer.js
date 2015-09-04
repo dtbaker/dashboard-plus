@@ -48,7 +48,11 @@
 				total_withdrawal_money = 0,
 				total_earning = 0,
 				total_reversals_money = 0,
-				total_reversals = 0;
+				total_reversals = 0,
+				total_extended_support_money = 0,
+                total_extended_support = 0;
+
+    var extended_support_sales = [];
 
     var sales_per_country = {};
 				
@@ -328,7 +332,35 @@
 						html += '<td colspan="2" class="number strong">Summary:</td><td class="number strong">' + total_purchases + '</td><td class="number strong">' + _d(total_purchases_money) + '</th>';
 						html += '</tr>';
 						html += '</table>';
-						
+
+					}
+
+					if (total_extended_support) {
+
+						var month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+						var year = "" + extended_support_sales[0].date.getFullYear();
+						month = month[extended_support_sales[0].date.getMonth()];
+
+						year = year.substr(2);
+
+						html += '<h3 style="padding-bottom:0;">Extended Support:</h3>';
+						html += 'You have made <strong>' + total_extended_support + '</strong> extended support ' + _n('sale', 'sales', total_extended_support) + ' within <strong>'+Math.ceil(daysrange)+'</strong> ' + _n('day', 'days', Math.ceil(daysrange)) + ' with a total value of <strong>'+_d(total_extended_support_money) +'</strong>. That\'s <strong>'+(total_extended_support/daysrange).toFixed(2)+'</strong> items and <strong>'+_d(total_extended_support_money/daysrange)+'</strong> per day.';
+						html += '<table class="table-general -striped -highlight-row" cellspacing="0" cellpadding="0">';
+						html += '<thead><tr>';
+						html += '<td width="70">Date</td><td>Detail</td><td width="50">Amount</td><td width="60">Price</td>';
+						html += '</tr></thead>';
+
+						$.each(extended_support_sales, function (i, data) {
+							html += '<tr>';
+							html += '<td title="' + data.date.toString().substr(0, 21) + '">' + data.date.getDate() + ' ' + month + ' ' + year + '</td><td><a href="/item/' + urlify(data.name) + '/' + data.id + '">' + data.name + '</a></td><td class="number">1</td><td class="number">' + _d(data.earnings) + '</td>';
+							html += '</tr>';
+						});
+
+						html += '<tr>';
+						html += '<td colspan="2" class="number strong">Summary:</td><td class="number strong">' + total_extended_support + '</td><td class="number strong">' + _d(total_extended_support_money) + '</th>';
+						html += '</tr>';
+						html += '</table>';
+
 					}
 
 					if (total_referrals) {
@@ -389,16 +421,9 @@
 
 					html += '<div id="statementer_copyright">Version '+version+' &copy; <a href="/user/revaxarts">revaxarts</a>.com. Licensed under the MIT license</div><hr>';
 
-
-                    console.log(html);
-
 					$('#statementer_content').html(html);
 
-
                     if (total_sales) {
-
-
-
 
                         var chart_data = [
                             ['Country','Sales']
@@ -674,11 +699,9 @@
 					
 					var statementcount = raw.length;
 
-					sales = {}, referrals = [], purchases = [], deposits = [], withdrawal = [], reversals = [], items = [];
+					sales = {}, referrals = [], deposits = [], withdrawal = [], reversals = [], items = [];
 
-					total_sales = total_sales_volume = total_referrals = total_referrals_money =
-
-					total_deposits = total_deposits_money = total_purchases = total_purchases_money = total_withdrawal = total_withdrawal_money = total_reversals = total_reversals_money = total_earning = 0;
+					total_sales = total_sales_volume = total_referrals = total_referrals_money = total_deposits = total_deposits_money = total_purchases = total_purchases_money = total_withdrawal = total_withdrawal_money = total_reversals = total_reversals_money = total_earning = 0;
 
 					sales[allitems] = {
 						id: 'all',
@@ -698,31 +721,97 @@
 						}
 					};
 					
-					var dateparts, line, data, lastdata, nextline;
+					var order_id, dateparts, line, data, lastdata, nextline, by_order_id = {}, random_order_id = 1;
 
-					for (var i = statementcount - 1; i >= 0; i--) {
+                    // first we go through the statement grouping everything by order id
+                    // then we go through the order ids calculating the sales etc..
+
+                    for (var i = statementcount - 1; i >= 0; i--) {
+
+                        line = raw[i].split('","');
+                        order_id = parseFloat(line[1]) || random_order_id++;
+                        order_id = order_id + "_" + (parseInt(line[4], 10) || "");
+                        if(typeof by_order_id[order_id] == 'undefined'){
+                            by_order_id[order_id] = [];
+                        }
+                        // todo: the order_id will fail if the buyer purchases the same item twice or more in a single cart transaction. the sale numbers wont match up
+
+                        line[0] = line[0].substr(1);
+
+                        dateparts = line[0].replace(/(-|:)/g, ' ').split(' ');
+
+                        data = {
+                            date: new Date(dateparts[0], dateparts[1]-1, dateparts[2], dateparts[3], dateparts[4], dateparts[5] ),
+                            type: line[2],
+                            name: line[3],
+                            id: parseInt(line[4], 10) || null,
+                            document: parseInt(line[5], 10) || null,
+                            earnings: parseFloat(line[8]),
+                            rate: null,
+                            price: parseFloat(line[6]),
+                            site: line[9].replace('"', ''),
+                            country: line[10],
+                            purchased: false,
+                            order_id: order_id
+                        };
+
+                        by_order_id[order_id].push(data);
+                    }
+                    // now we merge all the orders together into single entries so we can better process them in a loop
+
+                    var single_orders = [], o, x, s;
+                    for(o in by_order_id){
+                        if(by_order_id.hasOwnProperty(o)){
+                            var newdata = {};
+                            for(x=0; x<by_order_id[o].length; x++){
+                                // merge data into newdata
+                                for(s in by_order_id[o][x]){
+                                    if(by_order_id[o][x].hasOwnProperty(s)){
+                                        // merge this one into newdata
+                                        if(typeof newdata[s] == 'undefined' || !newdata[s] || newdata[s] == ''){
+                                            newdata[s] = by_order_id[o][x][s];
+                                        }else{
+                                            // data already exists in this key.
+                                            if(s == 'earnings'){
+                                                // combine earnings per order_id
+                                                newdata[s] += by_order_id[o][x][s];
+                                            }
+                                        }
+                                    }
+                                }
+                                if(by_order_id[o][x].name.indexOf('6 months extended') > 0){
+                                    total_extended_support++;
+                                    // find the author fee for this particular extended sale.
+                                    for(var other=0; other<by_order_id[o].length; other++){
+                                        if(by_order_id[o][other].type == 'Author Fee' && by_order_id[o][other].name.indexOf('for extended') > 1){
+                                            by_order_id[o][x].earnings += by_order_id[o][other].earnings;
+                                        }
+                                    }
+                                    total_extended_support_money+=by_order_id[o][x].earnings;
+                                    extended_support_sales.push(by_order_id[o][x]);
+                                }
+                            }
+                            single_orders.push(newdata);
+                        }
+                    }
+
+					for (var i = single_orders.length - 1; i >= 0; i--) {
 
 
-						line = raw[i].split('","');
-
-						//correct timezone
-						//line[0] = line[0].replace(/(\+1100|\+1000)/, '');
-
-						line[0] = line[0].substr(1);
-						
-						dateparts = line[0].replace(/(-|:)/g, ' ').split(' ');
-						
-						data = {
+						/*data = {
 							date: new Date(dateparts[0], dateparts[1]-1, dateparts[2], dateparts[3], dateparts[4], dateparts[5] ),
 							type: line[2],
-							name: line[3],
+							name: item_name,
 							id: parseInt(line[4], 10) || null,
+							document: parseInt(line[5], 10) || null,
 							earnings: parseFloat(line[8]),
 							rate: null,
 							price: parseFloat(line[6]),
 							site: line[9].replace('"', ''),
                             country: line[10]
-						};
+						};*/
+                        data = single_orders[i];
+
 						if (from <= data.date.getTime() && data.date.getTime() <= to || !to) {
 							switch (data.type) {
 							case 'Referral Cut':
@@ -730,9 +819,9 @@
 								referrals.push(data);
 								total_referrals++;
 								total_referrals_money += data.earnings;
-								if(raw[i - 1]){
-									nextline = raw[i - 1].substr(1).split('","');
-									(parseInt(nextline[7])*.3 == data.earnings && new Date(nextline[0].replace(/(\+1100|\+1000)/, '')).getTime()-data.date.getTime() <= 1000) ? data.purchased = nextline : data.purchased = false;
+								if(single_orders[i - 1]){
+									nextline = single_orders[i - 1];
+									(parseInt(nextline.earnings)*.3 == data.earnings && nextline.date.getTime()-data.date.getTime() <= 1000) ? data.purchased = nextline : data.purchased = false;
 								}else{
 									data.purchased = false;
 								}
@@ -749,7 +838,8 @@
 							case 'Purchase':
 								data.price = -data.earnings;
 								purchases.push(data);
-								if(!(/^Buyer fee for /.test(data.name))) total_purchases++;
+								//if(!(/^Buyer fee for /.test(data.name))) total_purchases++;
+								total_purchases++;
 								total_purchases_money -= data.earnings;
 								//total_earning += data.earnings;
 								break;
@@ -770,13 +860,13 @@
                                     sales_per_country[data.country] = (typeof sales_per_country[data.country] == 'undefined') ? 1 : (sales_per_country[data.country] + 1);
                                 }
 
-								if(raw[i - 1]){
+								/*if(raw[i - 1]){
 									nextline = raw[i - 1].substr(1).split('","');
 									if ( nextline[2] == 'Author Fee' ) {
 										data.earnings += parseFloat(nextline[8]);
 										data.price += parseFloat(nextline[6]);
 									}
-								}
+								}*/
 
 								if ($.inArray(name, items) == -1) {
 								
@@ -826,7 +916,7 @@
 								sales[allitems].maxearnings_day = Math.max(sales[allitems].earningsperday[data.date.getDate()], sales[allitems].maxearnings_day);
 
 								total_sales += add;
-								total_sales_volume += (data.price)*add;
+								total_sales_volume += (data.earnings)*add;
 								total_earning += (data.earnings*sales[name].percentage)*add;
 								break;
 
