@@ -699,9 +699,9 @@
 					
 					var statementcount = raw.length;
 
-					sales = {}, referrals = [], deposits = [], withdrawal = [], reversals = [], items = [];
+					sales = {}, referrals = [], deposits = [], withdrawal = [], reversals = [], items = [], extended_support_sales = [];
 
-					total_sales = total_sales_volume = total_referrals = total_referrals_money = total_deposits = total_deposits_money = total_purchases = total_purchases_money = total_withdrawal = total_withdrawal_money = total_reversals = total_reversals_money = total_earning = 0;
+					total_sales = total_sales_volume = total_referrals = total_referrals_money = total_deposits = total_deposits_money = total_purchases = total_purchases_money = total_withdrawal = total_withdrawal_money = total_reversals = total_reversals_money = total_earning = total_extended_support = total_extended_support_money = 0;
 
 					sales[allitems] = {
 						id: 'all',
@@ -780,15 +780,19 @@
                                     }
                                 }
                                 if(by_order_id[o][x].name.indexOf('6 months extended') > 0){
-                                    total_extended_support++;
-                                    // find the author fee for this particular extended sale.
-                                    for(var other=0; other<by_order_id[o].length; other++){
-                                        if(by_order_id[o][other].type == 'Author Fee' && by_order_id[o][other].name.indexOf('for extended') > 1){
-                                            by_order_id[o][x].earnings += by_order_id[o][other].earnings;
+
+
+                                    if (from <= by_order_id[o][x].date.getTime() && by_order_id[o][x].date.getTime() <= to || !to) {
+                                        total_extended_support++;
+                                        // find the author fee for this particular extended sale.
+                                        for (var other = 0; other < by_order_id[o].length; other++) {
+                                            if (by_order_id[o][other].type == 'Author Fee' && by_order_id[o][other].name.indexOf('for extended') > 1) {
+                                                by_order_id[o][x].earnings += by_order_id[o][other].earnings;
+                                            }
                                         }
+                                        total_extended_support_money += by_order_id[o][x].earnings;
+                                        extended_support_sales.push(by_order_id[o][x]);
                                     }
-                                    total_extended_support_money+=by_order_id[o][x].earnings;
-                                    extended_support_sales.push(by_order_id[o][x]);
                                 }
                             }
                             single_orders.push(newdata);
