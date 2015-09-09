@@ -1,5 +1,8 @@
 
 
+2015.09.09 - version 1.4.1
+ * Fix for duplicate extended support sales
+
 2015.09.04 - version 1.4.0
  * Fix for new statement CSV format and extended support stats
 
