@@ -44,7 +44,7 @@
 		dropdown += '</select>';
 		dropdown = $(dropdown);
 
-		$('.earning__breadcrumb__legend').prepend(dropdown);
+		$('.earning__breadcrumb').append(dropdown);
 
 		dropdown.on('change', function(){
 			location.hash = '/'+$(this).val();
