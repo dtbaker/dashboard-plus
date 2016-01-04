@@ -1,5 +1,8 @@
 
 
+2016.01.04 - version 1.4.2
+ * Fix for new US tax
+
 2015.09.09 - version 1.4.1
  * Fix for duplicate extended support sales
 
