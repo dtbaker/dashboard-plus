@@ -38,7 +38,7 @@
     line-height: 40px;
     padding-top: 10px;
     overflow: hidden;
-    width: 24%;
+    width: 18.65%;
 }
 
 #statementer #statementer_summary ul li .statementer_currency {
@@ -60,7 +60,7 @@
 
 #statementer h2 span.sortorder {
     float: right;
-    font-size: 16px;
+    font-size: 15px;
     padding-top: 4px;
 }
 
@@ -73,7 +73,7 @@
     display: block;
     white-space: nowrap;
     height: 20px;
-    font-size: 34px;
+    font-size: 30px;
     line-height: 17px;
     padding: 0;
     font-weight: bold;

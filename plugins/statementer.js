@@ -7,7 +7,7 @@
 				return;
 			}
 
-			var version = '2.3',
+			var version = '2.4',
 				exchangeinterval = 3600,
 				rates = {},
 				currentcurrency = 'USD',
@@ -24,7 +24,7 @@
 				deposits = [],
 				withdrawal = [],
 				items = [],
-				lastdate, firstdate, total_sales,
+				lastdate, firstdate,
 
 				allitems = 'all items',
 				
@@ -46,6 +46,8 @@
 				total_purchases_money = 0,
 				total_withdrawal = 0,
 				total_withdrawal_money = 0,
+                total_us_tax_count = 0,
+                total_us_tax_money = 0,
 				total_earning = 0,
 				total_reversals_money = 0,
 				total_reversals = 0,
@@ -231,7 +233,10 @@
 					
 					var daysrange = ((to || lastdate) - (from || firstdate))/864e5;
 					
-					if (raw == '"Date","Order ID","Type","Detail","Item ID","Price","Amount"') {
+					if (
+                        raw == '"Date","Order ID","Type","Detail","Item ID","Price","Amount"' ||
+                        raw == '"Date","Order ID","Type","Detail","Item ID","Document","Price","EU VAT","US RWT","US BWT","Amount","Site","Other Party Country","Other Party Region","Other Party City","Other Party Zipcode"'
+                    ) {
 						$('#statementer_content').html('<h2>Sorry, no action this month!</h2>');
 						return false;
 					}
@@ -242,6 +247,7 @@
 					html += '<li>you\'ve purchased<h4>' + number_format(total_purchases) + '</h4>' + _n('item', 'items', total_purchases) + ' and spent<h4>' + _d(total_purchases_money) + '</h4></li>';
 					html += '<li>you\'ve referred<h4>' + number_format(total_referrals) + '</h4>' + _n('user', 'users', total_referrals) + ' and earned<h4>' + _d(total_referrals_money) + '</h4></li>';
 					html += '<li>you\'ve withdrawn<h4>' + number_format(total_withdrawal) + '</h4>' + _n('time', 'times', total_withdrawal) + ' with an amount of<h4>' + _d(total_withdrawal_money) + '</h4></li>';
+					html += '<li>you\'ve been taxed on<h4>' + number_format(total_us_tax_count) + '</h4>' + _n('sale', 'sales', total_us_tax_count) + ' with an amount of<h4>' + _d(total_us_tax_money) + '</h4></li>';
 					html += '</ul>';
 					html += '</div>';
 					
@@ -690,7 +696,7 @@
 							return false;
 						}
 					}
-					if (raw == '"Date","Order ID","Type","Detail","Item ID","Document","Price","EU VAT","Amount","Site","Other Party Country","Other Party Region","Other Party City","Other Party Zipcode"') {
+					if (raw == '"Date","Order ID","Type","Detail","Item ID","Document","Price","EU VAT","US RWT","US BWT","Amount","Site","Other Party Country","Other Party Region","Other Party City","Other Party Zipcode"') {
 						$content.html('<span>No action here :(</span>');
 						return false;
 					}
@@ -701,7 +707,7 @@
 
 					sales = {}, referrals = [], deposits = [], withdrawal = [], reversals = [], items = [], extended_support_sales = [];
 
-					total_sales = total_sales_volume = total_referrals = total_referrals_money = total_deposits = total_deposits_money = total_purchases = total_purchases_money = total_withdrawal = total_withdrawal_money = total_reversals = total_reversals_money = total_earning = total_extended_support = total_extended_support_money = 0;
+					total_sales = total_sales_volume = total_referrals = total_referrals_money = total_deposits = total_deposits_money = total_purchases = total_purchases_money = total_withdrawal = total_withdrawal_money = total_reversals = total_reversals_money = total_earning = total_extended_support = total_extended_support_money = total_us_tax_count = total_us_tax_money = 0;
 
 					sales[allitems] = {
 						id: 'all',
@@ -746,14 +752,18 @@
                             name: line[3],
                             id: parseInt(line[4], 10) || null,
                             document: parseInt(line[5], 10) || null,
-                            earnings: parseFloat(line[8]),
+                            earnings: parseFloat(line[10]),
                             rate: null,
                             price: parseFloat(line[6]),
-                            site: line[9].replace('"', ''),
-                            country: line[10],
+                            us_rwt: parseFloat(line[8]), // from 0 to 30%
+                            us_bwt: parseFloat(line[9]), // if haven't submited W-8 form.
+                            site: line[11].replace('"', ''),
+                            country: line[12],
                             purchased: false,
                             order_id: order_id
                         };
+                        if(isNaN(data.us_bwt))data.us_bwt = 0;
+                        if(isNaN(data.us_rwt))data.us_rwt = 0;
 
                         by_order_id[order_id].push(data);
                     }
@@ -772,7 +782,11 @@
                                             newdata[s] = by_order_id[o][x][s];
                                         }else{
                                             // data already exists in this key.
-                                            if(s == 'earnings'){
+                                            if(
+                                                s == 'earnings' ||
+                                                s == 'us_rwt' ||
+                                                s == 'us_bwt'
+                                            ){
                                                 // combine earnings per order_id
                                                 newdata[s] += by_order_id[o][x][s];
                                             }
@@ -921,6 +935,8 @@
 
 								total_sales += add;
 								total_sales_volume += (data.earnings)*add;
+								total_us_tax_count += add;
+								total_us_tax_money += (data.us_rwt + data.us_bwt)*add;
 								total_earning += (data.earnings*sales[name].percentage)*add;
 								break;
 
@@ -999,7 +1015,7 @@
 								$content.html('<span style="font-style:italic">fetching data...</span>');
 								$.get(csvfile, function (data) {
 									//raw = $.trim(data.replace(/"Date","Order ID","Type","Detail","Item ID","Price","Amount"\n/g, ''));
-									raw = $.trim(data.replace(/"Date","Order ID","Type","Detail","Item ID","Document","Price","EU VAT","Amount","Site","Other Party Country","Other Party Region","Other Party City","Other Party Zipcode"\n/g, ''));
+									raw = $.trim(data.replace(/"Date","Order ID","Type","Detail","Item ID","Document","Price","EU VAT","US RWT","US BWT","Amount","Site","Other Party Country","Other Party Region","Other Party City","Other Party Zipcode"\n/g, ''));
 									save('' + currentyear + '_' + currentmonth, raw);
 									window.dashboardplus.setCookie('statementer_lastbalance', currentbalance, 30);
 									initCalc();
@@ -1012,7 +1028,7 @@
 							clear();
 							$content.html('<span style="font-style:italic">fetching data...</span>');
 							$.get(csvfile, function (data) {
-								raw = $.trim(data.replace(/"Date","Order ID","Type","Detail","Item ID","Document","Price","EU VAT","Amount","Site","Other Party Country","Other Party Region","Other Party City","Other Party Zipcode"\n/g, ''));
+								raw = $.trim(data.replace(/"Date","Order ID","Type","Detail","Item ID","Document","Price","EU VAT","US RWT","US BWT","Amount","Site","Other Party Country","Other Party Region","Other Party City","Other Party Zipcode"\n/g, ''));
 								initCalc();
 							});
 						}
