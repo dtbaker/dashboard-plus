@@ -935,8 +935,10 @@
 
 								total_sales += add;
 								total_sales_volume += (data.earnings)*add;
-								total_us_tax_count += add;
-								total_us_tax_money += (data.us_rwt + data.us_bwt)*add;
+                                if(data.us_rwt > 0 || data.us_bwt > 0) {
+                                    total_us_tax_count += add;
+                                    total_us_tax_money += (data.us_rwt + data.us_bwt) * add;
+                                }
 								total_earning += (data.earnings*sales[name].percentage)*add;
 								break;
 
