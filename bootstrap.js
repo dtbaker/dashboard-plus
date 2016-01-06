@@ -11,7 +11,7 @@
 
 	//"use strict"
 
-	var version = '1.4.2',
+	var version = '1.4.3',
 		cookiePrefix = 'dbp_';
 
 	if( typeof jQuery != 'undefined' ){
@@ -121,13 +121,17 @@
 		var fontawesome = $('<link id="dashboard-plus-font" media="all" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">');
 		
 		var active_plugins = get('active', {});
-	
-		var $content = $('#content');
+
+        var $content = $('#content');
 		
 		var plugins = {
 			'statementer': {
 				'name': 'Statementer',
-				'desc': 'Advanced Statement Section'
+				'desc': 'Advanced Statement Section (graphs etc..)'
+			},
+			'statement_merge': {
+				'name': 'Statement Merge',
+				'desc': 'Merge author fees into a single row on the statement page'
 			},
 			'notification': {
 				'name': 'Notifications',
@@ -223,6 +227,7 @@
         }else if (window.location.href.match(/^https?:\/\/[\.a-z3]+\.net\/user\/.*\/statement/) || location.href.match(/^https?:\/\/([\.a-z3]+)\.(net)\/statement/)) {
 
 			enque('statementer');
+			enque('statement_merge');
 
 			//Forums Page
 		}else if (location.href.match(/^https?:\/\/([\.a-z3]+)\.(net)\/user\/([\w-]+)\/(\w+)/)) {
@@ -291,9 +296,9 @@
 	
 	
 		function enque(plugin){
-			
+
 			if(!plugin || !active_plugins[plugin] || !plugins[plugin]) return false;
-			
+
 			loadit.push(plugin);
 			if(plugins[plugin].font || plugin == '_localdevelopment'){
 				fontawesome.appendTo('head');
@@ -380,6 +385,14 @@
 			
 					
 			$('#dashboard_plus_link').click(function(){
+
+
+                var urlmatches;
+                if(urlmatches = location.href.match(/^https:\/\/([\.a-z3]+)\.(net)\/user\/([\w-]+)\/(\w+)/)){
+                    // https, redirect to non https.
+                    location.href = 'http://codecanyon.net/user/' + urlmatches[3] + '/profile/edit#dashboard_plus';
+                    return false;
+                }
 			
 				$content.find('.content-s').html(boxhtml);
 				

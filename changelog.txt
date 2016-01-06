@@ -1,5 +1,8 @@
 
 
+2016.01.06 - version 1.4.3
+ * Merge statement rows
+
 2016.01.04 - version 1.4.2
  * Fix for new US tax
 
