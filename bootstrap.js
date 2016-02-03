@@ -11,9 +11,9 @@
 
 	//"use strict"
 
-	var version = '1.3.5',
+	var version = '1.4.3',
 		cookiePrefix = 'dbp_';
-	
+
 	if( typeof jQuery != 'undefined' ){
 		go();
 		return;
@@ -21,7 +21,7 @@
 	
 	yepnope({
 		load: [
-			"http://0.envato-static.com/assets/application/vendor-2b538c3f97134712a085fc58f4c396f5.js" 
+			"http://0.envato-static.com/assets/application/vendor-2b538c3f97134712a085fc58f4c396f5.js"
 		],
 		complete: go
 	});
@@ -121,13 +121,17 @@
 		var fontawesome = $('<link id="dashboard-plus-font" media="all" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">');
 		
 		var active_plugins = get('active', {});
-	
-		var $content = $('#content');
+
+        var $content = $('#content');
 		
 		var plugins = {
 			'statementer': {
 				'name': 'Statementer',
-				'desc': 'Advanced Statement Section'
+				'desc': 'Advanced Statement Section (graphs etc..)'
+			},
+			'statement_merge': {
+				'name': 'Statement Merge',
+				'desc': 'Merge author fees into a single row on the statement page'
 			},
 			'notification': {
 				'name': 'Notifications',
@@ -205,7 +209,7 @@
 				'desc': 'development only'
 			}
 		};
-	
+
 			//Dashboard Page
 		if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/author_dashboard/)) {
 	
@@ -215,22 +219,23 @@
 			enque('replypantry');
 
 			//Earnings Page
-		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/user\/(\w+)\/earnings\/(referrals|sales)\/(.*)/)) {
+		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/user\/(\w+)\/earnings\/(total_sales|item_sales|referrals|support_sales)\/(.*)/)) {
 		
 			enque('compare_earnings');
 			
 			//Settings Page
-		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/user\/([\w-]+)\/(\w+)\/edit/)) {
-		
-			settingspage();
-			
-			//Statement Page
-		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/statement/) || location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/user\/(.*)\/statement/)) {
-		
+        }else if (window.location.href.match(/^https?:\/\/[\.a-z3]+\.net\/user\/.*\/statement/) || location.href.match(/^https?:\/\/([\.a-z3]+)\.(net)\/statement/)) {
+
 			enque('statementer');
-			
+			enque('statement_merge');
+
 			//Forums Page
-		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/forums\//)) {
+		}else if (location.href.match(/^https?:\/\/([\.a-z3]+)\.(net)\/user\/([\w-]+)\/(\w+)/)) {
+
+            settingspage();
+
+            //Statement Page
+        }else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/forums\//)) {
 	
 			enque('envatitor');
 			enque('replypantry');
@@ -291,9 +296,9 @@
 	
 	
 		function enque(plugin){
-			
+
 			if(!plugin || !active_plugins[plugin] || !plugins[plugin]) return false;
-			
+
 			loadit.push(plugin);
 			if(plugins[plugin].font || plugin == '_localdevelopment'){
 				fontawesome.appendTo('head');
@@ -339,7 +344,7 @@
 		function settingspage(){
 		
 			var active = (location.hash == '#dashboard_plus') ? ' active' : '';
-			
+
 			$content.find('.side-tabs').append('<li><a id="dashboard_plus_link" href="#dashboard_plus" class="'+active+' glyph-plus">Dashboard Plus</a></li><style>.side-tabs a#dashboard_plus_link:before{background-position:-240px -168px;}.side-tabs a#dashboard_plus_link.active:before{background-position:13px -232px;}</style>');
 			
 			var boxhtml = '<div id="dashboard_plus_tab" class="tab-content'+active+'" style="display:block"><h2 class="underlined">Dashboard Plus</h2><p>Select all features you would like to activate. Please check out the <a href="/forums/thread/introducing-dashboard-plus/71870">forum thread</a> if you have questions</p><p></p><h3 class="underlined">Available Plugins</h3><form id="dashboardplus_form" class="horizontal-form"><fieldset>';
@@ -380,6 +385,14 @@
 			
 					
 			$('#dashboard_plus_link').click(function(){
+
+
+                var urlmatches;
+                if(urlmatches = location.href.match(/^https:\/\/([\.a-z3]+)\.(net)\/user\/([\w-]+)\/(\w+)/)){
+                    // https, redirect to non https.
+                    location.href = 'http://codecanyon.net/user/' + urlmatches[3] + '/profile/edit#dashboard_plus';
+                    return false;
+                }
 			
 				$content.find('.content-s').html(boxhtml);
 				

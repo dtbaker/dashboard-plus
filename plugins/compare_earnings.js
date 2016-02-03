@@ -4,7 +4,7 @@
 	var options = Chart.instances['chart-0'].options;
 	
 	var path,type,year,month,day,dropdown,
-		chart = Chart.instances['chart-0'].chart,
+		chart = Chart.instances['chart-0'],
 		nativedata,
 		externalAjax = true;
 
@@ -33,8 +33,29 @@
 		compares = {};
 
 		if(year) compares['last year'] = (year ? (year-1)+(month ? '/'+month+(day ? '/'+day : '') : '') : '');
-		if(month) compares['last month'] = (year ? year+(month ? '/'+(month-1)+(day ? '/'+day : '') : '') : '');
-		if(day) compares['last day'] = (year ? year+(month ? '/'+month+(day ? '/'+(day-1) : '') : '') : '');
+		if(month){
+            var last_month = month-1;
+            var last_year = year;
+            if(last_month <= 0){
+                last_month = 12;
+                last_year--;
+            }
+            compares['last month'] = (last_year ? last_year+(last_month ? '/'+last_month+(day ? '/'+day : '') : '') : '');
+        }
+		if(day){
+            var last_month = month;
+            var last_year = year;
+            var last_day = day-1;
+            if(last_day <= 0){
+                last_month--;
+                if(last_month <= 0){
+                    last_month = 12;
+                    last_year--;
+                }
+                last_day = new Date(last_year, last_month, 0).getDate();
+            }
+            compares['last day'] = (last_year ? last_year+(last_month ? '/'+last_month+(last_day ? '/'+last_day : '') : '') : '');
+        }
 
 
 		$.each(compares, function(name, value){
@@ -44,7 +65,7 @@
 		dropdown += '</select>';
 		dropdown = $(dropdown);
 
-		$('.earning__breadcrumb__legend').prepend(dropdown);
+		$('.earning__breadcrumb').append(dropdown);
 
 		dropdown.on('change', function(){
 			location.hash = '/'+$(this).val();
@@ -71,8 +92,10 @@
 			data.datasets[0].pointHighlightFill = "#fff";
 			data.datasets[0].pointHighlightStroke = "rgba(151,187,205,0.5)";
 
-			nativedata.datasets[1] = data.datasets[0];
-			chart.Line(nativedata, options);
+            nativedata.datasets[1] = data.datasets[0];
+            chart.datasets = nativedata.datasets;
+			chart.chart.Line(nativedata, options);
+            //chart.update();
 
 		});
 	}

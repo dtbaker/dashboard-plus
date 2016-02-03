@@ -11,7 +11,15 @@
                 "http://graphicriver.net/*",
                 "http://3docean.net/*",
                 "http://codecanyon.net/*",
-                "http://photodune.net/*"
+                "http://photodune.net/*",
+                "https://activeden.net/*",
+                "https://audiojungle.net/*",
+                "https://themeforest.net/*",
+                "https://videohive.net/*",
+                "https://graphicriver.net/*",
+                "https://3docean.net/*",
+                "https://codecanyon.net/*",
+                "https://photodune.net/*"
             ],
             "run_at": "document_idle"
         }
@@ -30,7 +38,7 @@
         "64": "icon.png",
         "128": "icon.png"
     },
-    "description": "Dashboard Plus for the Envato Market.",
+    "description": "Dashboard Plus for the Envato Market created by @revaxarts.",
     "name": "Dashboard Plus for Envato",
-    "version": "1.3.5"
+    "version": "1.4.3"
 }
