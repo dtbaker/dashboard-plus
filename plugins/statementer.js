@@ -571,7 +571,6 @@
 					map1 += '</map>';
 					map2 += '</map>';
 					html += map1 + map2;
-					console.log( element );
 					element.html(html).tabs({
 						selected: currenttab,
 						select: function (event, ui) {
