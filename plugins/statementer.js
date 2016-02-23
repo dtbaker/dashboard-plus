@@ -27,13 +27,13 @@
 				lastdate, firstdate,
 
 				allitems = 'all items',
-				
+
 				sortby = 'name', sortdir = 'DESC',
 
 				currenttab = 0,
 				currentitem = 0,
 				tabcount = 0,
-				
+
 				from, to;
 
 			var total_sales = 0,
@@ -57,21 +57,21 @@
     var extended_support_sales = [];
 
     var sales_per_country = {};
-				
+
 			var lastbalance = 0,
 				currentbalance = 0;
-				
+
 			var now = new Date(), timestamp = now.getTime(), envatotimeoffsetinhours = 12+now.getTimezoneOffset()/60;
 				now = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes() + (now.getTimezoneOffset()+ 60*parseInt(envatotimeoffsetinhours,10)), now.getSeconds());
-			
+
 			var current = location.pathname.match(/(\d\d\d\d)-(\d\d)/),
 				monthnames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
 				currentmonth = current ? parseInt(current[2],10)-1 : now.getMonth(),
 				currentyear = current ? parseInt(current[1],10) : now.getFullYear(),
 				csvfile = '/statement/'+currentyear+'-'+(currentmonth < 9 ? '0'+(currentmonth+1) : (currentmonth+1))+'.csv?v=v1';
-			
+
 			var color = '0084B4';
-			
+
 
 			var prepareUI = function () {
 					lastbalance = window.dashboardplus.getCookie('statementer_lastbalance');
@@ -107,7 +107,7 @@
 						window.location = this.href;
 						return false;
 					});
-					
+
 					html = '<div class="statementer_menu feature-list">';
 					var _first = new Date(currentyear, currentmonth, 1, 0, 0, 0),
 						_last = new Date(currentyear, currentmonth + 1, 0, 23, 59, 59),
@@ -132,7 +132,7 @@
 					if((_firstmonday + (6048e5 * 3)) < _last.getTime()) html += '<a class="btn btn--set" data-from="' + (_firstmonday + (6048e5 * 3)) + '" data-to="' + (_firstmonday + (6048e5 * 4) - 1000) + '">5th week</a></li>';
 					if((_firstmonday + (6048e5 * 4)) < _last.getTime()) html += '<a class="btn btn--set" data-from="' + (_firstmonday + (6048e5 * 4)) + '" data-to="' + (_firstmonday + (6048e5 * 5) - 1000) + '">6th week</a></li>';
 					html += '</div';
-					
+
 					$(html).insertAfter('.statement-search');
 					$('.statementer_menu').delegate('a', 'click', function () {
 						var _this = $(this),
@@ -168,35 +168,35 @@
 						$(this).select();
 					})
 					.delegate('.percentage', 'change', function(){
-						
+
 						var val = $(this).val(),
 							id = $(this).data('id'),
 							p = get('percentages');
-							
+
 						if(!id) return;
 						if(isNaN(val)) val = 100;
 						if(!p) p = {};
-						
+
 						val = Math.max(0, Math.min(100, val));
 						$(this).val(val);
 
 						p[id] = val/100;
-						
-						
+
+
 						save('percentages', p);
 						to = null;
 						calculate();
 						return;
 					});
-					
-					
+
+
 				},
 				currency = function () {
 					return false;
 					var lastcurrencyupdate = window.dashboardplus.getCookie('statementer_lastcurrencyupdate');
 						rates = get('statementer_rates');
-					
-						
+
+
 					if(timestamp - lastcurrencyupdate > exchangeinterval*1000 || !rates){
 						$.ajax({
 							url: 'http://openexchangerates.org/latest.json',
@@ -208,7 +208,7 @@
 							currencyDropdown(rates);
 							},
 							error: function(){
-								$('#statementer_currency').html('couldn\'t load currencies :('); 
+								$('#statementer_currency').html('couldn\'t load currencies :(');
 							}
 						});
 					}else{
@@ -228,11 +228,11 @@
 					$('#statementer_currency').html(html);
 				},
 				makeContent = function () {
-					
+
 					var lastdateday = new Date(lastdate).getDate()-1;
-					
+
 					var daysrange = ((to || lastdate) - (from || firstdate))/864e5;
-					
+
 					if (
                         raw == '"Date","Order ID","Type","Detail","Item ID","Price","Amount"' ||
                         raw == '"Date","Order ID","Type","Detail","Item ID","Document","Price","EU VAT","US RWT","US BWT","Amount","Site","Other Party Country","Other Party Region","Other Party City","Other Party Zipcode"'
@@ -250,7 +250,7 @@
 					html += '<li>you\'ve been taxed on<h4>' + number_format(total_us_tax_count) + '</h4>' + _n('sale', 'sales', total_us_tax_count) + ' with an amount of<h4>' + _d(total_us_tax_money) + '</h4></li>';
 					html += '</ul>';
 					html += '</div>';
-					
+
 					tabcount = 0;
 
 
@@ -262,7 +262,7 @@
 						html += '<div id="accordion">';
 
 						$.each(items, function (i, name) {
-							
+
 							if(sales[name].totalsales <= 0) return;
 
 							var linktext = (name != allitems) ? '<a href="/item/goto/' + sales[name].id + '" title="visit item page" class="statementer_itemlink" onclick="return false;">&rarr;</a> ' : '';
@@ -270,7 +270,7 @@
 
 							html += '<div id="tabh_' + sales[name].id + '" class="accordion-label"> ' + icon + name.replace('_'+sales[name].id, '') + ' ' + linktext + '<span class="right">' + sales[name].totalsales + ' total ' + _n('sale', 'sales', sales[name].totalsales) + ' &ndash; ' + _d(sales[name].totalearnings) + ' ' +(sales[name].percentage < 1 ? ' <span title="you get ' + (sales[name].percentage*100) + '% of this items profit">('+(sales[name].percentage*100)+'%)</span>' : '') + '</span></div>';
 							html += '<div style="height:417px;" data-name="' + name + '"></div>';
-							tabcount++;
+
 
 						});
 						html += '</div>';
@@ -310,7 +310,7 @@
 						html += '<td colspan="2" class="number strong">Summary:</td><td class="number strong">' + total_reversals + '</td><td class="number strong">- ' + _d(total_reversals_money) + '</th>';
 						html += '</tr>';
 						html += '</table>';
-						
+
 					}
 
 					if (total_purchases) {
@@ -478,7 +478,7 @@
 							loadCharts(ui.newContent);
 						}
 					});
-					
+
 					$('span.sortby').delegate('a', 'click', function(){
 						to = null;
 						if(sortby == $(this).data('sort')){
@@ -490,7 +490,7 @@
 						calculate();
 						return false;
 					}).find('[data-sort='+sortby+']').addClass('active');
-					
+
 					//
 					if($('#accordion').data('accordion')) loadCharts($('#accordion').data('accordion').active.next());
 
@@ -519,7 +519,7 @@
 					$('#statementer_date_from').html(new Date(from || firstofmonth).toString().substr(0, 21));
 					$('#statementer_date_to').html(new Date(to || lastofmonth).toString().substr(0, 21));
 					//";
-					
+
 
 				},
 
@@ -552,10 +552,10 @@
 							earnings_values.push(parseInt(value, 10));
 						}
 					});
-					
-					
+
+
 					var html = '' + '<div class="tabs"><ul><li><a href="#tabs' + tabcount + '1">Sales per day</a></li><li><a href="#tabs' + tabcount + '2">Sales per hour</a></li><li><a href="#tabs' + tabcount + '3">Earnings per day ($)</a></li></ul>' + ( (typeof sales[name].percentage == 'number') ? '<span class="percentage" title="you get ' + (sales[name].percentage*100) + '% of this items profit"><input type="text" value="' + (sales[name].percentage*100) + '" class="percentage" maxlength="3" data-id="' + sales[name].id + '">%</span>' : '') + '<div class="tab" id="tabs' + tabcount + '1">' + '	<img src="' + getGoogleChart(day_values, date_values, sales[name].maxsales_day, steps, sales[name].percentage) + '" width="937" height="320" usemap="#graph' + tabcount + '1"></div><div class="tab" id="tabs' + tabcount + '2"><img src="' + getGoogleChart(hour_values, hours, sales[name].maxsales_hour, steps, sales[name].percentage) + '" width="937" height="320"></div><div class="tab" id="tabs' + tabcount + '3">' + '<img src="' + getGoogleChart(earnings_values, date_values, sales[name].maxearnings_day, esteps, sales[name].percentage) + '" width="937" height="320" usemap="#graph' + tabcount + '2"></div></div>';
-					
+
 
 					var map1 = '<map name="graph' + tabcount + '1">';
 					var map2 = '<map name="graph' + tabcount + '2">';
@@ -571,13 +571,14 @@
 					map1 += '</map>';
 					map2 += '</map>';
 					html += map1 + map2;
+					console.log( element );
 					element.html(html).tabs({
 						selected: currenttab,
 						select: function (event, ui) {
 							currenttab = ui.index;
 						}
 					});
-					
+tabcount++;
 					element.data('loaded', true);
 				},
 
@@ -628,12 +629,12 @@
 				_n = function (single, plural, number) {
 					return (number == 1) ? single : plural;
 				},
-				
+
 				_d = function (value, decimal, raw) {
 					if(!rates) return (raw) ? value : _e(currentcurrency)+''+(value*1).toFixed(2);
 					return (raw) ? number_format(value*(rates[currentcurrency] || 1)) : _e(currentcurrency)+''+number_format((value*(rates[currentcurrency] || 1)).toFixed(2));
 				},
-				
+
 				_e = function (currency) {
 					currency = currency || 'USD';
 					var pres = {
@@ -685,7 +686,7 @@
 				},
 
 				calculate = function () {
-					
+
 					if (location.hash) {
 						var parts = location.hash.substr(1).split('&');
 						from = parseInt(parts[0].split('=')[1], 10);
@@ -700,9 +701,9 @@
 						$content.html('<span>No action here :(</span>');
 						return false;
 					}
-					
+
 					var percentages = get('percentages');
-					
+
 					var statementcount = raw.length;
 
 					sales = {}, referrals = [], deposits = [], withdrawal = [], reversals = [], items = [], extended_support_sales = [];
@@ -726,7 +727,7 @@
 							1: 0,2: 0,3: 0,4: 0,5: 0,6: 0,7: 0,8: 0,9: 0,10: 0,11: 0,12: 0,13: 0,14: 0,15: 0,16: 0,17: 0,18: 0,19: 0,20: 0,21: 0,22: 0,23: 0,24: 0,25: 0,26: 0,27: 0,28: 0,29: 0,30: 0,31: 0
 						}
 					};
-					
+
 					var order_id, dateparts, line, data, lastdata, nextline, by_order_id = {}, random_order_id = 1;
 
                     // first we go through the statement grouping everything by order id
@@ -852,7 +853,7 @@
 								total_deposits++;
 								total_deposits_money += data.earnings;
 								break;
-								
+
 							case 'Purchase':
 								data.price = -data.earnings;
 								purchases.push(data);
@@ -870,7 +871,7 @@
 								total_reversals++;
 								total_reversals_money += data.earnings;
 							case 'Sale':
-							
+
 								var add = (data.type == 'Sale' ? 1 : -1),
 								name = data.name+'_'+data.id;
 
@@ -887,7 +888,7 @@
 								}*/
 
 								if ($.inArray(name, items) == -1) {
-								
+
 									items.push(name);
 									sales[name] = {
 										id: data.id,
@@ -913,7 +914,7 @@
 
 
 								sales[name].totalsales += add;
-								
+
 								sales[name].totalearnings += (data.earnings*sales[name].percentage)*add;
 								sales[name].hours[data.date.getHours()] += add;
 								sales[name].days[data.date.getDate()] += add;
@@ -948,12 +949,12 @@
 								(data.earnings < 0) ? total_withdrawal++ : total_withdrawal--;
 								total_withdrawal_money -= data.earnings;
 								break;
-								
+
 							}
 
 							firstdate = (firstdate > data.date.getTime() || !firstdate) ? data.date.getTime() : firstdate;
 							lastdate = (lastdate < data.date.getTime() || !lastdate) ? data.date.getTime() : lastdate;
-							
+
 						}
 
 						lastdata = data;
@@ -969,7 +970,7 @@
 					items.unshift(allitems);
 
 					makeContent();
-					
+
 				},
 
 				sortitby = function (sales, sortby, sortfunc) {
@@ -984,17 +985,17 @@
 						if(name != allitems){
 							var pos = parseInt($.inArray(itemdata[sortby], sortarray))*10;
 							returnitem[next(pos, returnitem)] = name;
-							
+
 						}
 					});
-					
+
 					function next(pos, arr){
-						return (!arr[pos]) ? pos : next(++pos, arr);	
+						return (!arr[pos]) ? pos : next(++pos, arr);
 					}
-					
+
 					return $.map(returnitem, function(name){if(name) return name;});
 				},
-				
+
 
 				loadStatementer = function () {
 					$.ajax({
@@ -1042,22 +1043,22 @@
 
 				save = function (name, value){
 					var obj = localStorage['statementer'] ? $.parseJSON(localStorage['statementer']) : {};
-					
+
 					obj[name] = value;
 					localStorage.setItem('statementer', JSON.stringify(obj));
-					
+
 				},
-				
+
 				get = function (name){
 					var obj = localStorage['statementer'] || false;
-					
+
 					if(!obj) return false;
-					
+
 					obj = $.parseJSON(obj);
-					
+
 					return (obj[name]) ? obj[name] : false;
 				},
-				
+
 				clear = function (){
 					localStorage.removeItem('statementer');
 				},
@@ -1070,6 +1071,6 @@
 
 			prepareUI();
 
-	
+
 
 })();
