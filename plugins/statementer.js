@@ -7,7 +7,7 @@
 				return;
 			}
 
-			var version = '2.4',
+			var version = '2.4.1',
 				exchangeinterval = 3600,
 				rates = {},
 				currentcurrency = 'USD',
@@ -349,7 +349,7 @@
 
 						year = year.substr(2);
 
-						html += '<h3 style="padding-bottom:0;">Extended Support:</h3>';
+						html += '<h3 style="padding-bottom:0;">Extended &amp; Renewed Support:</h3>';
 						html += 'You have made <strong>' + total_extended_support + '</strong> extended support ' + _n('sale', 'sales', total_extended_support) + ' within <strong>'+Math.ceil(daysrange)+'</strong> ' + _n('day', 'days', Math.ceil(daysrange)) + ' with a total value of <strong>'+_d(total_extended_support_money) +'</strong>. That\'s <strong>'+(total_extended_support/daysrange).toFixed(2)+'</strong> items and <strong>'+_d(total_extended_support_money/daysrange)+'</strong> per day.';
 						html += '<table class="table-general -striped -highlight-row" cellspacing="0" cellpadding="0">';
 						html += '<thead><tr>';
@@ -793,7 +793,7 @@ tabcount++;
                                         }
                                     }
                                 }
-                                if(by_order_id[o][x].name.indexOf('6 months extended') > 0){
+                                if(/\d+ months (renewed|extended) support/.test(by_order_id[o][x].name)){
 
 
                                     if (from <= by_order_id[o][x].date.getTime() && by_order_id[o][x].date.getTime() <= to || !to) {
