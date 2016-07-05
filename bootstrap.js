@@ -211,7 +211,7 @@
 		};
 
 			//Dashboard Page
-		if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/author_dashboard/)) {
+		if (location.href.match(/^https?:\/\/([\.a-z3]+)\.(net)\/author_dashboard/)) {
 	
 			enque('envatitor');
 			enque('verify');
@@ -219,7 +219,7 @@
 			enque('replypantry');
 
 			//Earnings Page
-		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/user\/(\w+)\/earnings\/(total_sales|item_sales|referrals|support_sales)\/(.*)/)) {
+		}else if (location.href.match(/^https?:\/\/([\.a-z3]+)\.(net)\/user\/(\w+)\/earnings\/(total_sales|item_sales|referrals|support_sales)\/(.*)/)) {
 		
 			enque('compare_earnings');
 			
@@ -240,42 +240,42 @@
 			enque('envatitor');
 			enque('replypantry');
 			//Upload Page
-		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/upload\//)) {
+		}else if (location.href.match(/^https?:\/\/([\.a-z3]+)\.(net)\/upload\//)) {
 	
 			enque('envatitor');
 			
 			//item edit page
-		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/item\/([a-z0-9-]+)\/edit/)) {
+		}else if (location.href.match(/^https?:\/\/([\.a-z3]+)\.(net)\/item\/([a-z0-9-]+)\/edit/)) {
 	
 			enque('envatitor');
 			
 			//item discussion page
-		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/item\/([a-z0-9-]+)\/discussion/)) {
+		}else if (location.href.match(/^https?:\/\/([\.a-z3]+)\.(net)\/item\/([a-z0-9-]+)\/discussion/)) {
 	
 			enque('envatitor');
 			enque('replypantry');
 			
 			//item discussion page
-		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/item\/([a-z0-9-]+)\/([0-9]+)\/comments/)) {
+		}else if (location.href.match(/^https?:\/\/([\.a-z3]+)\.(net)\/item\/([a-z0-9-]+)\/([0-9]+)\/comments/)) {
 	
 			enque('envatitor');
 			enque('replypantry');
 			
 			//item faq page
-		}else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/item\/([a-z0-9-]+)\/([0-9]+)\/faqs/)) {
+		}else if (location.href.match(/^https?:\/\/([\.a-z3]+)\.(net)\/item\/([a-z0-9-]+)\/([0-9]+)\/faqs/)) {
 	
 			enque('envatitor');
 			
 			//item discussion page
 		}
 		
-		if (location.href.match(/^http:\/\/(themeforest|codecanyon|activeden)\.net/)) {
+		if (location.href.match(/^https?:\/\/(themeforest|codecanyon|activeden)\.net/)) {
 	
 			enque('gotolivepreview');
 			
 		}
 		
-		if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/item\/([a-z0-9-]+)/)) {
+		if (location.href.match(/^https?:\/\/([\.a-z3]+)\.(net)\/item\/([a-z0-9-]+)/)) {
 	
 			//enque('editinline');
 			
@@ -390,7 +390,7 @@
                 var urlmatches;
                 if(urlmatches = location.href.match(/^https:\/\/([\.a-z3]+)\.(net)\/user\/([\w-]+)\/(\w+)/)){
                     // https, redirect to non https.
-                    location.href = 'http://codecanyon.net/user/' + urlmatches[3] + '/profile/edit#dashboard_plus';
+                    location.href = 'https://codecanyon.net/user/' + urlmatches[3] + '/profile/edit#dashboard_plus';
                     return false;
                 }
 			
