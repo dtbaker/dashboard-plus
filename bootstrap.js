@@ -11,7 +11,7 @@
 
 	//"use strict"
 
-	var version = '1.4.4',
+	var version = '1.4.5',
 		cookiePrefix = 'dbp_';
 
 	if( typeof jQuery != 'undefined' ){
@@ -32,7 +32,6 @@
 		var loadit = [];
 		var storage;
 		if(!username) return false;
-        //console.log(window.dashboardplus);
 		window.dashboardplus = window.dashboardplus || {};
 		window.dashboardplus['base'] = window.dashboardplus['base'] || '//dtbaker.github.io/dashboard-plus/';
 		window.dashboardplus['user'] = username;
@@ -122,7 +121,7 @@
 		
 		var active_plugins = get('active', {});
 
-        var $content = $('#content');
+		var $content = $('#content');
 		
 		var plugins = {
 			'statementer': {
@@ -224,7 +223,7 @@
 			enque('compare_earnings');
 			
 			//Settings Page
-        }else if (window.location.href.match(/^https?:\/\/[\.a-z3]+\.net\/user\/.*\/statement/) || location.href.match(/^https?:\/\/([\.a-z3]+)\.(net)\/statement/)) {
+		}else if (window.location.href.match(/^https?:\/\/[\.a-z3]+\.net\/user\/.*\/statement/) || location.href.match(/^https?:\/\/([\.a-z3]+)\.(net)\/statement/)) {
 
 			enque('statementer');
 			enque('statement_merge');
@@ -232,10 +231,10 @@
 			//Forums Page
 		}else if (location.href.match(/^https?:\/\/([\.a-z3]+)\.(net)\/user\/([\w-]+)\/(\w+)/)) {
 
-            settingspage();
+			settingspage();
 
-            //Statement Page
-        }else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/forums\//)) {
+			//Statement Page
+		}else if (location.href.match(/^https?:\/\/([\.a-z3]+)\.(net)\/forums\//)) {
 	
 			enque('envatitor');
 			enque('replypantry');
@@ -387,13 +386,6 @@
 			$('#dashboard_plus_link').click(function(){
 
 
-                var urlmatches;
-                if(urlmatches = location.href.match(/^https:\/\/([\.a-z3]+)\.(net)\/user\/([\w-]+)\/(\w+)/)){
-                    // https, redirect to non https.
-                    location.href = 'https://codecanyon.net/user/' + urlmatches[3] + '/profile/edit#dashboard_plus';
-                    return false;
-                }
-			
 				$content.find('.content-s').html(boxhtml);
 				
 				$content.find('.sidebar-l').find('a').removeClass('active');
