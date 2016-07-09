@@ -60,7 +60,7 @@
 			return false;
 		}
 		
-		var url = 'http://marketplace.envato.com/api/edge/'+username+'/'+apikey+'/verify-purchase:'+code+'.json';
+		var url = 'https://marketplace.envato.com/api/edge/'+username+'/'+apikey+'/verify-purchase:'+code+'.json';
 		
 		$.get(url, function(response){
 		

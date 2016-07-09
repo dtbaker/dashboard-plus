@@ -18,8 +18,8 @@
 		now = new Date().getTime(),
 		lastcheck = window.dashboardplus.getCookie('cha-ching_lastcheck'),
 		lastsales = window.dashboardplus.getCookie('cha-ching_lastsales'),
-		mp3 = 'http://dl.dropbox.com/u/9916342/cha-ching/cha-ching.mp3',
-		ogg = 'http://dl.dropbox.com/u/9916342/cha-ching/cha-ching.ogg',
+		mp3 = 'https://dl.dropbox.com/u/9916342/cha-ching/cha-ching.mp3',
+		ogg = 'https://dl.dropbox.com/u/9916342/cha-ching/cha-ching.ogg',
 		$userbalance = $('.header-logo-account__balance');
 
 	setTimeout(start, Math.max(0, interval * 60000 - (now - lastcheck)));

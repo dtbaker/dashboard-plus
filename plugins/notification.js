@@ -224,7 +224,7 @@
 	};
 	
 	var getURL = function(page) {
-		return 'http://'+location.hostname+'/author_dashboard?page='+page;
+		return 'https://'+location.hostname+'/author_dashboard?page='+page;
 	};
 
 	init();
