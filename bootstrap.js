@@ -11,7 +11,7 @@
 
 	//"use strict"
 
-	var version = '1.4.4',
+	var version = '1.4.5',
 		cookiePrefix = 'dbp_';
 
 	if( typeof jQuery != 'undefined' ){
@@ -32,7 +32,6 @@
 		var loadit = [];
 		var storage;
 		if(!username) return false;
-        //console.log(window.dashboardplus);
 		window.dashboardplus = window.dashboardplus || {};
 		window.dashboardplus['base'] = window.dashboardplus['base'] || '//dtbaker.github.io/dashboard-plus/';
 		window.dashboardplus['user'] = username;
@@ -122,7 +121,7 @@
 		
 		var active_plugins = get('active', {});
 
-        var $content = $('#content');
+		var $content = $('#content');
 		
 		var plugins = {
 			'statementer': {
@@ -224,7 +223,7 @@
 			enque('compare_earnings');
 			
 			//Settings Page
-        }else if (window.location.href.match(/^https?:\/\/[\.a-z3]+\.net\/user\/.*\/statement/) || location.href.match(/^https?:\/\/([\.a-z3]+)\.(net)\/statement/)) {
+		}else if (window.location.href.match(/^https?:\/\/[\.a-z3]+\.net\/user\/.*\/statement/) || location.href.match(/^https?:\/\/([\.a-z3]+)\.(net)\/statement/)) {
 
 			enque('statementer');
 			enque('statement_merge');
@@ -232,10 +231,10 @@
 			//Forums Page
 		}else if (location.href.match(/^https?:\/\/([\.a-z3]+)\.(net)\/user\/([\w-]+)\/(\w+)/)) {
 
-            settingspage();
+			settingspage();
 
-            //Statement Page
-        }else if (location.href.match(/^http:\/\/([\.a-z3]+)\.(net)\/forums\//)) {
+			//Statement Page
+		}else if (location.href.match(/^https?:\/\/([\.a-z3]+)\.(net)\/forums\//)) {
 	
 			enque('envatitor');
 			enque('replypantry');
@@ -346,57 +345,48 @@
 			var active = (location.hash == '#dashboard_plus') ? ' active' : '';
 
 			$content.find('.side-tabs').append('<li><a id="dashboard_plus_link" href="#dashboard_plus" class="'+active+' glyph-plus">Dashboard Plus</a></li><style>.side-tabs a#dashboard_plus_link:before{background-position:-240px -168px;}.side-tabs a#dashboard_plus_link.active:before{background-position:13px -232px;}</style>');
-			
+
 			var boxhtml = '<div id="dashboard_plus_tab" class="tab-content'+active+'" style="display:block"><h2 class="underlined">Dashboard Plus</h2><p>Select all features you would like to activate. Please check out the <a href="/forums/thread/introducing-dashboard-plus/71870">forum thread</a> if you have questions</p><p></p><h3 class="underlined">Available Plugins</h3><form id="dashboardplus_form" class="horizontal-form"><fieldset>';
 	
 			$.each(plugins, function(id, data){
-			
-			if(!(typeof data.beta != 'undefined' && !(username == 'revaxarts'))){
-				
-				boxhtml += '<div class="input-group"><label for="dbp_'+id+'">'+data.name+'</label><div class="inputs"><label for="dbp_'+id+'">  <input id="dbp_'+id+'" name="active[]" class="dbp_plugins" type="checkbox" value="'+id+'" '+(active_plugins[id] ? ' checked' : '')+'> '+data.desc+'</label>';
-				
-				if(data.settings){
-					$.each(data.settings, function (i, setting){
-						if(!setting.type) setting.type = 'textfield';
-						if(!setting.placeholder) setting.placeholder = '';
-						
-						boxhtml += '<div style="padding-left:20px">';
-							switch(setting.type){
-								case 'checkbox':
-									boxhtml += '<label><input class="dbp_setting" type="checkbox" '+(window.dashboardplus.get(id, setting.id) ? ' checked' : '')+' data-id="'+id+'" data-name="'+setting.id+'"> '+setting.label+'</label>';
-									break;
-								case 'textfield':
-								default:
-									boxhtml += ''+setting.label+' <input class="dbp_setting" placeholder="'+(setting.placeholder)+'" type="text" value="'+(window.dashboardplus.get(id, setting.id))+'" style="width:100%" data-id="'+id+'" data-name="'+setting.id+'">';
-									break;
-									
-							}
-						boxhtml += '</div>';
-						
-					});
-				}
-				
-				boxhtml += '</div> </div>';
-			}
+
+                if(!(typeof data.beta != 'undefined' && !(username == 'revaxarts'))){
+
+                    boxhtml += '<div class="input-group"><label for="dbp_'+id+'">'+data.name+'</label><div class="inputs"><label for="dbp_'+id+'">  <input id="dbp_'+id+'" name="active[]" class="dbp_plugins" type="checkbox" value="'+id+'" '+(active_plugins[id] ? ' checked' : '')+'> '+data.desc+'</label>';
+
+                    if(data.settings){
+                        $.each(data.settings, function (i, setting){
+                            if(!setting.type) setting.type = 'textfield';
+                            if(!setting.placeholder) setting.placeholder = '';
+
+                            boxhtml += '<div style="padding-left:20px">';
+                                switch(setting.type){
+                                    case 'checkbox':
+                                        boxhtml += '<label><input class="dbp_setting" type="checkbox" '+(window.dashboardplus.get(id, setting.id) ? ' checked' : '')+' data-id="'+id+'" data-name="'+setting.id+'"> '+setting.label+'</label>';
+                                        break;
+                                    case 'textfield':
+                                    default:
+                                        boxhtml += ''+setting.label+' <input class="dbp_setting" placeholder="'+(setting.placeholder)+'" type="text" value="'+(window.dashboardplus.get(id, setting.id))+'" style="width:100%" data-id="'+id+'" data-name="'+setting.id+'">';
+                                        break;
+
+                                }
+                            boxhtml += '</div>';
+
+                        });
+                    }
+
+                    boxhtml += '</div> </div>';
+                }
 	 
 			});
 			
 			boxhtml += '</fieldset><div class="form-submit"><a id="dbp_reset_button" href="#dashboard_plus">Reset all settings</a> or <button id="dbp_submit_button" class="btn-icon save" type="submit">Save</button></div></form><a style="font-size:10px" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=U4V8TKF6WNYZ2&amp;lc=AT&amp;item_name=revaxarts%20Statementer&amp;currency_code=USD&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted" title="for those who are too enthusiastic about">buy me a beer</a></div>';
-			
-					
+
 			$('#dashboard_plus_link').click(function(){
 
-
-                var urlmatches;
-                if(urlmatches = location.href.match(/^https:\/\/([\.a-z3]+)\.(net)\/user\/([\w-]+)\/(\w+)/)){
-                    // https, redirect to non https.
-                    location.href = 'https://codecanyon.net/user/' + urlmatches[3] + '/profile/edit#dashboard_plus';
-                    return false;
-                }
-			
 				$content.find('.content-s').html(boxhtml);
 				
-				$content.find('.sidebar-l').find('a').removeClass('active');
+				$content.find('.layout__sidebar').find('a').removeClass('active');
 				
 				$(this).addClass('active');
 	
@@ -446,6 +436,8 @@
 					}
 					return false;
 				});
+
+                return false;
 				
 				
 			});

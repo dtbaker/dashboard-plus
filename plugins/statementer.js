@@ -199,7 +199,7 @@
 
 					if(timestamp - lastcurrencyupdate > exchangeinterval*1000 || !rates){
 						$.ajax({
-							url: 'http://openexchangerates.org/latest.json',
+							url: 'https://openexchangerates.org/latest.json',
 							dataType: 'jsonp',
 							success: function(data){
 							rates = data.rates;
@@ -582,7 +582,7 @@ tabcount++;
 				},
 
 				getGoogleChart = function (values, dates, maxvalue, steps, percentage) {
-					var url = '//chart.apis.google.com/chart?cht=bvg',
+					var url = '//chart.googleapis.com/chart?cht=bvg',
 						yaxis = (function () {
 							var ret = '';
 							for (var i = 0; i <= maxvalue; i += steps) {
