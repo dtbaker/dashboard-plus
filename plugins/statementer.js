@@ -299,9 +299,11 @@
 
 						$.each(reversals, function (i, data) {
 							var url = data.type == 'other_adjustments_earnings' ? '' : '/item/' + urlify(data.name) + '/' + data.id;
+							if(data.document) url = '';
 							html += '<tr>';
 							html += '<td title="' + data.date.toString().substr(0, 21) + '">' + data.date.getDate() + ' ' + month + ' ' + year + '</td><td>';
 							html += url ? '<a href=" ' + url + '">' + data.name + '</a>' : data.name;
+							if(data.document) html += ' (<a href="/financial_document/invoices/item_purchases/' + data.document + '">IVIP' + data.document + '</a>)';
 							html += '</td><td class="number">1</td><td class="number">- ' + _d(data.earnings) + '</td>';
 							html += '</tr>';
 						});
@@ -737,6 +739,7 @@ tabcount++;
                         line = raw[i].split('","');
                         order_id = parseFloat(line[1]) || random_order_id++;
                         order_id = order_id + "_" + (parseInt(line[4], 10) || "");
+                        // if('Sale Reversal' == line[2] || 'Author Fee Reversal' == line[2]) order_id = order_id + "_sr";
                         if(typeof by_order_id[order_id] == 'undefined'){
                             by_order_id[order_id] = [];
                         }
@@ -769,11 +772,12 @@ tabcount++;
                     }
                     // now we merge all the orders together into single entries so we can better process them in a loop
 
-                    var single_orders = [], o, x, s;
+                    var single_orders = [], o, x, s, ivip;
                     for(o in by_order_id){
                         if(by_order_id.hasOwnProperty(o)){
                             var newdata = {};
                             for(x=0; x<by_order_id[o].length; x++){
+
                                 // merge data into newdata
                                 for(s in by_order_id[o][x]){
                                     if(by_order_id[o][x].hasOwnProperty(s)){
@@ -781,7 +785,7 @@ tabcount++;
                                         if(typeof newdata[s] == 'undefined' || !newdata[s] || newdata[s] == ''){
                                             newdata[s] = by_order_id[o][x][s];
                                         }else{
-                                            // data already exists in this key.
+                                           // data already exists in this key.
                                             if(
                                                 s == 'earnings' ||
                                                 s == 'us_rwt' ||
@@ -808,18 +812,34 @@ tabcount++;
                                         extended_support_sales.push(by_order_id[o][x]);
                                     }
                                 }
-                                if('Sale Reversal' == by_order_id[o][x].type){
-                                    newdata = by_order_id[o][x];
+
+                                if(/Sale Reversal|Author Fee Reversal/.test(by_order_id[o][x].type)){
+                                    for(sr in by_order_id[o]){
+                                        if(by_order_id[o].hasOwnProperty(sr)){
+
+                                            if(ivip = by_order_id[o][x].name.match(/IVIP([0-9]+)$/)){
+                                                newdata.document = ivip[1];
+                                            }
+
+                                            if(/\(\d+ months included support\)$/.test(by_order_id[o][x].name)){
+                                                newdata.name = by_order_id[o][x].name;
+                                            }
+                                        }
+
+                                    }
+
                                 }
+
                             }
                             single_orders.push(newdata);
                         }
                     }
 
-					for (var i = single_orders.length - 1; i >= 0; i--) {
+
+                    for (var i = single_orders.length - 1; i >= 0; i--) {
 
 
-						/*data = {
+    					/*data = {
 							date: new Date(dateparts[0], dateparts[1]-1, dateparts[2], dateparts[3], dateparts[4], dateparts[5] ),
 							type: line[2],
 							name: item_name,
@@ -868,6 +888,7 @@ tabcount++;
 							case 'Other Adjustments Earnings':
 							case 'Manual Adjustment':
 							case 'Sale Reversal':
+							case 'Author Fee Reversal':
 								reversals.push(data);
 								data.earnings *= -1;
 								total_reversals++;
