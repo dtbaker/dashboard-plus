@@ -808,6 +808,9 @@ tabcount++;
                                         extended_support_sales.push(by_order_id[o][x]);
                                     }
                                 }
+                                if('Sale Reversal' == by_order_id[o][x].type){
+                                    newdata = by_order_id[o][x];
+                                }
                             }
                             single_orders.push(newdata);
                         }
