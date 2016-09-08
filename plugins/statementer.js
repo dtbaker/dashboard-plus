@@ -853,8 +853,6 @@ tabcount++;
 						};*/
                         data = single_orders[i];
 
-                        console.log(data.type);
-
 						if (from <= data.date.getTime() && data.date.getTime() <= to || !to) {
 							switch (data.type) {
 							case 'Referral Cut':
