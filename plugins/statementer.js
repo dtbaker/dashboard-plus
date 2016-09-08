@@ -813,7 +813,7 @@ tabcount++;
                                     }
                                 }
 
-                                if(/Sale Reversal|Author Fee Reversal/.test(by_order_id[o][x].type)){
+                                if(/Sale Reversal|Author Fee Reversal|Sale Refund|Author Fee Refund/.test(by_order_id[o][x].type)){
                                     for(sr in by_order_id[o]){
                                         if(by_order_id[o].hasOwnProperty(sr)){
 
@@ -853,6 +853,8 @@ tabcount++;
 						};*/
                         data = single_orders[i];
 
+                        console.log(data.type);
+
 						if (from <= data.date.getTime() && data.date.getTime() <= to || !to) {
 							switch (data.type) {
 							case 'Referral Cut':
@@ -889,6 +891,8 @@ tabcount++;
 							case 'Manual Adjustment':
 							case 'Sale Reversal':
 							case 'Author Fee Reversal':
+							case 'Sale Refund':
+							case 'Author Fee Refund':
 								reversals.push(data);
 								data.earnings *= -1;
 								total_reversals++;
