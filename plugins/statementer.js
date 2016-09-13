@@ -755,13 +755,13 @@ tabcount++;
                             name: line[3],
                             id: parseInt(line[4], 10) || null,
                             document: parseInt(line[5], 10) || null,
-                            earnings: parseFloat(line[10]),
+                            earnings: parseFloat(line[11]),
                             rate: null,
                             price: parseFloat(line[6]),
                             us_rwt: parseFloat(line[8]), // from 0 to 30%
                             us_bwt: parseFloat(line[9]), // if haven't submited W-8 form.
-                            site: line[11].replace('"', ''),
-                            country: line[12],
+                            site: line[12].replace('"', ''),
+                            country: line[13],
                             purchased: false,
                             order_id: order_id
                         };
@@ -813,7 +813,7 @@ tabcount++;
                                     }
                                 }
 
-                                if(/Sale Reversal|Author Fee Reversal/.test(by_order_id[o][x].type)){
+                                if(/Sale Reversal|Author Fee Reversal|Sale Refund|Author Fee Refund/.test(by_order_id[o][x].type)){
                                     for(sr in by_order_id[o]){
                                         if(by_order_id[o].hasOwnProperty(sr)){
 
@@ -889,6 +889,8 @@ tabcount++;
 							case 'Manual Adjustment':
 							case 'Sale Reversal':
 							case 'Author Fee Reversal':
+							case 'Sale Refund':
+							case 'Author Fee Refund':
 								reversals.push(data);
 								data.earnings *= -1;
 								total_reversals++;
@@ -1041,7 +1043,7 @@ tabcount++;
 								$content.html('<span style="font-style:italic">fetching data...</span>');
 								$.get(csvfile, function (data) {
 									//raw = $.trim(data.replace(/"Date","Order ID","Type","Detail","Item ID","Price","Amount"\n/g, ''));
-									raw = $.trim(data.replace(/"Date","Order ID","Type","Detail","Item ID","Document","Price","EU VAT","US RWT","US BWT","Amount","Site","Other Party Country","Other Party Region","Other Party City","Other Party Zipcode"\n/g, ''));
+									raw = $.trim(data.replace(/"Date","Order ID","Type","Detail","Item ID","Document","Price","EU VAT","US Sales Tax","US RWT","US BWT","Amount","Site","Other Party Country","Other Party Region","Other Party City","Other Party Zipcode"\n/g, ''));
 									save('' + currentyear + '_' + currentmonth, raw);
 									window.dashboardplus.setCookie('statementer_lastbalance', currentbalance, 30);
 									initCalc();
@@ -1054,7 +1056,7 @@ tabcount++;
 							clear();
 							$content.html('<span style="font-style:italic">fetching data...</span>');
 							$.get(csvfile, function (data) {
-								raw = $.trim(data.replace(/"Date","Order ID","Type","Detail","Item ID","Document","Price","EU VAT","US RWT","US BWT","Amount","Site","Other Party Country","Other Party Region","Other Party City","Other Party Zipcode"\n/g, ''));
+								raw = $.trim(data.replace(/"Date","Order ID","Type","Detail","Item ID","Document","Price","EU VAT","US Sales Tax","US RWT","US BWT","Amount","Site","Other Party Country","Other Party Region","Other Party City","Other Party Zipcode"\n/g, ''));
 								initCalc();
 							});
 						}
