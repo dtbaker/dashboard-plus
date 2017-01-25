@@ -428,7 +428,7 @@
 					}
 
 
-					html += '<div id="statementer_copyright">Version '+version+' &copy; <a href="/user/revaxarts">revaxarts</a>.com. Licensed under the MIT license</div><hr>';
+					html += '<div id="statementer_copyright">Version '+version+' &copy; <a href="/user/revaxarts">revaxarts</a> &amp; <a href="/user/dtbaker">dtbaker</a>. Licensed under the MIT license</div><hr>';
 
 					$('#statementer_content').html(html);
 
