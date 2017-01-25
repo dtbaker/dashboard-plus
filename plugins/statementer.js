@@ -235,7 +235,8 @@
 
 					if (
                         raw == '"Date","Order ID","Type","Detail","Item ID","Price","Amount"' ||
-                        raw == '"Date","Order ID","Type","Detail","Item ID","Document","Price","EU VAT","US RWT","US BWT","Amount","Site","Other Party Country","Other Party Region","Other Party City","Other Party Zipcode"'
+                        raw == '"Date","Order ID","Type","Detail","Item ID","Document","Price","EU VAT","US RWT","US BWT","Amount","Site","Other Party Country","Other Party Region","Other Party City","Other Party Zipcode"' ||
+                        raw == '"Date","Order ID","Type","Detail","Item ID","Document","Price","AU RWT","EU VAT","US Sales Tax","US RWT","US BWT","Amount","Site","Other Party Country","Other Party Region","Other Party City","Other Party Zipcode"'
                     ) {
 						$('#statementer_content').html('<h2>Sorry, no action this month!</h2>');
 						return false;
@@ -698,7 +699,7 @@ tabcount++;
 							return false;
 						}
 					}
-					if (raw == '"Date","Order ID","Type","Detail","Item ID","Document","Price","EU VAT","US RWT","US BWT","Amount","Site","Other Party Country","Other Party Region","Other Party City","Other Party Zipcode"') {
+					if (raw == '"Date","Order ID","Type","Detail","Item ID","Document","Price","AU RWT","EU VAT","US Sales Tax","US RWT","US BWT","Amount","Site","Other Party Country","Other Party Region","Other Party City","Other Party Zipcode"') {
 						$content.html('<span>No action here :(</span>');
 						return false;
 					}
@@ -749,19 +750,40 @@ tabcount++;
 
                         dateparts = line[0].replace(/(-|:)/g, ' ').split(' ');
 
+                        /*
+                         "Date",
+                         "Order ID",
+                         "Type",
+                         "Detail",
+                         "Item ID",
+                         "Document",
+                         "Price",
+                         "AU RWT",
+                         "EU VAT",
+                         "US Sales Tax",
+                         "US RWT",
+                         "US BWT",
+                         "Amount",
+                         "Site",
+                         "Other Party Country",
+                         "Other Party Region",
+                         "Other Party City",
+                         "Other Party Zipcode"
+                          */
                         data = {
                             date: new Date(dateparts[0], dateparts[1]-1, dateparts[2], dateparts[3], dateparts[4], dateparts[5] ),
                             type: line[2],
                             name: line[3],
                             id: parseInt(line[4], 10) || null,
                             document: parseInt(line[5], 10) || null,
-                            earnings: parseFloat(line[11]),
+                            earnings: parseFloat(line[12]),
                             rate: null,
                             price: parseFloat(line[6]),
-                            us_rwt: parseFloat(line[8]), // from 0 to 30%
-                            us_bwt: parseFloat(line[9]), // if haven't submited W-8 form.
-                            site: line[12].replace('"', ''),
-                            country: line[13],
+                            au_rwt: parseFloat(line[7]), // from 0 to 30%
+                            us_rwt: parseFloat(line[10]), // from 0 to 30%
+                            us_bwt: parseFloat(line[11]), // if haven't submited W-8 form.
+                            site: line[13].replace('"', ''),
+                            country: line[14],
                             purchased: false,
                             order_id: order_id
                         };
@@ -1043,7 +1065,7 @@ tabcount++;
 								$content.html('<span style="font-style:italic">fetching data...</span>');
 								$.get(csvfile, function (data) {
 									//raw = $.trim(data.replace(/"Date","Order ID","Type","Detail","Item ID","Price","Amount"\n/g, ''));
-									raw = $.trim(data.replace(/"Date","Order ID","Type","Detail","Item ID","Document","Price","EU VAT","US Sales Tax","US RWT","US BWT","Amount","Site","Other Party Country","Other Party Region","Other Party City","Other Party Zipcode"\n/g, ''));
+									raw = $.trim(data.replace(/"Date","Order ID","Type","Detail","Item ID","Document","Price","AU RWT","EU VAT","US Sales Tax","US RWT","US BWT","Amount","Site","Other Party Country","Other Party Region","Other Party City","Other Party Zipcode"\n/g, ''));
 									save('' + currentyear + '_' + currentmonth, raw);
 									window.dashboardplus.setCookie('statementer_lastbalance', currentbalance, 30);
 									initCalc();
@@ -1056,7 +1078,7 @@ tabcount++;
 							clear();
 							$content.html('<span style="font-style:italic">fetching data...</span>');
 							$.get(csvfile, function (data) {
-								raw = $.trim(data.replace(/"Date","Order ID","Type","Detail","Item ID","Document","Price","EU VAT","US Sales Tax","US RWT","US BWT","Amount","Site","Other Party Country","Other Party Region","Other Party City","Other Party Zipcode"\n/g, ''));
+								raw = $.trim(data.replace(/"Date","Order ID","Type","Detail","Item ID","Document","Price","AU RWT","EU VAT","US Sales Tax","US RWT","US BWT","Amount","Site","Other Party Country","Other Party Region","Other Party City","Other Party Zipcode"\n/g, ''));
 								initCalc();
 							});
 						}
