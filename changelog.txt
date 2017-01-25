@@ -1,5 +1,8 @@
 
 
+2017.01.26 - version 1.4.7
+ * Statement CSV change
+
 2016.09.13 - version 1.4.6
  * Statement CSV change
 
