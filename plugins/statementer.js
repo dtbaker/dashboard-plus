@@ -7,7 +7,7 @@
 				return;
 			}
 
-			var version = '2.4.1',
+			var version = '2.5',
 				exchangeinterval = 3600,
 				rates = {},
 				currentcurrency = 'USD',
@@ -76,7 +76,7 @@
 			var prepareUI = function () {
 					lastbalance = window.dashboardplus.getCookie('statementer_lastbalance');
 					currentcurrency = window.dashboardplus.getCookie('statementer_currentcurrency') || 'USD';
-					currentbalance = parseInt($('.header-logo-account__balance').html().substr(1).replace(',', '').replace('.', ''), 16);
+					currentbalance = parseInt($('.global-header-menu__link-text').html().substr(1).replace(',', '').replace('.', ''), 16);
 
 					$content.html('<span style="font-style:italic">loading Statement... <a href="javascript:window.dashboardplus.set(\'statementer\', {});window.dashboardplus.setCookie(\'statementer_lastbalance\', \'\', -1);location.reload();">Click here if it stucks...</a></span>');
                     $('head').append('<link type="text/css" rel="stylesheet" href="'+window.dashboardplus.base + 'css/statementer.css" />');
