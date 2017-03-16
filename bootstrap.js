@@ -11,7 +11,7 @@
 
 	//"use strict"
 
-	var version = '1.4.5',
+	var version = '1.5',
 		cookiePrefix = 'dbp_';
 
 	if( typeof jQuery != 'undefined' ){
@@ -28,7 +28,7 @@
 		
 	function go(){
 	
-		var username = $('#user_username').html();
+		var username = $('.global-header-menu__link-text').html();
 		var loadit = [];
 		var storage;
 		if(!username) return false;
