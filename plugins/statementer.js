@@ -740,7 +740,8 @@ tabcount++;
 
                     for (var i = statementcount - 1; i >= 0; i--) {
 
-                        line = raw[i].split('","');
+						 line = raw[i].split('","');
+						//console.log(line);
                         order_id = parseFloat(line[1]) || random_order_id++;
                         order_id = order_id + "_" + (parseInt(line[4], 10) || "");
                         // if('Sale Reversal' == line[2] || 'Author Fee Reversal' == line[2]) order_id = order_id + "_sr";
@@ -780,20 +781,20 @@ tabcount++;
                             name: line[3],
                             id: parseInt(line[4], 10) || null,
                             document: parseInt(line[5], 10) || null,
-                            earnings: parseFloat(line[13]),
+                            earnings: parseFloat(line[12]),
                             rate: null,
                             price: parseFloat(line[6]),
                             au_gst: parseFloat(line[7]), // from 0 to 30%
                             au_rwt: parseFloat(line[8]), // from 0 to 30%
                             us_rwt: parseFloat(line[11]), // from 0 to 30%
                             us_bwt: parseFloat(line[12]), // if haven't submited W-8 form.
-                            site: line[14].replace('"', ''),
-                            country: line[15],
+                            site: line[13].replace('"', ''),
+                            country: line[14],
                             purchased: false,
                             order_id: order_id
                         };
-                        console.log(line);
-                        console.log(data);
+                        //console.log(line);
+                        //console.log(data);
                         if(isNaN(data.us_bwt))data.us_bwt = 0;
                         if(isNaN(data.us_rwt))data.us_rwt = 0;
 

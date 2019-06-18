@@ -3,6 +3,7 @@
     init();
 
     function init(){
+        console.log('foo');
 
         $('head').append('<link type="text/css" rel="stylesheet" href="'+window.dashboardplus.base + 'css/statement_merge.css" />');
 
@@ -32,8 +33,8 @@
             price_string   = $(this).find('.statement__price .statement__price').text().replace(/\s+/g,'');
             price          = parseFloat(price_string.substring(1, price_string.length)).toFixed(2);
 
-            console.log(order_id + ": Adding price "+price_string+" value: "+price);
-            console.log(order_id + ": Adding amount "+amount_string+" value: "+amount + ". Total is: " + current_row_amount);
+            //console.log(order_id + ": Adding price "+price_string+" value: "+price);
+            //console.log(order_id + ": Adding amount "+amount_string+" value: "+amount + ". Total is: " + current_row_amount);
 
             if(!current_order_id || order_id != current_order_id){
                 current_row = $(this).clone();
