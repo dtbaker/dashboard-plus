@@ -784,10 +784,10 @@ tabcount++;
                             earnings: parseFloat(line[12]),
                             rate: null,
                             price: parseFloat(line[6]),
-							au_gst: parseFloat(line[11]), // from 0 to 30%
-							au_rwt: parseFloat(line[12]), // from 0 to 30%
-							us_rwt: parseFloat(line[8]), // from 0 to 30%
-							us_bwt: parseFloat(line[9]), // if haven't submited W-8 form.
+                            au_gst: parseFloat(line[11]), // from 0 to 30%
+                            au_rwt: parseFloat(line[12]), // from 0 to 30%
+                            us_rwt: parseFloat(line[8]), // from 0 to 30%
+                            us_bwt: parseFloat(line[9]), // if haven't submited W-8 form.
                             site: line[13].replace('"', ''),
                             country: line[14],
                             purchased: false,
