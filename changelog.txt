@@ -1,5 +1,9 @@
 
 
+2019.06.28 - version 1.4.9
+ * Source files from local plugin install
+ * Statement CSV change (Thanks	Ataurr)
+
 2017.07.02 - version 1.4.8
  * Statement CSV change (AU GST Added)
 
